@@ -1,35 +1,30 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import Header from "./components/header";
+import UserList from "./components/userList";
+
+import "./App.css";
+import { CreateUser, GetUser } from "./api/services/userServices";
 
 function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+	return (
+		<main>
+			<Header />
+			<UserList />
+			<button
+				type="button"
+				onClick={() =>
+					CreateUser({
+						userName: "newuser",
+						email: "newuser@example.com",
+						password: "defaultPassword123",
+					})
+				}>
+				Add User
+			</button>
+			<button type="button" onClick={() => GetUser(1)}>
+				Get User
+			</button>
+		</main>
+	);
 }
 
-export default App
+export default App;
