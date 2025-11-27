@@ -1,28 +1,22 @@
+import { useState } from "react";
+
 import Header from "./components/header";
 import UserList from "./components/userList";
+import LoginForm from "./components/forms/loginForm";
+import FormContainer from "./components/formContainer";
 
 import "./App.css";
-import { CreateUser, GetUser } from "./api/services/userServices";
 
 function App() {
+	const [isLogged, serIsLogged] = useState(false);
+
 	return (
 		<main>
 			<Header />
-			<UserList />
-			<button
-				type="button"
-				onClick={() =>
-					CreateUser({
-						userName: "newuser",
-						email: "newuser@example.com",
-						password: "defaultPassword123",
-					})
-				}>
-				Add User
-			</button>
-			<button type="button" onClick={() => GetUser(1)}>
-				Get User
-			</button>
+			<UserList cardId={1} />
+			<FormContainer>
+				<LoginForm />
+			</FormContainer>
 		</main>
 	);
 }

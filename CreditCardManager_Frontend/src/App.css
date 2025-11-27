@@ -19,10 +19,23 @@
 	border-radius: 9999px;
 }
 
-.flex-center {
+.block {
+	display: block;
+	width: 100%;
+}
+
+.flex {
 	display: flex;
+}
+
+.flex-center {
 	justify-content: center;
 	align-items: center;
+}
+
+.bg-blue {
+	color: var(--color-white);
+	background-color: var(--color-blue);
 }
 
 .container {
@@ -32,9 +45,42 @@
 	background-color: var(--color-white);
 }
 
+.absoluteContainer {
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 9999;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	width: 100dvw;
+	height: 100dvh;
+
+	background: rgba(0, 0, 0, 0.226);
+	backdrop-filter: blur(1px);
+}
+
+.formContainer {
+	width: 100%;
+	max-width: 60dvw;
+
+	padding: 2rem;
+
+	background-color: var(--color-white);
+}
+
+.formButton {
+	border: none;
+	padding: 0.5rem 1rem;
+
+	cursor: pointer;
+}
+
 .container-title {
-  font-weight: 600;
-  margin-bottom: 0.5rem;
+	font-weight: 600;
+	margin-bottom: 0.5rem;
 }
 
 .icon-container {

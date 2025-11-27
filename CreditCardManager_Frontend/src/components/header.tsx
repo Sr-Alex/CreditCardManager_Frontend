@@ -3,7 +3,7 @@ import { CreditCard, Moon } from "lucide-react";
 function Header() {
 	return (
 		<header>
-			<div className="flex-center" style={{ gap: "0.5rem" }}>
+			<div className="flex flex-center" style={{ gap: "0.5rem" }}>
 				<div
 					className="icon-container rounded"
 					style={{

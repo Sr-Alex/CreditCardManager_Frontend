@@ -1,4 +1,12 @@
-function Container({ Title = "", Description = "", ...children }) {
+function Container({
+	Title = "",
+	Description = "",
+	...children
+}: {
+	Title?: string;
+	Description?: string;
+	children: React.ReactNode;
+}) {
 	return (
 		<section className="container box-shadow">
 			{Title?.trim() && (
