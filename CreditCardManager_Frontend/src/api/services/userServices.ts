@@ -1,4 +1,4 @@
-import { METHODS, RequestApi, saveAuthToken } from "../client";
+import { GetAuthToken, METHODS, RequestApi, SaveAuthToken } from "../client";
 import type { UserDTO, CreateUserDTO } from "../dtos/userDtos";
 
 const PATH = "/user";
@@ -17,7 +17,7 @@ export const LoginUser = async (
 	const data = response.data;
 
 	if (response.status === 200) {
-		saveAuthToken(data.token);
+		SaveAuthToken(data.token);
 		return true;
 	} else {
 		return data;
@@ -37,7 +37,7 @@ export const CreateUser = async (
 	let data = response.data;
 
 	if (response.status === 201) {
-		saveAuthToken(data.token);
+		SaveAuthToken(data.token);
 		return true;
 	} else {
 		return data;
@@ -48,13 +48,17 @@ export const UpdateUser = async (userId: number, userData: CreateUserDTO) => {
 	const response = await RequestApi(
 		`${PATH}/${userId}`,
 		METHODS.PUT,
-		undefined,
+		GetAuthToken(),
 		userData
 	);
 	return response.data;
 };
 
 export const DeleteUser = async (userId: number) => {
-	const response = await RequestApi(`${PATH}/${userId}`, METHODS.DELETE);
+	const response = await RequestApi(
+		`${PATH}/${userId}`,
+		METHODS.DELETE,
+		GetAuthToken()
+	);
 	return response.data;
 };

@@ -14,12 +14,12 @@ export const METHODS = {
 	DELETE: "delete",
 };
 
-export function saveAuthToken(token: string) {
+export function SaveAuthToken(token: string) {
 	localStorage.setItem("token", token);
 }
 
-export function getAuthToken(): string | null {
-	return localStorage.getItem("token");
+export function GetAuthToken(): string | undefined {
+	return localStorage.getItem("token") || undefined;
 }
 
 export async function RequestApi(

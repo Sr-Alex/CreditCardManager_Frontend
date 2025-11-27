@@ -1,4 +1,5 @@
-import { METHODS, RequestApi } from "../client";
+import { GetAuthToken, METHODS, RequestApi } from "../client";
+
 import type { CardUsersDTO } from "../dtos/cardUsersDtos";
 import type {
 	CreditCardDTO,
@@ -22,7 +23,8 @@ export const GetCreditCardUsers = async (
 ): Promise<CardUsersDTO> => {
 	const response = await RequestApi(
 		`${PATH}/details/${cardId}/users`,
-		METHODS.GET
+		METHODS.GET,
+		GetAuthToken()
 	);
 	return response.data as CardUsersDTO;
 };
@@ -31,6 +33,7 @@ export const AddUser = async (cardId: number, userId: number) => {
 	const response = await RequestApi(
 		`${PATH}/details/${cardId}/users`,
 		METHODS.POST,
+		GetAuthToken(),
 		userId.toString()
 	);
 	return response.data;
@@ -40,13 +43,17 @@ export const CreateCreditCard = async (cardData: CreateCreditCardDTO) => {
 	const response = await RequestApi(
 		`${PATH}`,
 		METHODS.POST,
-		undefined,
+		GetAuthToken(),
 		cardData
 	);
 	return response.data;
 };
 
 export const DeleteCreditCard = async (cardId: number) => {
-	const response = await RequestApi(`${PATH}/${cardId}`, METHODS.DELETE);
+	const response = await RequestApi(
+		`${PATH}/${cardId}`,
+		METHODS.DELETE,
+		GetAuthToken()
+	);
 	return response.data;
 };
