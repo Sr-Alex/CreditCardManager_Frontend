@@ -5,15 +5,20 @@ import type { UserDTO } from "../api/dtos/userDtos";
 
 import Container from "./container";
 
-function UserList({ cardId }: { cardId: number }) {
+function UserList({ cardId }: { cardId: number | undefined }) {
 	const [users, setUsers] = useState(Array<UserDTO>());
 
+	const handleGetUsers = async () => {
+		if (cardId === undefined) return;
+
+		const data = await GetCreditCardUsers(cardId);
+		if (data.users && Array.isArray(data.users)) {
+			setUsers(data.users);
+		}
+	};
+
 	useEffect(() => {
-		GetCreditCardUsers(cardId).then((data) => {
-			if (data.users && Array.isArray(data.users)) {
-				setUsers(data.users);
-			}
-		});
+		handleGetUsers();
 	}, [cardId]);
 
 	return (

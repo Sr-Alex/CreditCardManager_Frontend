@@ -6,16 +6,19 @@ import type {
 	CreateCreditCardDTO,
 } from "../dtos/creditCardDtos";
 
-const PATH = "/creditcard";
+const PATH = "/Creditcard";
 
 export const GetCreditCard = async (cardId: number): Promise<CreditCardDTO> => {
 	const response = await RequestApi(`${PATH}/details/${cardId}`, METHODS.GET);
 	return response.data as CreditCardDTO;
 };
 
-export const GetUserCreditCards = async (userId: number) => {
+export const GetUserCreditCards = async (
+	userId: number
+): Promise<Array<CreditCardDTO>> => {
 	const response = await RequestApi(`${PATH}/${userId}`, METHODS.GET);
-	return response.data;
+
+	return response.data as Array<CreditCardDTO>;
 };
 
 export const GetCreditCardUsers = async (

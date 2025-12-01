@@ -1,16 +1,29 @@
-import { useState } from "react";
+import { useContext, useRef, type FormEvent } from "react";
+import LoginContext from "./../../contexts/loginContext";
+import { LoginUser } from "../../api/services/userServices";
 
 function LoginForm() {
-	const [userName, setUserName] = useState("");
-	const [password, setPassword] = useState("");
+	const context = useContext(LoginContext);
+	const userEmail = useRef<HTMLInputElement>(null);
+	const password = useRef<HTMLInputElement>(null);
 
 	const handleReset = () => {
-		setUserName("");
-		setPassword("");
+		userEmail.current!.value = "";
+		password.current!.value = "";
 	};
 
-	const handleLogin = (e: React.FormEvent) => {
+	const handleLogin = (e: FormEvent) => {
 		e.preventDefault();
+		if (!userEmail.current!.value || !password.current!.value) return;
+
+		LoginUser(userEmail.current!.value, password.current!.value).then(
+			(response) => {
+				if (response) {
+					context?.setIsLogged(true);
+					handleReset();
+				}
+			}
+		);
 	};
 
 	return (
@@ -19,12 +32,11 @@ function LoginForm() {
 			className="flex"
 			style={{ flexDirection: "column", gap: "0.75rem" }}>
 			<div>
-				<label htmlFor="username">UserName:</label>
+				<label htmlFor="userEmail">Email de usuário:</label>
 				<input
 					type="text"
-					id="username"
-					value={userName}
-					onChange={(e) => setUserName(e.target.value)}
+					id="userEmail"
+					ref={userEmail}
 					className="block"
 				/>
 			</div>
@@ -33,8 +45,7 @@ function LoginForm() {
 				<input
 					type="password"
 					id="password"
-					value={password}
-					onChange={(e) => setPassword(e.target.value)}
+					ref={password}
 					className="block"
 				/>
 			</div>
@@ -43,7 +54,7 @@ function LoginForm() {
 					className="formButton rounded-full bg-blue"
 					type="button"
 					onClick={handleReset}>
-					Reset
+					Limpar
 				</button>
 				<button
 					type="submit"
@@ -55,4 +66,5 @@ function LoginForm() {
 		</form>
 	);
 }
+
 export default LoginForm;

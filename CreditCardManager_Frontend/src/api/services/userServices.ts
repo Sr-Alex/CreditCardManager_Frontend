@@ -6,7 +6,7 @@ const PATH = "/user";
 export const LoginUser = async (
 	email: string,
 	password: string
-): Promise<boolean | object> => {
+): Promise<UserDTO | object> => {
 	const response = await RequestApi(
 		`${PATH}/login`,
 		METHODS.POST,
@@ -14,14 +14,10 @@ export const LoginUser = async (
 		{ email, password }
 	);
 
-	const data = response.data;
+	const loginUser = response.data;
 
-	if (response.status === 200) {
-		SaveAuthToken(data.token);
-		return true;
-	} else {
-		return data;
-	}
+	SaveAuthToken(loginUser?.token, loginUser?.user.id);
+	return loginUser.user as UserDTO;
 };
 
 export const GetUser = async (userId: number): Promise<UserDTO | object> => {
@@ -31,17 +27,13 @@ export const GetUser = async (userId: number): Promise<UserDTO | object> => {
 
 export const CreateUser = async (
 	userData: CreateUserDTO
-): Promise<boolean | object> => {
+): Promise<UserDTO | object> => {
 	const response = await RequestApi(PATH, METHODS.POST, undefined, userData);
 
-	let data = response.data;
+	let createUser = response.data;
 
-	if (response.status === 201) {
-		SaveAuthToken(data.token);
-		return true;
-	} else {
-		return data;
-	}
+	SaveAuthToken(createUser?.token, createUser?.user.Id);
+	return createUser.user;
 };
 
 export const UpdateUser = async (userId: number, userData: CreateUserDTO) => {

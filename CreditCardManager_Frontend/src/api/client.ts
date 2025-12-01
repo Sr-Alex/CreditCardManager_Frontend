@@ -7,6 +7,11 @@ const api = axios.create({
 	timeout: 10000,
 });
 
+type AuthToken = {
+	userId: number;
+	token: string;
+};
+
 export const METHODS = {
 	GET: "get",
 	POST: "post",
@@ -14,23 +19,36 @@ export const METHODS = {
 	DELETE: "delete",
 };
 
-export function SaveAuthToken(token: string) {
+export function SaveAuthToken(token: string, userId: number) {
 	localStorage.setItem("token", token);
+	localStorage.setItem("userId", userId.toString());
 }
 
-export function GetAuthToken(): string | undefined {
-	return localStorage.getItem("token") || undefined;
+export function GetAuthToken(): AuthToken | undefined {
+	const token = localStorage.getItem("token");
+	const userId = localStorage.getItem("userId");
+
+	if (token && userId) {
+		return { token, userId: parseInt(userId) };
+	}
+
+	return undefined;
+}
+
+export function ClearAuthToken() {
+	localStorage.removeItem("token");
+	localStorage.removeItem("userId");
 }
 
 export async function RequestApi(
-	path: string,
+	path: string = "",
 	method: string,
-	jwtToken?: string,
+	auth?: { token: string; userId: number },
 	data?: string | object
 ) {
 	return api({
 		url: path,
-		headers: jwtToken ? { Authorization: `Bearer ${jwtToken}` } : undefined,
+		headers: auth ? { Authorization: `Bearer ${auth.token}` } : undefined,
 		method: method,
 		data: data,
 	});
