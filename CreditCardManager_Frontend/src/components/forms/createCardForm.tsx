@@ -19,10 +19,13 @@ function CreateCardForm() {
 
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
-		if (context?.user?.Id) return;
+		if (!context?.user?.id) {
+			console.log(context);
+			return
+		};
 
 		const createCard: CreateCreditCardDTO = {
-			userId: Number(context?.user?.Id),
+			userId: Number(context.user.id),
 			cardName: cardName.current!.value || undefined,
 			expiresAt: expiresAt.current!.value || undefined,
 			Limit: limit.current!.value || undefined,
@@ -45,10 +48,10 @@ function CreateCardForm() {
 				<label htmlFor="limit">Limit:</label>
 				<input id="limit" type="number" ref={limit} />
 			</div>
-			<button type="button" onClick={handleReset}>
+			<button className="formButton rounded bg-blue" type="button" onClick={handleReset}>
 				Reset
 			</button>
-			<button type="submit">Submit</button>
+			<button className="formButton rounded bg-blue" type="submit" onClick={handleSubmit}>Submit</button>
 		</form>
 	);
 }

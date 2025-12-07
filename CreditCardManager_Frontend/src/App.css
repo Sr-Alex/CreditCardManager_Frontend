@@ -28,6 +28,10 @@
 	display: flex;
 }
 
+.flex-column {
+	flex-direction: column;
+}
+
 .flex-center {
 	justify-content: center;
 	align-items: center;
@@ -64,7 +68,6 @@
 	backdrop-filter: blur(1px);
 }
 
-
 .formButton {
 	border: none;
 	padding: 0.5rem 1rem;
@@ -85,10 +88,9 @@
 	aspect-ratio: 1 / 1;
 }
 
-header {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
+.cardSelect {
+	max-width: 8rem;
 
-	margin-bottom: 2rem;
+	color: white;
+	background: var(--color-blue);
 }

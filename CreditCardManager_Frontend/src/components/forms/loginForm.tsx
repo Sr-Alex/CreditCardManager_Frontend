@@ -1,6 +1,7 @@
 import { useContext, useRef, type FormEvent } from "react";
 import LoginContext from "./../../contexts/loginContext";
 import { LoginUser } from "../../api/services/userServices";
+import type { UserDTO } from "../../api/dtos/userDtos";
 
 function LoginForm() {
 	const context = useContext(LoginContext);
@@ -20,6 +21,7 @@ function LoginForm() {
 			(response) => {
 				if (response) {
 					context?.setIsLogged(true);
+					context?.setUser(response as UserDTO);
 					handleReset();
 				}
 			}

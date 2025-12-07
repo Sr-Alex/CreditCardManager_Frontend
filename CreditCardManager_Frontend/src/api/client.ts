@@ -48,7 +48,7 @@ export async function RequestApi(
 ) {
 	return api({
 		url: path,
-		headers: auth ? { Authorization: `Bearer ${auth.token}` } : undefined,
+		headers: auth ? { Authorization: `bearer ${auth.token}` } : undefined,
 		method: method,
 		data: data,
 	});

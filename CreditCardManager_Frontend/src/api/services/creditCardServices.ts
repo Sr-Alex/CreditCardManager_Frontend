@@ -16,7 +16,7 @@ export const GetCreditCard = async (cardId: number): Promise<CreditCardDTO> => {
 export const GetUserCreditCards = async (
 	userId: number
 ): Promise<Array<CreditCardDTO>> => {
-	const response = await RequestApi(`${PATH}/${userId}`, METHODS.GET);
+	const response = await RequestApi(`${PATH}/?userid=${userId}`, METHODS.GET);
 
 	return response.data as Array<CreditCardDTO>;
 };
