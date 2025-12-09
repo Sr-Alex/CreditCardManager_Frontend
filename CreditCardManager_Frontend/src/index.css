@@ -1,34 +1,29 @@
-*, :after, :before, ::backdrop {
-  box-sizing: border-box;
-  border: 0 solid;
-  margin: 0;
-  padding: 0;
+@import "tailwindcss";
+
+@theme {
+	--color-blue: #4843f8;
+	--color-dark-blue: #0c1428;
+	--color-white: #fff;
+	--color-light-gray: #eff5ff;
+	--color-dark-slate: #0f172b;
+
+	--color-opaque: #0000001a;
 }
 
 :root {
-  color-scheme: light dark;
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-
-  --color-blue: #4843f8;
-  --color-dark-blue: #0c1428;
-  --color-white: #fff;
-  --color-light-gray: #eff5ff;
-  --color-dark-slate: #0f172b;
-
-  --color-opaque: #0000001a;
+	color-scheme: light dark;
+	font-synthesis: none;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 
-header {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
+@layer components {
+	.input-text {
+		@apply block w-full my-2 px-2 rounded-md border-2 border-dark-slate focus:border-4 focus-visible:border-blue;
+	}
 
-	margin-bottom: 2rem;
-}
-
-button {
-  background: none;
+	.form-button {
+		@apply px-4 py-2 mx-2 cursor-pointer rounded-full text-white bg-blue hover:shadow-lg hover:scale-105 transition-all ease-in-out duration-100;
+	}
 }

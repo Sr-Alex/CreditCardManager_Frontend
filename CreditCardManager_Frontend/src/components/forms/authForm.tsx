@@ -10,13 +10,7 @@ function AuthForm() {
 	return (
 		<Container Title="Faça login para acessar seus cartões!">
 			{showLoginForm ? <LoginForm /> : <CreateUserForm />}
-			<button
-				onClick={() => setShowLoginForm(!showLoginForm)}
-				style={{
-					backgroundColor: "transparent",
-					color: "var(--color-black)",
-					textDecoration: "underline",
-				}}>
+			<button type="button" onClick={() => setShowLoginForm(!showLoginForm)} className="cursor-pointer text-blue underline">
 				{showLoginForm ? "Criar Conta" : "Login"}
 			</button>
 		</Container>

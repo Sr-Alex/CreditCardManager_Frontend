@@ -20,9 +20,9 @@ function LoginForm() {
 		LoginUser(userEmail.current!.value, password.current!.value).then(
 			(response) => {
 				if (response) {
-					context?.setIsLogged(true);
-					context?.setUser(response as UserDTO);
 					handleReset();
+					context?.setUser(response as UserDTO);
+					context?.setIsLogged(true);
 				}
 			}
 		);
@@ -39,7 +39,8 @@ function LoginForm() {
 					type="text"
 					id="userEmail"
 					ref={userEmail}
-					className="block"
+					placeholder="exemplo@gmail.com"
+					className="input-text"
 				/>
 			</div>
 			<div>
@@ -48,20 +49,18 @@ function LoginForm() {
 					type="password"
 					id="password"
 					ref={password}
-					className="block"
+					placeholder="*********"
+					className="input-text"
 				/>
 			</div>
 			<div>
 				<button
-					className="formButton rounded-full bg-blue"
+					className="form-button"
 					type="button"
 					onClick={handleReset}>
 					Limpar
 				</button>
-				<button
-					type="submit"
-					onClick={handleLogin}
-					className="formButton rounded-full bg-blue">
+				<button type="submit" className="form-button">
 					Login
 				</button>
 			</div>

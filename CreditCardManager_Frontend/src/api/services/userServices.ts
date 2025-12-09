@@ -32,8 +32,8 @@ export const CreateUser = async (
 
 	let createUser = response.data;
 
-	SaveAuthToken(createUser?.token, createUser?.user.Id);
-	return createUser.user;
+	SaveAuthToken(createUser?.token, createUser?.user.id);
+	return createUser.user as UserDTO;
 };
 
 export const UpdateUser = async (userId: number, userData: CreateUserDTO) => {

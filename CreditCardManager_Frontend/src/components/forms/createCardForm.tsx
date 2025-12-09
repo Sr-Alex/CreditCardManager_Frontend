@@ -31,27 +31,32 @@ function CreateCardForm() {
 			Limit: limit.current!.value || undefined,
 		};
 
-		CreateCreditCard(createCard);
+		CreateCreditCard(createCard).then((response) => {
+			if (response) {
+				handleReset();
+				context.setCardId(response.id);
+			}
+		});
 	};
 
 	return (
 		<form onSubmit={handleSubmit}>
 			<div>
 				<label htmlFor="cardName">Card Name:</label>
-				<input id="cardName" type="text" ref={cardName} />
+				<input id="cardName" type="text" ref={cardName} className="input-text"/>
 			</div>
 			<div>
 				<label htmlFor="expiresAt">Expires At:</label>
-				<input id="expiresAt" type="text" ref={expiresAt} />
+				<input id="expiresAt" type="text" ref={expiresAt} className="input-text"/>
 			</div>
 			<div>
 				<label htmlFor="limit">Limit:</label>
-				<input id="limit" type="number" ref={limit} />
+				<input id="limit" type="number" ref={limit} className="input-text"/>
 			</div>
-			<button className="formButton rounded bg-blue" type="button" onClick={handleReset}>
+			<button className="form-button" type="button" onClick={handleReset}>
 				Reset
 			</button>
-			<button className="formButton rounded bg-blue" type="submit" onClick={handleSubmit}>Submit</button>
+			<button className="form-button" type="submit" onClick={handleSubmit}>Submit</button>
 		</form>
 	);
 }

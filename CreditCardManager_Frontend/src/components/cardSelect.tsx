@@ -16,17 +16,17 @@ function CardSelect({ card, clickHandler }: CardSelectProps) {
 
 	return (
 		<li
-			className="cardSelect rounded flex flex-column flex-center"
+			className="flex flex-col items-center p-2 max-w-40 rounded-lg text-white bg-blue"
 			style={{ cursor: "pointer" }}
 			onClick={() => clickHandler(card.id)}>
 			<div>
-				<CreditCard size={"4rem"} style={{ color: "white" }} />
+				<CreditCard size={"4rem"}/>
 			</div>
 			<div>
-				<p style={{ textAlign: "center", margin: "0 0 0.5rem 0" }}>
+				<p className="text-center">
 					{card.cardName}
 				</p>
-                <p style={{ textAlign: "center" }}>
+                <p className="text-center">
 					{card?.invoice &&
 						formatter.format(
 							parseInt(card.invoice.replace(",", "."))

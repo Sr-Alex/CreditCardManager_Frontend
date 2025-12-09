@@ -3,6 +3,7 @@ import { useContext, useRef, type FormEvent } from "react";
 import LoginContext from "../../contexts/loginContext";
 
 import { CreateUser } from "../../api/services/userServices";
+import type { UserDTO } from "../../api/dtos/userDtos";
 
 function CreateUserForm() {
 	const context = useContext(LoginContext);
@@ -31,25 +32,36 @@ function CreateUserForm() {
 			email: email.current!.value,
 			password: password.current!.value,
 		}).then((response) => {
+			console.log("logado");
 			if (response) {
-				context?.setIsLogged(true);
 				handleReset();
+				context?.setUser(response as UserDTO);
+				context?.setIsLogged(true);
 			}
 		});
 	};
 
 	return (
-		<form
-			onSubmit={handleCreateUser}
-			className="flex"
-			style={{ flexDirection: "column", gap: "0.75rem" }}>
+		<form onSubmit={handleCreateUser} className="flex flex-col gap-3">
 			<div>
 				<label htmlFor="name">Nome:</label>
-				<input type="text" id="name" ref={userName} className="block" />
+				<input
+					type="text"
+					id="name"
+					ref={userName}
+					placeholder="Nome do usuário"
+					className="input-text"
+				/>
 			</div>
 			<div>
 				<label htmlFor="email">Email:</label>
-				<input type="email" id="email" ref={email} className="block" />
+				<input
+					type="email"
+					id="email"
+					ref={email}
+					placeholder="exemplo@gmail.com"
+					className="input-text"
+				/>
 			</div>
 			<div>
 				<label htmlFor="password">Senha:</label>
@@ -57,19 +69,18 @@ function CreateUserForm() {
 					type="password"
 					id="password"
 					ref={password}
-					className="block"
+					placeholder="*********"
+					className="input-text"
 				/>
 			</div>
 			<div>
 				<button
-					className="formButton rounded-full bg-blue"
+					className="form-button"
 					type="button"
 					onClick={handleReset}>
 					Limpar
 				</button>
-				<button
-					type="submit"
-					className="formButton rounded-full bg-blue">
+				<button type="submit" className="form-button">
 					Criar Usuário
 				</button>
 			</div>

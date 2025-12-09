@@ -8,11 +8,20 @@ const UserCardsSelect = () => {
 	const [showCreated, setShowCreated] = useState(false);
 
 	return (
-		<Container Title={showCreated ? "Crie seu cartão!" : "Selecione um de seus cartões!"}>
-			<button style={{display: "block", marginLeft: "auto"}} onClick={() => setShowCreated(!showCreated)}>
+		<Container
+			Title={
+				showCreated
+					? "Crie seu cartão!"
+					: "Selecione um de seus cartões!"
+			}>
+			<button
+				type="button"
+				onClick={() => setShowCreated(!showCreated)}
+				className="block ml-auto cursor-pointer">
 				<Plus
-					size="1.5rem"
-					style={{ color: "var(--color-dark-blue)" }}
+					size="2rem"
+					className={`text-dark-slate transition-all duration-100 ease-in-out`}
+					style={{rotate : showCreated ? "45deg" : "0deg"}}
 				/>
 			</button>
 

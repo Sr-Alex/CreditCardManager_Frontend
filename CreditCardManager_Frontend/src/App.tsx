@@ -34,7 +34,7 @@ function App() {
 		<main>
 			<LoginContext value={{ isLogged, setIsLogged, user, setUser, cardId, setCardId }}>
 				<Header />
-				<UserList cardId={cardId} />
+				<UserList />
 				{(!isLogged || !cardId) && (
 					<AbsoluteContainer>
 						{!isLogged ? <AuthForm /> : <UserCardsSelect />}
