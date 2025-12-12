@@ -11,9 +11,9 @@ import Header from "./components/header";
 import UserList from "./components/userList";
 import AbsoluteContainer from "./components/absoluteContainer";
 import AuthForm from "./components/forms/authForm";
+import UserCardsSelect from "./components/userCardsSelect";
 
 import "./App.css";
-import UserCardsSelect from "./components/userCardsSelect";
 
 function App() {
 	const [isLogged, setIsLogged] = useState<boolean>(false);
@@ -31,8 +31,16 @@ function App() {
 	}, []);
 
 	return (
-		<main>
-			<LoginContext value={{ isLogged, setIsLogged, user, setUser, cardId, setCardId }}>
+		<main className="app">
+			<LoginContext
+				value={{
+					isLogged,
+					setIsLogged,
+					user,
+					setUser,
+					cardId,
+					setCardId,
+				}}>
 				<Header />
 				<UserList />
 				{(!isLogged || !cardId) && (

@@ -11,13 +11,20 @@ function UserList() {
 	const context = useContext(LoginContext);
 	const [users, setUsers] = useState(Array<UserDTO>());
 
+	const handleWheel = (event: React.WheelEvent) => {
+		event.currentTarget.scrollLeft =
+			event.deltaY > 0
+				? event.currentTarget.scrollLeft + 100
+				: event.currentTarget.scrollLeft - 100;
+	};
+
 	const handleGetUsers = async () => {
 		const cardId = context?.cardId;
-		if (cardId) return;
+		if (!cardId) return;
 
-		const data = await GetCreditCardUsers(cardId!);
-		if (data.users && Array.isArray(data.users)) {
-			setUsers(data.users);
+		const data = await GetCreditCardUsers(cardId);
+		if (data && Array.isArray(data)) {
+			setUsers(data);
 		}
 	};
 
@@ -29,31 +36,12 @@ function UserList() {
 		<Container
 			Title="Lista de usuários"
 			Description="Gerencie os usuários do sistema">
-			<ul className="flex">
-				{/* {users.map((user: UserDTO) => (
-					<li key={user.id}>{user.userName}</li>
-				))} */}
-				<CardUser
-					user={{
-						"id": 0,
-						"userName": "usuário01",
-						"email": "usuario01@gmail.com",
-					}}
-				/>
-				<CardUser
-					user={{
-						"id": 1,
-						"userName": "usuário02",
-						"email": "usuario01@gmail.com",
-					}}
-				/>
-				<CardUser
-					user={{
-						"id": 2,
-						"userName": "usuário03",
-						"email": "usuario01@gmail.com",
-					}}
-				/>
+			<ul
+				onWheel={(event) => handleWheel(event)}
+				className="flex gap-4 overflow-x-auto scrollbar-hide">
+				{users.map((user: UserDTO) => (
+					<CardUser key={user.id} user={user} />
+				))}
 			</ul>
 		</Container>
 	);

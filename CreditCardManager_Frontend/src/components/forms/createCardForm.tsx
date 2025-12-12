@@ -43,11 +43,11 @@ function CreateCardForm() {
 		<form onSubmit={handleSubmit}>
 			<div>
 				<label htmlFor="cardName">Card Name:</label>
-				<input id="cardName" type="text" ref={cardName} className="input-text"/>
+				<input id="cardName" type="text" placeholder="Credit Card" ref={cardName} className="input-text"/>
 			</div>
 			<div>
 				<label htmlFor="expiresAt">Expires At:</label>
-				<input id="expiresAt" type="text" ref={expiresAt} className="input-text"/>
+				<input id="expiresAt" type="date" placeholder="" ref={expiresAt} className="input-text"/>
 			</div>
 			<div>
 				<label htmlFor="limit">Limit:</label>

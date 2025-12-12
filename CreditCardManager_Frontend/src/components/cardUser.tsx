@@ -7,9 +7,9 @@ interface CardUserProps {
 
 function CardUser({ user }: CardUserProps) {
 	return (
-		<li>
-			<User size={"4rem"} style={{ color: "var(--color-dark-blue)" }} />
-			<div>
+		<li className="p-2">
+			<User size={"4rem"} className="inline-block text-dark-blue" />
+			<div className="inline-block">
 				<p>{user.userName}</p>
 			</div>
 		</li>

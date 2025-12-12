@@ -16,7 +16,7 @@ function CardSelect({ card, clickHandler }: CardSelectProps) {
 
 	return (
 		<li
-			className="flex flex-col items-center p-2 max-w-40 rounded-lg text-white bg-blue"
+			className="flex flex-col items-center p-2 w-36 rounded-lg text-white bg-blue"
 			style={{ cursor: "pointer" }}
 			onClick={() => clickHandler(card.id)}>
 			<div>

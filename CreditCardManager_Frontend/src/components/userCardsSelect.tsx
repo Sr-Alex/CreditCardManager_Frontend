@@ -17,7 +17,7 @@ const UserCardsSelect = () => {
 			<button
 				type="button"
 				onClick={() => setShowCreated(!showCreated)}
-				className="block ml-auto cursor-pointer">
+				className="block ml-auto mb-2 cursor-pointer">
 				<Plus
 					size="2rem"
 					className={`text-dark-slate transition-all duration-100 ease-in-out`}

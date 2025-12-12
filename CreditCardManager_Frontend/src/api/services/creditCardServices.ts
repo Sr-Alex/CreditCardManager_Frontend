@@ -5,6 +5,7 @@ import type {
 	CreditCardDTO,
 	CreateCreditCardDTO,
 } from "../dtos/creditCardDtos";
+import type { UserDTO } from "../dtos/userDtos";
 
 const PATH = "/Creditcard";
 
@@ -23,13 +24,14 @@ export const GetUserCreditCards = async (
 
 export const GetCreditCardUsers = async (
 	cardId: number
-): Promise<CardUsersDTO> => {
+): Promise<Array<UserDTO>> => {
 	const response = await RequestApi(
 		`${PATH}/details/${cardId}/users`,
 		METHODS.GET,
 		GetAuthToken()
 	);
-	return response.data as CardUsersDTO;
+	console.log(cardId);
+	return response.data as Array<UserDTO>;
 };
 
 export const AddUser = async (cardId: number, userId: number) => {

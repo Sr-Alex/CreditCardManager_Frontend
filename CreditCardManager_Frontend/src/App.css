@@ -7,9 +7,6 @@
 	background-color: var(--color-light-gray);
 }
 
-.cardSelect {
-	max-width: 8rem;
-
-	color: white;
-	background: var(--color-blue);
+.app {
+	display: grid;
 }

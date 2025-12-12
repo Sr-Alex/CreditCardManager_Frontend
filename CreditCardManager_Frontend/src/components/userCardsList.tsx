@@ -23,7 +23,7 @@ function UserCardsList() {
 	};
 
 	return (
-		<ul>
+		<ul className="flex w-full gap-6">
 			{cards.map((card) => (
 				<CardSelect card={card} clickHandler={cardSelectionHandler} />
 			))}

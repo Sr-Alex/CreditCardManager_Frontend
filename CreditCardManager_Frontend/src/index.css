@@ -26,4 +26,16 @@
 	.form-button {
 		@apply px-4 py-2 mx-2 cursor-pointer rounded-full text-white bg-blue hover:shadow-lg hover:scale-105 transition-all ease-in-out duration-100;
 	}
+
+	.scrollbar {
+		scroll-behavior: smooth;
+	}
+
+	.scrollbar-hide::-webkit-scrollbar {
+		background: transparent;
+		height: 8px;
+	}
+	.scrollbar-hide::-webkit-scrollbar-thumb {
+		background: var(--color-opaque);
+	}
 }
