@@ -18,14 +18,17 @@ function UserCardsList() {
 		});
 	}, [context?.user]);
 
-	const cardSelectionHandler = (cardId: number) => {
-		context?.setCardId(cardId);
+	const cardSelectionHandler = (card: CreditCardDTO) => {
+		context?.setCard(card);
 	};
 
 	return (
 		<ul className="flex w-full gap-6">
 			{cards.map((card) => (
-				<CardSelect card={card} clickHandler={cardSelectionHandler} />
+				<CardSelect
+					card={card}
+					clickHandler={() => cardSelectionHandler(card)}
+				/>
 			))}
 		</ul>
 	);

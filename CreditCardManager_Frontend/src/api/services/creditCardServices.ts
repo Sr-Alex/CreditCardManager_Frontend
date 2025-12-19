@@ -1,6 +1,5 @@
 import { GetAuthToken, METHODS, RequestApi } from "../client";
 
-import type { CardUsersDTO } from "../dtos/cardUsersDtos";
 import type {
 	CreditCardDTO,
 	CreateCreditCardDTO,

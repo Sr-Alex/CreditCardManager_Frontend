@@ -34,7 +34,7 @@ function CreateCardForm() {
 		CreateCreditCard(createCard).then((response) => {
 			if (response) {
 				handleReset();
-				context.setCardId(response.id);
+				context.setCard(response);
 			}
 		});
 	};

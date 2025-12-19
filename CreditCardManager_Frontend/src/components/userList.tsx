@@ -19,10 +19,10 @@ function UserList() {
 	};
 
 	const handleGetUsers = async () => {
-		const cardId = context?.cardId;
-		if (!cardId) return;
+		const card = context?.card;
+		if (!card) return;
 
-		const data = await GetCreditCardUsers(cardId);
+		const data = await GetCreditCardUsers(card.id);
 		if (data && Array.isArray(data)) {
 			setUsers(data);
 		}
@@ -30,7 +30,7 @@ function UserList() {
 
 	useEffect(() => {
 		handleGetUsers();
-	}, [context?.cardId]);
+	}, [context?.card]);
 
 	return (
 		<Container
