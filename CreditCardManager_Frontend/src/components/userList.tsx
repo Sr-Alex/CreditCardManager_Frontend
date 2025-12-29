@@ -3,12 +3,13 @@ import { useContext, useEffect, useState } from "react";
 import { GetCreditCardUsers } from "../api/services/creditCardServices";
 import type { UserDTO } from "../api/dtos/userDtos";
 
+import AuthContext from "../contexts/authContext";
+
 import Container from "./container";
-import LoginContext from "../contexts/loginContext";
 import CardUser from "./cardUser";
 
 function UserList() {
-	const context = useContext(LoginContext);
+	const { card } = useContext(AuthContext);
 	const [users, setUsers] = useState(Array<UserDTO>());
 
 	const handleWheel = (event: React.WheelEvent) => {
@@ -19,7 +20,6 @@ function UserList() {
 	};
 
 	const handleGetUsers = async () => {
-		const card = context?.card;
 		if (!card) return;
 
 		const data = await GetCreditCardUsers(card.id);
@@ -30,7 +30,7 @@ function UserList() {
 
 	useEffect(() => {
 		handleGetUsers();
-	}, [context?.card]);
+	}, [card]);
 
 	return (
 		<Container

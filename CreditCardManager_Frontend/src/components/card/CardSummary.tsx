@@ -1,9 +1,9 @@
 import { useContext, useEffect, useRef } from "react";
-import Container from "./container";
-import LoginContext from "../contexts/loginContext";
+import Container from "../container";
+import AuthContext from "../../contexts/authContext";
 
 function CardSummary() {
-	const context = useContext(LoginContext);
+	const context = useContext(AuthContext);
 	const invoiceRef = useRef<HTMLSpanElement>(null);
 
 	useEffect(() => {

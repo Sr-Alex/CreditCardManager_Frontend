@@ -1,6 +1,6 @@
 import { CreditCard } from "lucide-react";
 
-import type { CreditCardDTO } from "../api/dtos/creditCardDtos";
+import type { CreditCardDTO } from "../../api/dtos/creditCardDtos";
 
 interface CardSelectProps {
 	card: CreditCardDTO;

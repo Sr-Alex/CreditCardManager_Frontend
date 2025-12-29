@@ -1,31 +1,29 @@
 import { useContext, useRef, type FormEvent } from "react";
-import LoginContext from "./../../contexts/loginContext";
+import AuthContext from "../../contexts/authContext";
 import { LoginUser } from "../../api/services/userServices";
-import type { UserDTO } from "../../api/dtos/userDtos";
 
 function LoginForm() {
-	const context = useContext(LoginContext);
+	const context = useContext(AuthContext);
 	const userEmail = useRef<HTMLInputElement>(null);
-	const password = useRef<HTMLInputElement>(null);
+	const UserPassword = useRef<HTMLInputElement>(null);
 
 	const handleReset = () => {
 		userEmail.current!.value = "";
-		password.current!.value = "";
+		UserPassword.current!.value = "";
 	};
 
 	const handleLogin = (e: FormEvent) => {
 		e.preventDefault();
-		if (!userEmail.current!.value || !password.current!.value) return;
+		const email = userEmail.current!.value;
+		const password = UserPassword.current!.value;
 
-		LoginUser(userEmail.current!.value, password.current!.value).then(
-			(response) => {
-				if (response) {
-					handleReset();
-					context?.setUser(response as UserDTO);
-					context?.setIsLogged(true);
-				}
+		if (!email || !password) return;
+
+		LoginUser(email, password).then((user) => {
+			if (user.hasOwnProperty("id")) {
+				context.login(user);
 			}
-		);
+		});
 	};
 
 	return (
@@ -48,7 +46,7 @@ function LoginForm() {
 				<input
 					type="password"
 					id="password"
-					ref={password}
+					ref={UserPassword}
 					placeholder="*********"
 					className="input-text"
 				/>

@@ -1,25 +1,25 @@
 import { useContext, useEffect, useState } from "react";
 
-import { GetUserCreditCards } from "../api/services/creditCardServices";
+import { GetUserCreditCards } from "../../api/services/creditCardServices";
 
-import LoginContext from "../contexts/loginContext";
+import AuthContext from "../../contexts/authContext";
 
-import type { CreditCardDTO } from "../api/dtos/creditCardDtos";
+import type { CreditCardDTO } from "../../api/dtos/creditCardDtos";
 import CardSelect from "./cardSelect";
 
 function UserCardsList() {
-	const context = useContext(LoginContext);
+	const { user, updateCard } = useContext(AuthContext);
 	const [cards, setCards] = useState<Array<CreditCardDTO>>([]);
 
 	useEffect(() => {
-		if (!context?.user?.id) return;
-		GetUserCreditCards(context.user.id).then((data) => {
+		if (!user?.id) return;
+		GetUserCreditCards(user.id).then((data) => {
 			setCards(data);
 		});
-	}, [context?.user]);
+	}, [user]);
 
 	const cardSelectionHandler = (card: CreditCardDTO) => {
-		context?.setCard(card);
+		updateCard(card);
 	};
 
 	return (

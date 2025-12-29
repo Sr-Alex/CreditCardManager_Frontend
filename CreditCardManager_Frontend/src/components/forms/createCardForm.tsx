@@ -2,10 +2,10 @@ import { useContext, useRef } from "react";
 
 import type { CreateCreditCardDTO } from "../../api/dtos/creditCardDtos";
 import { CreateCreditCard } from "../../api/services/creditCardServices";
-import LoginContext from "../../contexts/loginContext";
+import AuthContext from "../../contexts/authContext";
 
 function CreateCardForm() {
-	const context = useContext(LoginContext);
+	const context = useContext(AuthContext);
 
 	const cardName = useRef<HTMLInputElement>(null);
 	const expiresAt = useRef<HTMLInputElement>(null);

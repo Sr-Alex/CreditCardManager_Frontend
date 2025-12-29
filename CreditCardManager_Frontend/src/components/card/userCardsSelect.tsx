@@ -1,8 +1,8 @@
 import { useState } from "react";
 import UserCardsList from "./userCardsList";
 import { Plus } from "lucide-react";
-import CreateCardForm from "./forms/createCardForm";
-import Container from "./container";
+import CreateCardForm from "../forms/createCardForm";
+import Container from "../container";
 
 const UserCardsSelect = () => {
 	const [showCreated, setShowCreated] = useState(false);

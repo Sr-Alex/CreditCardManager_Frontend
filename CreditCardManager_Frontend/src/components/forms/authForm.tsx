@@ -10,7 +10,11 @@ function AuthForm() {
 	return (
 		<Container Title="Faça login para acessar seus cartões!">
 			{showLoginForm ? <LoginForm /> : <CreateUserForm />}
-			<button type="button" onClick={() => setShowLoginForm(!showLoginForm)} className="cursor-pointer text-blue underline">
+
+			<button
+				type="button"
+				onClick={() => setShowLoginForm(!showLoginForm)}
+				className="cursor-pointer text-blue underline">
 				{showLoginForm ? "Criar Conta" : "Login"}
 			</button>
 		</Container>

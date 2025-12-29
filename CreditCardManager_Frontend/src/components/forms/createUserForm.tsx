@@ -1,42 +1,38 @@
 import { useContext, useRef, type FormEvent } from "react";
 
-import LoginContext from "../../contexts/loginContext";
+import AuthContext from "../../contexts/authContext";
 
 import { CreateUser } from "../../api/services/userServices";
 import type { UserDTO } from "../../api/dtos/userDtos";
 
 function CreateUserForm() {
-	const context = useContext(LoginContext);
+	const context = useContext(AuthContext);
 	const userName = useRef<HTMLInputElement>(null);
-	const email = useRef<HTMLInputElement>(null);
-	const password = useRef<HTMLInputElement>(null);
+	const userEmail = useRef<HTMLInputElement>(null);
+	const userPassword = useRef<HTMLInputElement>(null);
 
 	const handleReset = () => {
 		userName.current!.value = "";
-		email.current!.value = "";
-		password.current!.value = "";
+		userEmail.current!.value = "";
+		userPassword.current!.value = "";
 	};
 
 	const handleCreateUser = (e: FormEvent) => {
 		e.preventDefault();
+		const name = userName.current!.value;
+		const email = userEmail.current!.value;
+		const password = userPassword.current!.value;
 
-		if (
-			!userName.current!.value ||
-			!email.current!.value ||
-			password.current!.value.length < 6
-		)
-			return;
+		if (!name || !email || password?.length < 6) return;
 
 		CreateUser({
-			userName: userName.current!.value,
-			email: email.current!.value,
-			password: password.current!.value,
-		}).then((response) => {
-			console.log("logado");
-			if (response) {
+			userName: name,
+			email: email,
+			password: password,
+		}).then((user) => {
+			if (user.hasOwnProperty("id")) {
 				handleReset();
-				context?.setUser(response as UserDTO);
-				context?.setIsLogged(true);
+				context.login(user as UserDTO);
 			}
 		});
 	};
@@ -58,7 +54,7 @@ function CreateUserForm() {
 				<input
 					type="email"
 					id="email"
-					ref={email}
+					ref={userEmail}
 					placeholder="exemplo@gmail.com"
 					className="input-text"
 				/>
@@ -68,7 +64,7 @@ function CreateUserForm() {
 				<input
 					type="password"
 					id="password"
-					ref={password}
+					ref={userPassword}
 					placeholder="*********"
 					className="input-text"
 				/>

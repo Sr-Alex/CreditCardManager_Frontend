@@ -1,4 +1,10 @@
-import { GetAuthToken, METHODS, RequestApi, SaveAuthToken } from "../client";
+import {
+	ClearAuthToken,
+	GetAuthToken,
+	METHODS,
+	RequestApi,
+	SaveAuthToken,
+} from "../client";
 import type { UserDTO, CreateUserDTO } from "../dtos/userDtos";
 
 const PATH = "/user";
@@ -52,5 +58,6 @@ export const DeleteUser = async (userId: number) => {
 		METHODS.DELETE,
 		GetAuthToken()
 	);
+	ClearAuthToken();
 	return response.data;
 };
