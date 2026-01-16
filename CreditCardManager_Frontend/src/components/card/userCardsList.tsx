@@ -1,14 +1,14 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { GetUserCreditCards } from "../../api/services/creditCardServices";
 
-import AuthContext from "../../contexts/authContext";
+import { useAuthContext } from "../../contexts/authContext";
 
 import type { CreditCardDTO } from "../../api/dtos/creditCardDtos";
 import CardSelect from "./cardSelect";
 
 function UserCardsList() {
-	const { user, updateCard } = useContext(AuthContext);
+	const { user, updateCard } = useAuthContext();
 	const [cards, setCards] = useState<Array<CreditCardDTO>>([]);
 
 	useEffect(() => {
@@ -26,6 +26,7 @@ function UserCardsList() {
 		<ul className="flex w-full gap-6">
 			{cards.map((card) => (
 				<CardSelect
+					key={card.id}
 					card={card}
 					clickHandler={() => cardSelectionHandler(card)}
 				/>

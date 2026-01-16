@@ -1,9 +1,9 @@
-import { useContext, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import Container from "../container";
-import AuthContext from "../../contexts/authContext";
+import { useAuthContext } from "../../contexts/authContext";
 
 function CardSummary() {
-	const context = useContext(AuthContext);
+	const context = useAuthContext();
 	const invoiceRef = useRef<HTMLSpanElement>(null);
 
 	useEffect(() => {
@@ -13,7 +13,10 @@ function CardSummary() {
 	}, [context?.card]);
 
 	return (
-		<Container Title="Total da Fatura" ClassName="bg-blue text-white">
+		<Container
+			title="Total da Fatura"
+			backgroundColor="bg-blue"
+			textColor="text-white">
 			<h2>
 				R$ <span ref={invoiceRef}></span>
 			</h2>

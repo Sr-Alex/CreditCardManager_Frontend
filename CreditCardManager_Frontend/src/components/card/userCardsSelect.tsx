@@ -9,22 +9,19 @@ const UserCardsSelect = () => {
 
 	return (
 		<Container
-			Title={
+			title={
 				showCreated
 					? "Crie seu cartão!"
 					: "Selecione um de seus cartões!"
 			}>
 			<button
-				type="button"
 				onClick={() => setShowCreated(!showCreated)}
-				className="block ml-auto mb-2 cursor-pointer">
+				className="w-fit mb-2 px-4 py-2 bg-blue text-white rounded-lg hover:bg-dark-blue transition-colors font-medium">
 				<Plus
-					size="2rem"
-					className={`text-dark-slate transition-all duration-100 ease-in-out`}
-					style={{rotate : showCreated ? "45deg" : "0deg"}}
+					className="transition-all duration-100 ease-in-out"
+					style={{ rotate: showCreated ? "45deg" : "0deg" }}
 				/>
 			</button>
-
 			{showCreated ? <CreateCardForm /> : <UserCardsList />}
 		</Container>
 	);

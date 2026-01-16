@@ -1,15 +1,23 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { GetCreditCardUsers } from "../api/services/creditCardServices";
 import type { UserDTO } from "../api/dtos/userDtos";
 
-import AuthContext from "../contexts/authContext";
+import { useAuthContext } from "../contexts/authContext";
 
 import Container from "./container";
 import CardUser from "./cardUser";
 
-function UserList() {
-	const { card } = useContext(AuthContext);
+interface UserListProps {
+	title?: string;
+	description?: string;
+}
+
+function UserList({
+	title = "Lista de usuários",
+	description = "Gerencie os usuários do sistema",
+}: UserListProps) {
+	const { card } = useAuthContext();
 	const [users, setUsers] = useState(Array<UserDTO>());
 
 	const handleWheel = (event: React.WheelEvent) => {
@@ -33,9 +41,7 @@ function UserList() {
 	}, [card]);
 
 	return (
-		<Container
-			Title="Lista de usuários"
-			Description="Gerencie os usuários do sistema">
+		<Container title={title} description={description}>
 			<ul
 				onWheel={(event) => handleWheel(event)}
 				className="flex gap-4 overflow-x-auto scrollbar-hide">

@@ -6,7 +6,7 @@ import { CreateUser } from "../../api/services/userServices";
 import type { UserDTO } from "../../api/dtos/userDtos";
 
 function CreateUserForm() {
-	const context = useContext(AuthContext);
+	const context = useAuthContext();
 	const userName = useRef<HTMLInputElement>(null);
 	const userEmail = useRef<HTMLInputElement>(null);
 	const userPassword = useRef<HTMLInputElement>(null);

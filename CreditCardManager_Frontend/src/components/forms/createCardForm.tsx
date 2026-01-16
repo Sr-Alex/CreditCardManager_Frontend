@@ -1,11 +1,12 @@
-import { useContext, useRef } from "react";
+import { useRef, type FormEvent } from "react";
 
-import type { CreateCreditCardDTO } from "../../api/dtos/creditCardDtos";
+import { useAuthContext } from "../../contexts/authContext";
+
 import { CreateCreditCard } from "../../api/services/creditCardServices";
-import AuthContext from "../../contexts/authContext";
+import type { CreateCreditCardDTO } from "../../api/dtos/creditCardDtos";
 
 function CreateCardForm() {
-	const context = useContext(AuthContext);
+	const { updateCard, user } = useAuthContext();
 
 	const cardName = useRef<HTMLInputElement>(null);
 	const expiresAt = useRef<HTMLInputElement>(null);
@@ -17,24 +18,23 @@ function CreateCardForm() {
 		limit.current!.value = "";
 	};
 
-	const handleSubmit = (e: React.FormEvent) => {
+	const handleSubmit = (e: FormEvent) => {
 		e.preventDefault();
-		if (!context?.user?.id) {
-			console.log(context);
-			return
-		};
+		if (!user) {
+			return;
+		}
 
 		const createCard: CreateCreditCardDTO = {
-			userId: Number(context.user.id),
-			cardName: cardName.current!.value || undefined,
-			expiresAt: expiresAt.current!.value || undefined,
-			Limit: limit.current!.value || undefined,
+			userId: Number(user.id),
+			cardName: cardName.current?.value || undefined,
+			expiresAt: expiresAt.current?.value || undefined,
+			Limit: limit.current?.value || undefined,
 		};
 
 		CreateCreditCard(createCard).then((response) => {
 			if (response) {
 				handleReset();
-				context.setCard(response);
+				updateCard(response);
 			}
 		});
 	};
@@ -43,20 +43,42 @@ function CreateCardForm() {
 		<form onSubmit={handleSubmit}>
 			<div>
 				<label htmlFor="cardName">Card Name:</label>
-				<input id="cardName" type="text" placeholder="Credit Card" ref={cardName} className="input-text"/>
+				<input
+					type="text"
+					name="cardName"
+					placeholder="Credit Card"
+					ref={cardName}
+					className="input-text"
+				/>
 			</div>
 			<div>
 				<label htmlFor="expiresAt">Expires At:</label>
-				<input id="expiresAt" type="date" placeholder="" ref={expiresAt} className="input-text"/>
+				<input
+					type="date"
+					name="expiresAt"
+					placeholder=""
+					ref={expiresAt}
+					className="input-text"
+				/>
 			</div>
 			<div>
 				<label htmlFor="limit">Limit:</label>
-				<input id="limit" type="number" ref={limit} className="input-text"/>
+				<input
+					type="number"
+					name="limit"
+					ref={limit}
+					className="input-text"
+				/>
 			</div>
 			<button className="form-button" type="button" onClick={handleReset}>
 				Reset
 			</button>
-			<button className="form-button" type="submit" onClick={handleSubmit}>Submit</button>
+			<button
+				className="form-button"
+				type="submit"
+				onClick={handleSubmit}>
+				Submit
+			</button>
 		</form>
 	);
 }

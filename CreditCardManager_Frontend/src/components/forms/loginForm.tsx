@@ -1,9 +1,9 @@
-import { useContext, useRef, type FormEvent } from "react";
-import AuthContext from "../../contexts/authContext";
+import { useRef, type FormEvent } from "react";
+import { useAuthContext } from "../../contexts/authContext";
 import { LoginUser } from "../../api/services/userServices";
 
 function LoginForm() {
-	const context = useContext(AuthContext);
+	const context = useAuthContext();
 	const userEmail = useRef<HTMLInputElement>(null);
 	const UserPassword = useRef<HTMLInputElement>(null);
 

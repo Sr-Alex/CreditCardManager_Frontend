@@ -8,7 +8,7 @@ function AuthForm() {
 	const [showLoginForm, setShowLoginForm] = useState<boolean>(true);
 
 	return (
-		<Container Title="Faça login para acessar seus cartões!">
+		<Container title="Faça login para acessar seus cartões!">
 			{showLoginForm ? <LoginForm /> : <CreateUserForm />}
 
 			<button

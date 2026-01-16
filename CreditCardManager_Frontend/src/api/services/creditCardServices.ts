@@ -29,7 +29,7 @@ export const GetCreditCardUsers = async (
 		METHODS.GET,
 		GetAuthToken()
 	);
-	console.log(cardId);
+	
 	return response.data as Array<UserDTO>;
 };
 
