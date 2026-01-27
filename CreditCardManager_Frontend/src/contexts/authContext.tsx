@@ -1,6 +1,5 @@
 import {
 	createContext,
-	useContext,
 	useEffect,
 	useState,
 	type Context,
@@ -12,34 +11,27 @@ import type { CreditCardDTO } from "../api/dtos/creditCardDtos";
 
 import { ClearAuthToken, GetAuthToken } from "../api/client";
 import { GetUser } from "../api/services/userServices";
-import type { DebtDTO } from "../api/dtos/debtsDTOs";
 
-interface IAuthContext {
+export interface IAuthContext {
 	isLogged: boolean;
 	user: UserDTO | undefined;
 	card: CreditCardDTO | undefined;
-	debts: DebtDTO[] | undefined;
-	login: Function;
-	logout: Function;
-	updateCard: Function;
+	login: (userDto: UserDTO) => void;
+	logout: () => void;
+	updateCard: (card: CreditCardDTO | undefined) => void;
 }
 
-const defaultAuthContext: IAuthContext = {
+const DEFAULT_AUTHCONTEXT: IAuthContext = {
 	isLogged: false,
 	user: undefined,
 	card: undefined,
-	debts: [],
 	login: () => {},
 	logout: () => {},
 	updateCard: () => {},
 };
 
 const AuthContext: Context<IAuthContext> =
-	createContext<IAuthContext>(defaultAuthContext);
-
-export function useAuthContext(): IAuthContext {
-	return useContext(AuthContext);
-}
+	createContext<IAuthContext>(DEFAULT_AUTHCONTEXT);
 
 export function AuthContextProvider({
 	children,
@@ -49,7 +41,6 @@ export function AuthContextProvider({
 	const [isLogged, setIsLogged] = useState<boolean>(false);
 	const [user, setUser] = useState<UserDTO | undefined>(undefined);
 	const [card, setCard] = useState<CreditCardDTO | undefined>(undefined);
-	const [debts, setDebts] = useState<DebtDTO[] | undefined>(undefined);
 
 	const login = (userDTO: UserDTO) => {
 		setIsLogged(true);
@@ -67,25 +58,26 @@ export function AuthContextProvider({
 		setCard(card);
 	};
 
-	useEffect(() => {
+	const autoLogin = (): boolean => {
 		const auth = GetAuthToken();
 
-		if (auth?.userId) {
-			GetUser(auth.userId).then((user) => {
-				if (user.hasOwnProperty("id")) {
-					login(user as UserDTO);
-				} else {
-					logout();
-				}
-			});
-		}
+		if (!auth) return false;
+
+		GetUser(auth.userId).then((response) => {
+			if (Object.hasOwn(response, "id")) login(response as UserDTO);
+		});
+
+		return true;
+	};
+
+	useEffect(() => {
+		autoLogin();
 	}, []);
 
 	const values = {
 		isLogged: isLogged,
 		user: user,
 		card: card,
-		debts: debts,
 		login: login,
 		logout: logout,
 		updateCard: updateCard,

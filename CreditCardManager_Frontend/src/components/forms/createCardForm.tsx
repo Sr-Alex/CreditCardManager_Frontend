@@ -1,6 +1,6 @@
 import { useRef, type FormEvent } from "react";
 
-import { useAuthContext } from "../../contexts/authContext";
+import { useAuthContext } from '../../hooks/useAuthContext';
 
 import { CreateCreditCard } from "../../api/services/creditCardServices";
 import type { CreateCreditCardDTO } from "../../api/dtos/creditCardDtos";
@@ -66,6 +66,9 @@ function CreateCardForm() {
 				<input
 					type="number"
 					name="limit"
+					min={0}
+					max={999999}
+					step={0.01}
 					ref={limit}
 					className="input-text"
 				/>
@@ -73,10 +76,7 @@ function CreateCardForm() {
 			<button className="form-button" type="button" onClick={handleReset}>
 				Reset
 			</button>
-			<button
-				className="form-button"
-				type="submit"
-				onClick={handleSubmit}>
+			<button className="form-button" type="submit">
 				Submit
 			</button>
 		</form>

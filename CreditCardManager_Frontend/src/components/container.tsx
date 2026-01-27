@@ -1,5 +1,6 @@
 import { X } from "lucide-react";
 import type { ReactNode } from "react";
+import ActionButton from "./actionButton";
 
 interface ContainerProps {
 	children: ReactNode;
@@ -27,18 +28,22 @@ function Container({
 				<div className="flex w-full gap-2 mb-2">
 					<div>
 						<h3 className="text-lg font-bold">{title}</h3>
-						{description && <p>{description}</p>}
+						{description && (
+							<p className="text-md text-gray">{description}</p>
+						)}
 					</div>
+
 					{closeButton && (
-						<button
+						<ActionButton
 							type="button"
 							onClick={() => closeButtonHandler()}
-							className="block ml-auto mb-2 cursor-pointer">
+							className="block ml-auto mb-2 "
+							backgroundColor="bg-transparent">
 							<X
 								size="2rem"
 								className={`text-dark-slate transition-all duration-100 ease-in-out`}
 							/>
-						</button>
+						</ActionButton>
 					)}
 				</div>
 			)}

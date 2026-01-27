@@ -6,8 +6,7 @@ import UserSet from "./components/userSet";
 import Header from "./components/header";
 import CardSummary from "./components/card/CardSummary";
 import UserList from "./components/userList";
-import DebtHistory from './components/debt/debtHistory';
-
+import DebtHistory from "./components/debt/debtHistory";
 
 function App() {
 	return (

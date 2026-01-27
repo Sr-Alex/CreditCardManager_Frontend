@@ -1,11 +1,15 @@
 @import "tailwindcss";
 
 @theme {
+	--color-red: #e7000b;
+
 	--color-blue: #4843f8;
 	--color-dark-blue: #0c1428;
-	--color-white: #fff;
-	--color-light-gray: #eff5ff;
 	--color-dark-slate: #0f172b;
+
+	--color-white: #fff;
+	--color-gray: #4a5565;
+	--color-light-gray: #eff5ff;
 
 	--color-opaque: #0000001a;
 }
@@ -20,7 +24,7 @@
 
 @layer components {
 	.input-text {
-		@apply block w-full my-2 px-2 rounded-md border-2 border-dark-slate focus:border-4 focus-visible:border-blue;
+		@apply block w-full my-2 px-2 rounded-md border-2 border-opaque focus:border-4 focus-visible:border-blue;
 	}
 
 	.form-button {

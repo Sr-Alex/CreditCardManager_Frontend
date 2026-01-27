@@ -1,15 +1,15 @@
 import { useRef, type FormEvent } from "react";
 
-import { useAuthContext } from "../../contexts/authContext";
+import { useAuthContext } from "../../hooks/useAuthContext";
 
 import { createDebt } from "../../api/services/DebtServices";
 import type { CreateDebtDTO } from "../../api/dtos/debtsDTOs";
 
 interface DebtFormProps {
-	handleCreateForm: Function | undefined;
+	handleSubmit: Function | undefined;
 }
 
-function DebtForm({ handleCreateForm = () => {} }: DebtFormProps) {
+function DebtForm({ handleSubmit = () => {} }: DebtFormProps) {
 	const { user, card } = useAuthContext();
 
 	const label = useRef<HTMLInputElement>(null);
@@ -22,7 +22,7 @@ function DebtForm({ handleCreateForm = () => {} }: DebtFormProps) {
 		date.current!.value = "";
 	};
 
-	const handleSubmit = (event: FormEvent) => {
+	const handleCreate = (event: FormEvent) => {
 		event.preventDefault();
 
 		if (!user || !card) return;
@@ -35,21 +35,20 @@ function DebtForm({ handleCreateForm = () => {} }: DebtFormProps) {
 			date: date.current?.value || undefined,
 		};
 
-		createDebt(debtData).then((data) => {
-			if (data.hasOwnProperty("id")) {
-				handleCreateForm();
-			}
+		createDebt(debtData).then(() => {
+			handleSubmit();
 		});
 	};
 
 	return (
-		<form onSubmit={(e) => handleSubmit(e)}>
+		<form onSubmit={(e) => handleCreate(e)}>
 			<div>
 				<label htmlFor="debtLabel">Rótulo da dívida:</label>
 				<input
 					type="text"
 					name="debtLabel"
 					placeholder="User Debt"
+					maxLength={100}
 					ref={label}
 					className="input-text"
 				/>
@@ -59,7 +58,10 @@ function DebtForm({ handleCreateForm = () => {} }: DebtFormProps) {
 				<input
 					type="number"
 					name="debtValue"
-					placeholder="1.00"
+					placeholder="1,00"
+					min={0}
+					max={999999}
+					step={0.01}
 					ref={value}
 					className="input-text"
 				/>

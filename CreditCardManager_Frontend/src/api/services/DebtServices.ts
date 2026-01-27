@@ -7,7 +7,7 @@ export const GetDebtHistory = async (cardId: number): Promise<DebtDTO[]> => {
 	const response = await RequestApi(
 		`${PATH}/?cardId=${cardId}`,
 		METHODS.GET,
-		GetAuthToken()
+		GetAuthToken(),
 	);
 
 	const debts = response.data as DebtDTO[];
@@ -19,19 +19,35 @@ export const GetDebt = async (debtId: number): Promise<DebtDTO> => {
 	const response = await RequestApi(
 		`${PATH}/detail/${debtId}`,
 		METHODS.GET,
-		GetAuthToken()
+		GetAuthToken(),
 	);
 	const debt = response.data as DebtDTO;
 
 	return debt;
 };
 
-export const createDebt = async (debtData: CreateDebtDTO): Promise<DebtDTO> => {
+export const createDebt = async (debtData: CreateDebtDTO): Promise<boolean> => {
 	const response = await RequestApi(
 		PATH,
 		METHODS.POST,
 		GetAuthToken(),
-		debtData
+		debtData,
+	);
+
+	if (response.status !== 200) return false;
+
+	return true;
+};
+
+export const updateDebt = async (
+	debtId: number,
+	debtData: UpdateDebtDTO,
+): Promise<DebtDTO> => {
+	const response = await RequestApi(
+		`${PATH}/${debtId}`,
+		METHODS.PUT,
+		GetAuthToken(),
+		debtData,
 	);
 
 	const debt = response.data as DebtDTO;
@@ -39,18 +55,16 @@ export const createDebt = async (debtData: CreateDebtDTO): Promise<DebtDTO> => {
 	return debt;
 };
 
-export const updateDebt = async (
-	debtId: number,
-	debtData: UpdateDebtDTO
-): Promise<DebtDTO> => {
+export const deleteDebt = async (debtId: number): Promise<boolean> => {
 	const response = await RequestApi(
-		`${PATH}/pay/${debtId}`,
-		METHODS.PUT,
+		`${PATH}/${debtId}`,
+		METHODS.DELETE,
 		GetAuthToken(),
-		debtData
 	);
 
-	const debt = response.data as DebtDTO;
+	if (response.status != 200) {
+		return false;
+	}
 
-	return debt;
+	return true;
 };

@@ -4,7 +4,7 @@ import CreateUserForm from "./createUserForm";
 import LoginForm from "./loginForm";
 import Container from "../container";
 
-function AuthForm() {
+function AuthFormContainer() {
 	const [showLoginForm, setShowLoginForm] = useState<boolean>(true);
 
 	return (
@@ -21,4 +21,4 @@ function AuthForm() {
 	);
 }
 
-export default AuthForm;
+export default AuthFormContainer;

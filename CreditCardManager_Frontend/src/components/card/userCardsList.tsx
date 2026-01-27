@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import { GetUserCreditCards } from "../../api/services/creditCardServices";
 
-import { useAuthContext } from "../../contexts/authContext";
+import { useAuthContext } from '../../hooks/useAuthContext';
 
 import type { CreditCardDTO } from "../../api/dtos/creditCardDtos";
 import CardSelect from "./cardSelect";

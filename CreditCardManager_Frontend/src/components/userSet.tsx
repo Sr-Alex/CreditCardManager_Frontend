@@ -1,7 +1,7 @@
-import { useAuthContext } from "../contexts/authContext";
+import { useAuthContext } from '../hooks/useAuthContext';
 
 import AbsoluteContainer from "./absoluteContainer";
-import AuthForm from "./forms/authForm";
+import AuthFormContainer from "./forms/authFormContainer";
 import UserCardsSelect from "./card/userCardsSelect";
 
 function UserSet() {
@@ -10,7 +10,7 @@ function UserSet() {
 	return (
 		(!isLogged || !card) && (
 			<AbsoluteContainer>
-				{!isLogged ? <AuthForm /> : <UserCardsSelect />}
+				{!isLogged ? <AuthFormContainer /> : <UserCardsSelect />}
 			</AbsoluteContainer>
 		)
 	);

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { GetCreditCardUsers } from "../api/services/creditCardServices";
 import type { UserDTO } from "../api/dtos/userDtos";
 
-import { useAuthContext } from "../contexts/authContext";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 import Container from "./container";
 import CardUser from "./cardUser";
@@ -21,10 +21,12 @@ function UserList({
 	const [users, setUsers] = useState(Array<UserDTO>());
 
 	const handleWheel = (event: React.WheelEvent) => {
+		const SCROLL_VALUE: number = 100;
+
 		event.currentTarget.scrollLeft =
 			event.deltaY > 0
-				? event.currentTarget.scrollLeft + 100
-				: event.currentTarget.scrollLeft - 100;
+				? event.currentTarget.scrollLeft + SCROLL_VALUE
+				: event.currentTarget.scrollLeft - SCROLL_VALUE;
 	};
 
 	const handleGetUsers = async () => {
@@ -45,8 +47,8 @@ function UserList({
 			<ul
 				onWheel={(event) => handleWheel(event)}
 				className="flex gap-4 overflow-x-auto scrollbar-hide">
-				{users.map((user: UserDTO) => (
-					<CardUser key={user.id} user={user} />
+				{users.map((user: UserDTO, index) => (
+					<CardUser key={index} user={user} />
 				))}
 			</ul>
 		</Container>

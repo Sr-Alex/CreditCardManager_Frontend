@@ -1,9 +1,12 @@
 import { useRef, type FormEvent } from "react";
-import { useAuthContext } from "../../contexts/authContext";
+
+import type { UserDTO } from "../../api/dtos/userDtos";
+import { useAuthContext } from "../../hooks/useAuthContext";
+
 import { LoginUser } from "../../api/services/userServices";
 
 function LoginForm() {
-	const context = useAuthContext();
+	const { login } = useAuthContext();
 	const userEmail = useRef<HTMLInputElement>(null);
 	const UserPassword = useRef<HTMLInputElement>(null);
 
@@ -21,7 +24,7 @@ function LoginForm() {
 
 		LoginUser(email, password).then((user) => {
 			if (user.hasOwnProperty("id")) {
-				context.login(user);
+				login(user as UserDTO);
 			}
 		});
 	};

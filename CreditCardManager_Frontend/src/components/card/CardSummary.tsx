@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import Container from "../container";
-import { useAuthContext } from "../../contexts/authContext";
+import { useAuthContext } from '../../hooks/useAuthContext';
 
 function CardSummary() {
 	const context = useAuthContext();

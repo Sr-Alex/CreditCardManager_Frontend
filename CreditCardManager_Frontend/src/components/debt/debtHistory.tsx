@@ -1,16 +1,15 @@
 import { useEffect, useState } from "react";
 
-import { useAuthContext } from "../../contexts/authContext";
-
+import type { DebtDTO } from "../../api/dtos/debtsDTOs";
 import { GetDebtHistory } from "../../api/services/DebtServices";
 
-import type { DebtDTO } from "../../api/dtos/debtsDTOs";
+import { useAuthContext } from "../../hooks/useAuthContext";
 
 import DebtShowData from "./debtShowData";
 import AbsoluteContainer from "../absoluteContainer";
 import Container from "../container";
 import DebtForm from "../forms/debtForm";
-
+import ActionButton from "../actionButton";
 interface DebtHistoryProps {
 	title?: string;
 	description?: string;
@@ -20,9 +19,13 @@ function DebtHistory({
 	title = "Histórico de Dívidas",
 	description = "Visualize e gerencie suas dívidas",
 }: DebtHistoryProps) {
-	const { card } = useAuthContext();
+	const { card, user } = useAuthContext();
 	const [debts, setDebts] = useState<DebtDTO[]>([]);
 	const [showDebtForm, setShowDebtForm] = useState(false);
+
+	const isOwner = (debt: DebtDTO) => {
+		return user?.id == debt.user || user?.id == card?.userId;
+	};
 
 	const getDebts = () => {
 		if (!card) return;
@@ -34,22 +37,28 @@ function DebtHistory({
 
 	useEffect(() => {
 		getDebts();
-		console.log(debts);
-	}, [card]);
+	}, [card, user]);
 
 	return (
 		<Container title={title} description={description}>
 			<ul>
-				{debts.length &&
-					debts.map((debt) => (
-						<DebtShowData key={debt.id} debt={debt} />
+				{debts.length > 0 &&
+					debts.map((debt, index) => (
+						<DebtShowData
+							key={index}
+							debtData={debt}
+							editable={isOwner(debt)}
+							payable={isOwner(debt)}
+						/>
 					))}
 			</ul>
-			<button
+
+			<ActionButton
 				onClick={() => setShowDebtForm(true)}
-				className="w-full mt-4 px-4 py-2 bg-blue text-white rounded-lg hover:bg-dark-blue transition-colors font-medium">
+				className="w-full mt-4 px-4 py-2 rounded-lg hover:bg-dark-blue transition-colors font-medium">
 				+ Adicionar Dívida
-			</button>
+			</ActionButton>
+
 			{showDebtForm && card && (
 				<AbsoluteContainer>
 					<Container
@@ -59,7 +68,7 @@ function DebtHistory({
 							setShowDebtForm(!showDebtForm)
 						}>
 						<DebtForm
-							handleCreateForm={() => {
+							handleSubmit={() => {
 								getDebts();
 								setShowDebtForm(false);
 							}}
