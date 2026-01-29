@@ -10,9 +10,11 @@ export const GetDebtHistory = async (cardId: number): Promise<DebtDTO[]> => {
 		GetAuthToken(),
 	);
 
-	const debts = response.data as DebtDTO[];
+	if (response.status == 200) {
+		return response.data as DebtDTO[];
+	}
 
-	return debts;
+	throw new Error(response.data);
 };
 
 export const GetDebt = async (debtId: number): Promise<DebtDTO> => {
@@ -34,7 +36,7 @@ export const createDebt = async (debtData: CreateDebtDTO): Promise<boolean> => {
 		debtData,
 	);
 
-	if (response.status !== 200) return false;
+	if (response.status !== 201) return false;
 
 	return true;
 };

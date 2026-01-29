@@ -16,14 +16,14 @@ function Container({
 	children,
 	title,
 	description,
-	backgroundColor = "bg-white",
-	textColor = "text-dark-blue",
+	backgroundColor = "bg-white dark:bg-dark-blue",
+	textColor = "text-dark-blue dark:text-white",
 	closeButton = false,
 	closeButtonHandler = () => {},
 }: ContainerProps) {
 	return (
 		<section
-			className={`min-w-80 pt-6 pr-4 pb-2 pl-4 rounded-2xl shadow-md ${backgroundColor} ${textColor}`}>
+			className={`min-w-80 min-h-32 h-fit pt-6 pr-4 pb-2 pl-4 rounded-2xl shadow-md border border-light-gray dark:border-dark-gray ${backgroundColor} ${textColor}`}>
 			{title?.trim() && (
 				<div className="flex w-full gap-2 mb-2">
 					<div>

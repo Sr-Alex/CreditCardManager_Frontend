@@ -1,32 +1,41 @@
-import { CreditCard, Moon } from "lucide-react";
+import { CreditCard, Moon, Sun } from "lucide-react";
+import { useEffect, useState } from "react";
+
+import ActionButton from "./actionButton";
 
 function Header() {
-	return (
-		<header className="flex justify-between items-center mb-8">
-			<div className="flex justify-center items-center" style={{ gap: "0.5rem" }}>
-				<div
-					className="icon-container rounded"
-					style={{
-						padding: "1rem",
+	const [darkMode, setDarkMode] = useState(false);
 
-						backgroundColor: "var(--color-blue)",
-					}}>
+	useEffect(() => {
+		if (darkMode) {
+			document.documentElement.classList.add("dark");
+		} else {
+			document.documentElement.classList.remove("dark");
+		}
+	}, [darkMode]);
+
+	return (
+		<header className="flex justify-between items-center px-1 mb-8 bg-dark text-dark-slate dark:text-white">
+			<div className="flex justify-center items-center gap-2">
+				<div className="p-4 icon-container rounded bg-blue">
 					<CreditCard size={"1.5rem"} color="var(--color-white)" />
 				</div>
-				<div style={{ display: "inline-block" }}>
+				<div className="block">
 					<h1>CreditCard Manager</h1>
 					<p>Controle seus gastos do cartão de crédito.</p>
 				</div>
 			</div>
-			<button
+			<ActionButton
 				type="button"
-				className="icon-container rounded-full box-shadow"
-				style={{
-					padding: "0.5rem",
-					backgroundColor: "var(--color-white)",
-				}}>
-				<Moon size={"1.5rem"} color="var(--color-dark-slate)" />
-			</button>
+				onClick={() => setDarkMode(!darkMode)}
+				className="p-2 icon-container rounded-full box-shadow border border-off-white dark:border-dark-blue"
+				backgroundColor="bg-white dark:bg-dark-blue">
+				{darkMode ? (
+					<Sun size={"1.5rem"} color="var(--color-white" />
+				) : (
+					<Moon size={"1.5rem"} color="var(--color-dark-slate" />
+				)}
+			</ActionButton>
 		</header>
 	);
 }

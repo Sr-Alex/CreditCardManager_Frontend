@@ -11,6 +11,7 @@ import type { CreditCardDTO } from "../api/dtos/creditCardDtos";
 
 import { ClearAuthToken, GetAuthToken } from "../api/client";
 import { GetUser } from "../api/services/userServices";
+import { GetCreditCard } from "../api/services/creditCardServices";
 
 export interface IAuthContext {
 	isLogged: boolean;
@@ -18,7 +19,8 @@ export interface IAuthContext {
 	card: CreditCardDTO | undefined;
 	login: (userDto: UserDTO) => void;
 	logout: () => void;
-	updateCard: (card: CreditCardDTO | undefined) => void;
+	selectCard: (selected: CreditCardDTO) => void;
+	updateCard: () => void;
 }
 
 const DEFAULT_AUTHCONTEXT: IAuthContext = {
@@ -27,6 +29,7 @@ const DEFAULT_AUTHCONTEXT: IAuthContext = {
 	card: undefined,
 	login: () => {},
 	logout: () => {},
+	selectCard: () => {},
 	updateCard: () => {},
 };
 
@@ -49,19 +52,34 @@ export function AuthContextProvider({
 
 	const logout = () => {
 		ClearAuthToken();
-		updateCard(undefined);
-		setIsLogged(false);
+		setCard(undefined);
 		setUser(undefined);
+		setIsLogged(false);
 	};
 
-	const updateCard = (card: CreditCardDTO | undefined) => {
-		setCard(card);
+	const selectCard = (selected: CreditCardDTO) => {
+		if (!selected.id) return;
+
+		setCard(selected);
+	};
+
+	const updateCard = () => {
+		if (!card?.id || !(card?.userId == user?.id)) {
+			logout();
+			return;
+		}
+
+		GetCreditCard(card?.id).then((card) => {
+			if (Object.hasOwn(card, "id")) {
+				setCard(card);
+			}
+		});
 	};
 
 	const autoLogin = (): boolean => {
 		const auth = GetAuthToken();
 
-		if (!auth) return false;
+		if (!auth?.token || !auth?.userId) return false;
 
 		GetUser(auth.userId).then((response) => {
 			if (Object.hasOwn(response, "id")) login(response as UserDTO);
@@ -74,12 +92,13 @@ export function AuthContextProvider({
 		autoLogin();
 	}, []);
 
-	const values = {
+	const values: IAuthContext = {
 		isLogged: isLogged,
 		user: user,
 		card: card,
 		login: login,
 		logout: logout,
+		selectCard,
 		updateCard: updateCard,
 	};
 

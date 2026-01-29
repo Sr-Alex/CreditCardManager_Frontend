@@ -8,7 +8,10 @@ interface CardUserProps {
 function CardUser({ user }: CardUserProps) {
 	return (
 		<li className="p-2">
-			<User size={"4rem"} className="inline-block text-dark-blue" />
+			<User
+				size={"4rem"}
+				className="inline-block text-dark-blue dark:text-light-gray"
+			/>
 			<div className="inline-block">
 				<p>{user.userName}</p>
 			</div>

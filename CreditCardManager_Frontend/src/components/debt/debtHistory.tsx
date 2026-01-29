@@ -1,15 +1,17 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import type { DebtDTO } from "../../api/dtos/debtsDTOs";
-import { GetDebtHistory } from "../../api/services/DebtServices";
 
 import { useAuthContext } from "../../hooks/useAuthContext";
+
+import useFetchDebts from "../../hooks/useFetchDebts";
 
 import DebtShowData from "./debtShowData";
 import AbsoluteContainer from "../absoluteContainer";
 import Container from "../container";
 import DebtForm from "../forms/debtForm";
 import ActionButton from "../actionButton";
+
 interface DebtHistoryProps {
 	title?: string;
 	description?: string;
@@ -20,24 +22,12 @@ function DebtHistory({
 	description = "Visualize e gerencie suas dívidas",
 }: DebtHistoryProps) {
 	const { card, user } = useAuthContext();
-	const [debts, setDebts] = useState<DebtDTO[]>([]);
+	const debts = useFetchDebts();
 	const [showDebtForm, setShowDebtForm] = useState(false);
 
 	const isOwner = (debt: DebtDTO) => {
 		return user?.id == debt.user || user?.id == card?.userId;
 	};
-
-	const getDebts = () => {
-		if (!card) return;
-
-		GetDebtHistory(card.id).then((data) => {
-			setDebts(data);
-		});
-	};
-
-	useEffect(() => {
-		getDebts();
-	}, [card, user]);
 
 	return (
 		<Container title={title} description={description}>
@@ -68,8 +58,7 @@ function DebtHistory({
 							setShowDebtForm(!showDebtForm)
 						}>
 						<DebtForm
-							handleSubmit={() => {
-								getDebts();
+							handleCreateForm={() => {
 								setShowDebtForm(false);
 							}}
 						/>

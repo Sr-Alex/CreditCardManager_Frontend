@@ -3,13 +3,13 @@ export type CreditCardDTO = {
 	userId: number;
 	cardName?: string;
 	expiresAt: string;
-	invoice?: string;
-	limit?: string;
+	invoice?: number;
+	limit?: number;
 };
 
 export type CreateCreditCardDTO = {
 	userId: number;
 	cardName?: string;
 	expiresAt?: string;
-	Limit?: string;
+	Limit?: number;
 };

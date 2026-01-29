@@ -10,7 +10,7 @@ import DebtHistory from "./components/debt/debtHistory";
 
 function App() {
 	return (
-		<main className="app">
+		<main className="app bg-light-gray dark:bg-dark-slate">
 			<AuthContextProvider>
 				<UserSet />
 				<Header />

@@ -1,5 +1,7 @@
 import { CreditCard } from "lucide-react";
 
+import { formatCurrencyValue } from "../../utils/formatters";
+
 import type { CreditCardDTO } from "../../api/dtos/creditCardDtos";
 
 interface CardSelectProps {
@@ -8,11 +10,8 @@ interface CardSelectProps {
 }
 
 function CardSelect({ card, clickHandler }: CardSelectProps) {
-	const formatter = Intl.NumberFormat("pt-BR", {
-		minimumFractionDigits: 2,
-		maximumFractionDigits: 2,
-		currency: "BRL",
-	});
+	const formattedInvoice = formatCurrencyValue(Number(card.invoice));
+	const formattedLimit = formatCurrencyValue(Number(card.limit));
 
 	return (
 		<li
@@ -20,25 +19,12 @@ function CardSelect({ card, clickHandler }: CardSelectProps) {
 			style={{ cursor: "pointer" }}
 			onClick={() => clickHandler(card.id)}>
 			<div>
-				<CreditCard size={"4rem"}/>
+				<CreditCard size={"4rem"} />
 			</div>
 			<div>
-				<p className="text-center">
-					{card.cardName}
-				</p>
-                <p className="text-center">
-					{card?.invoice &&
-						formatter.format(
-							parseInt(card.invoice.replace(",", "."))
-						)}
-				</p>
-				<p>
-					Limite: R$
-					{card?.limit &&
-						formatter.format(
-							parseInt(card.limit.replace(",", "."))
-						)}
-				</p>
+				<p className="text-center">{card.cardName}</p>
+				<p className="text-center">{formattedInvoice}</p>
+				<p>Limite: {formattedLimit}</p>
 			</div>
 		</li>
 	);

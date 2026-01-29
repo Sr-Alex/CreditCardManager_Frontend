@@ -8,15 +8,7 @@ import { useAuthContext } from "../hooks/useAuthContext";
 import Container from "./container";
 import CardUser from "./cardUser";
 
-interface UserListProps {
-	title?: string;
-	description?: string;
-}
-
-function UserList({
-	title = "Lista de usuários",
-	description = "Gerencie os usuários do sistema",
-}: UserListProps) {
+function UserList() {
 	const { card } = useAuthContext();
 	const [users, setUsers] = useState(Array<UserDTO>());
 
@@ -43,7 +35,9 @@ function UserList({
 	}, [card]);
 
 	return (
-		<Container title={title} description={description}>
+		<Container
+			title={"Lista de usuários"}
+			description={"Gerencie os usuários do sistema"}>
 			<ul
 				onWheel={(event) => handleWheel(event)}
 				className="flex gap-4 overflow-x-auto scrollbar-hide">

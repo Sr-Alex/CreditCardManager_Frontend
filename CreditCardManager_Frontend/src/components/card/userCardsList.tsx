@@ -2,13 +2,13 @@ import { useEffect, useState } from "react";
 
 import { GetUserCreditCards } from "../../api/services/creditCardServices";
 
-import { useAuthContext } from '../../hooks/useAuthContext';
+import { useAuthContext } from "../../hooks/useAuthContext";
 
 import type { CreditCardDTO } from "../../api/dtos/creditCardDtos";
 import CardSelect from "./cardSelect";
 
 function UserCardsList() {
-	const { user, updateCard } = useAuthContext();
+	const { user, selectCard } = useAuthContext();
 	const [cards, setCards] = useState<Array<CreditCardDTO>>([]);
 
 	useEffect(() => {
@@ -19,7 +19,7 @@ function UserCardsList() {
 	}, [user]);
 
 	const cardSelectionHandler = (card: CreditCardDTO) => {
-		updateCard(card);
+		selectCard(card);
 	};
 
 	return (

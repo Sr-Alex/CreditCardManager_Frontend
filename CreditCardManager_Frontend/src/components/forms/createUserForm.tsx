@@ -1,6 +1,6 @@
 import { useRef, type FormEvent } from "react";
 
-import { useAuthContext } from '../../hooks/useAuthContext';
+import { useAuthContext } from "../../hooks/useAuthContext";
 
 import { CreateUser } from "../../api/services/userServices";
 import type { UserDTO } from "../../api/dtos/userDtos";

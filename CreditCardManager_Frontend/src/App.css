@@ -1,12 +1,11 @@
 #root {
-	min-height: 100dvh;
-	padding: 2rem 1rem;
-
 	font-family: sans-serif;
 	color: var(--color-dark-slate);
-	background-color: var(--color-light-gray);
 }
 
 .app {
 	display: grid;
+
+	min-height: 100dvh;
+	padding: 2rem 1rem;
 }

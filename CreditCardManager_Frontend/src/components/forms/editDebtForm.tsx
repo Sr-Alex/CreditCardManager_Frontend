@@ -2,6 +2,8 @@ import { useRef, type FormEvent } from "react";
 
 import type { DebtDTO, UpdateDebtDTO } from "../../api/dtos/debtsDTOs";
 import { deleteDebt, updateDebt } from "../../api/services/DebtServices";
+import { useAuthContext } from "../../hooks/useAuthContext";
+import ActionButton from "../actionButton";
 
 interface EditDebtFormProps {
 	debtData: DebtDTO;
@@ -12,6 +14,8 @@ function EditDebtForm({
 	debtData,
 	submitHandler = () => {},
 }: EditDebtFormProps) {
+	const { updateCard } = useAuthContext();
+
 	const label = useRef<HTMLInputElement>(null);
 	const value = useRef<HTMLInputElement>(null);
 	const date = useRef<HTMLInputElement>(null);
@@ -35,6 +39,7 @@ function EditDebtForm({
 		updateDebt(debtData.id, updatedDebt).then((result) => {
 			if (Object.hasOwn(result, "id")) {
 				submitHandler();
+				updateCard();
 			}
 		});
 	};
@@ -83,9 +88,9 @@ function EditDebtForm({
 				onClick={handleDelete}>
 				delete
 			</button>
-			<button className="form-button" type="submit">
-				update
-			</button>
+			<ActionButton type="submit" className="form-button">
+				Update
+			</ActionButton>
 		</form>
 	);
 }

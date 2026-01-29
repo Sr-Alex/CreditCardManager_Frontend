@@ -6,11 +6,11 @@ import { createDebt } from "../../api/services/DebtServices";
 import type { CreateDebtDTO } from "../../api/dtos/debtsDTOs";
 
 interface DebtFormProps {
-	handleSubmit: Function | undefined;
+	handleCreateForm: Function | undefined;
 }
 
-function DebtForm({ handleSubmit = () => {} }: DebtFormProps) {
-	const { user, card } = useAuthContext();
+function DebtForm({ handleCreateForm = () => {} }: DebtFormProps) {
+	const { user, card, updateCard } = useAuthContext();
 
 	const label = useRef<HTMLInputElement>(null);
 	const value = useRef<HTMLInputElement>(null);
@@ -36,7 +36,8 @@ function DebtForm({ handleSubmit = () => {} }: DebtFormProps) {
 		};
 
 		createDebt(debtData).then(() => {
-			handleSubmit();
+			handleCreateForm();
+			updateCard();
 		});
 	};
 

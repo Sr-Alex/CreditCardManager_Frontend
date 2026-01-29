@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 
 interface ActionButtonProps {
 	children: ReactNode;
-	onClick: () => void;
+	onClick?: () => void;
 	disabled?: boolean;
 	type?: "submit" | "reset" | "button" | undefined;
 	className?: string;
@@ -12,7 +12,7 @@ interface ActionButtonProps {
 
 function ActionButton({
 	children,
-	onClick,
+	onClick = () => {},
 	disabled = false,
 	type = "button",
 	className,

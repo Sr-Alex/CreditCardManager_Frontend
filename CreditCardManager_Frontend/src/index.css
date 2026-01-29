@@ -4,15 +4,19 @@
 	--color-red: #e7000b;
 
 	--color-blue: #4843f8;
-	--color-dark-blue: #0c1428;
+	--color-dark-blue: #15203d;
 	--color-dark-slate: #0f172b;
 
 	--color-white: #fff;
+	--color-off-white: #f9f9f9;
 	--color-gray: #4a5565;
+	--color-dark-gray: #30738d;
 	--color-light-gray: #eff5ff;
 
 	--color-opaque: #0000001a;
 }
+
+@custom-variant dark (&:where(.dark, .dark *));
 
 :root {
 	color-scheme: light dark;
