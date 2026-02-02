@@ -14,18 +14,19 @@ function CardSelect({ card, clickHandler }: CardSelectProps) {
 	const formattedLimit = formatCurrencyValue(Number(card.limit));
 
 	return (
-		<li
-			className="flex flex-col items-center p-2 w-36 rounded-lg text-white bg-blue"
-			style={{ cursor: "pointer" }}
-			onClick={() => clickHandler(card.id)}>
-			<div>
-				<CreditCard size={"4rem"} />
-			</div>
-			<div>
-				<p className="text-center">{card.cardName}</p>
-				<p className="text-center">{formattedInvoice}</p>
-				<p>Limite: {formattedLimit}</p>
-			</div>
+		<li>
+			<button
+				className="flex flex-col items-center p-2 w-36 rounded-lg text-white bg-blue"
+				onClick={() => clickHandler(card.id)}>
+				<div>
+					<CreditCard size={"4rem"} />
+				</div>
+				<div>
+					<p className="text-center">{card.cardName}</p>
+					<p className="text-center">{formattedInvoice}</p>
+					<p>Limite: {formattedLimit}</p>
+				</div>
+			</button>
 		</li>
 	);
 }

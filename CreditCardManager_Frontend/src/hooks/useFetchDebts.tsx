@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import { GetDebtHistory } from "../api/services/DebtServices";
 
-import { useAuthContext } from "./useAuthContext";
+import useAuthContext from "./useAuthContext";
 
 import type { DebtDTO } from "../api/dtos/debtsDTOs";
 
@@ -14,11 +14,13 @@ function useFetchDebts() {
 		if (!card?.id) return;
 
 		try {
-			const debts = await GetDebtHistory(card.id);
-			setDebts(debts);
+			GetDebtHistory(card.id).then((response) => {
+				if (response.success) {
+					setDebts(response.data as DebtDTO[]);
+				}
+			});
 		} catch (error) {
 			setDebts([]);
-			console.error(error);
 		}
 	};
 

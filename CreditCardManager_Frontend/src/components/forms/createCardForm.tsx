@@ -1,16 +1,22 @@
-import { useRef, type FormEvent } from "react";
+import { useRef, useState, type FormEvent } from "react";
 
-import { useAuthContext } from '../../hooks/useAuthContext';
+import useAuthContext from "../../hooks/useAuthContext";
 
 import { CreateCreditCard } from "../../api/services/creditCardServices";
-import type { CreateCreditCardDTO } from "../../api/dtos/creditCardDtos";
+import type {
+	CreateCreditCardDTO,
+	CreditCardDTO,
+} from "../../api/dtos/creditCardDtos";
+import ActionButton from "../actionButton";
 
 function CreateCardForm() {
-	const { updateCard, user } = useAuthContext();
+	const { selectCard, user } = useAuthContext();
 
 	const cardName = useRef<HTMLInputElement>(null);
 	const expiresAt = useRef<HTMLInputElement>(null);
 	const limit = useRef<HTMLInputElement>(null);
+
+	const [isWaiting, setIsWaiting] = useState(false);
 
 	const handleReset = () => {
 		cardName.current!.value = "";
@@ -24,19 +30,24 @@ function CreateCardForm() {
 			return;
 		}
 
+		setIsWaiting(true);
+
 		const createCard: CreateCreditCardDTO = {
 			userId: Number(user.id),
 			cardName: cardName.current?.value || undefined,
 			expiresAt: expiresAt.current?.value || undefined,
-			Limit: limit.current?.value || undefined,
+			Limit: Number(limit.current?.value) || undefined,
 		};
 
 		CreateCreditCard(createCard).then((response) => {
-			if (response) {
+			if (response.success) {
+				const card = response.data as CreditCardDTO;
 				handleReset();
-				updateCard(response);
+				selectCard(card);
 			}
 		});
+
+		setIsWaiting(false);
 	};
 
 	return (
@@ -73,12 +84,18 @@ function CreateCardForm() {
 					className="input-text"
 				/>
 			</div>
-			<button className="form-button" type="button" onClick={handleReset}>
+			<ActionButton
+				className="form-button"
+				type="button"
+				onClick={handleReset}>
 				Reset
-			</button>
-			<button className="form-button" type="submit">
-				Submit
-			</button>
+			</ActionButton>
+			<ActionButton
+				disabled={isWaiting}
+				className="form-button"
+				type="submit">
+				{isWaiting ? "Waiting" : "Submit"}
+			</ActionButton>
 		</form>
 	);
 }

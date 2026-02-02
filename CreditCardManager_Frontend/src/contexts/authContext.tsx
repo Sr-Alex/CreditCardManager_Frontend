@@ -9,11 +9,11 @@ import {
 import type { UserDTO } from "../api/dtos/userDtos";
 import type { CreditCardDTO } from "../api/dtos/creditCardDtos";
 
-import { ClearAuthToken, GetAuthToken } from "../api/client";
 import { GetUser } from "../api/services/userServices";
 import { GetCreditCard } from "../api/services/creditCardServices";
+import { ClearAuthToken, GetAuthToken } from "../api/authStorage";
 
-export interface IAuthContext {
+export interface AuthContextImp {
 	isLogged: boolean;
 	user: UserDTO | undefined;
 	card: CreditCardDTO | undefined;
@@ -23,7 +23,7 @@ export interface IAuthContext {
 	updateCard: () => void;
 }
 
-const DEFAULT_AUTHCONTEXT: IAuthContext = {
+const DEFAULT_AUTHCONTEXT: AuthContextImp = {
 	isLogged: false,
 	user: undefined,
 	card: undefined,
@@ -33,8 +33,8 @@ const DEFAULT_AUTHCONTEXT: IAuthContext = {
 	updateCard: () => {},
 };
 
-const AuthContext: Context<IAuthContext> =
-	createContext<IAuthContext>(DEFAULT_AUTHCONTEXT);
+const AuthContext: Context<AuthContextImp> =
+	createContext<AuthContextImp>(DEFAULT_AUTHCONTEXT);
 
 export function AuthContextProvider({
 	children,
@@ -69,9 +69,9 @@ export function AuthContextProvider({
 			return;
 		}
 
-		GetCreditCard(card?.id).then((card) => {
-			if (Object.hasOwn(card, "id")) {
-				setCard(card);
+		GetCreditCard(card.id).then((response) => {
+			if (response.success) {
+				setCard(response.data as CreditCardDTO);
 			}
 		});
 	};
@@ -79,10 +79,10 @@ export function AuthContextProvider({
 	const autoLogin = (): boolean => {
 		const auth = GetAuthToken();
 
-		if (!auth?.token || !auth?.userId) return false;
+		if (!auth) return false;
 
 		GetUser(auth.userId).then((response) => {
-			if (Object.hasOwn(response, "id")) login(response as UserDTO);
+			if (response.success) login(response.data as UserDTO);
 		});
 
 		return true;
@@ -92,7 +92,7 @@ export function AuthContextProvider({
 		autoLogin();
 	}, []);
 
-	const values: IAuthContext = {
+	const values: AuthContextImp = {
 		isLogged: isLogged,
 		user: user,
 		card: card,

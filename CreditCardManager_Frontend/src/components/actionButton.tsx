@@ -16,7 +16,7 @@ function ActionButton({
 	disabled = false,
 	type = "button",
 	className,
-	backgroundColor = "bg-blue",
+	backgroundColor = "bg-blue disabled:bg-gray",
 	textColor = "text-white",
 }: ActionButtonProps) {
 	return (

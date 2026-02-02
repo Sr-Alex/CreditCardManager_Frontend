@@ -1,34 +1,49 @@
-import { GetAuthToken, METHODS, RequestApi } from "../client";
+import { GetAuthToken } from "../authStorage";
+import { METHODS, RequestApi, STATUS_CODE } from "../client";
 import type { CreateDebtDTO, DebtDTO, UpdateDebtDTO } from "../dtos/debtsDTOs";
+import {
+	failedResponse,
+	successResponse,
+	type responseDTO,
+} from "../dtos/responses";
 
 const PATH = "/debt";
 
-export const GetDebtHistory = async (cardId: number): Promise<DebtDTO[]> => {
+export const GetDebtHistory = async (cardId: number): Promise<responseDTO> => {
 	const response = await RequestApi(
 		`${PATH}/?cardId=${cardId}`,
 		METHODS.GET,
 		GetAuthToken(),
 	);
 
-	if (response.status == 200) {
-		return response.data as DebtDTO[];
-	}
+	if (response.status != STATUS_CODE.Ok) return failedResponse(response.data);
 
-	throw new Error(response.data);
+	if (!Array.isArray(response.data)) return failedResponse();
+
+	const debts = response.data as DebtDTO[];
+
+	return successResponse(debts);
 };
 
-export const GetDebt = async (debtId: number): Promise<DebtDTO> => {
+export const GetDebt = async (debtId: number): Promise<responseDTO> => {
 	const response = await RequestApi(
 		`${PATH}/detail/${debtId}`,
 		METHODS.GET,
 		GetAuthToken(),
 	);
+
+	if (response.status != STATUS_CODE.Ok) return failedResponse(response.data);
+
+	if (!Object.hasOwn(response.data, "id")) return failedResponse();
+
 	const debt = response.data as DebtDTO;
 
-	return debt;
+	return successResponse(debt);
 };
 
-export const createDebt = async (debtData: CreateDebtDTO): Promise<boolean> => {
+export const createDebt = async (
+	debtData: CreateDebtDTO,
+): Promise<responseDTO> => {
 	const response = await RequestApi(
 		PATH,
 		METHODS.POST,
@@ -36,15 +51,16 @@ export const createDebt = async (debtData: CreateDebtDTO): Promise<boolean> => {
 		debtData,
 	);
 
-	if (response.status !== 201) return false;
+	if (response.status != STATUS_CODE.Created)
+		return failedResponse(response.data);
 
-	return true;
+	return successResponse();
 };
 
 export const updateDebt = async (
 	debtId: number,
 	debtData: UpdateDebtDTO,
-): Promise<DebtDTO> => {
+): Promise<responseDTO> => {
 	const response = await RequestApi(
 		`${PATH}/${debtId}`,
 		METHODS.PUT,
@@ -52,21 +68,24 @@ export const updateDebt = async (
 		debtData,
 	);
 
+	if (response.status != STATUS_CODE.Ok) return failedResponse(response.data);
+
+	if (!Object.hasOwn(response.data, "id")) return failedResponse();
+
 	const debt = response.data as DebtDTO;
 
-	return debt;
+	return successResponse(debt);
 };
 
-export const deleteDebt = async (debtId: number): Promise<boolean> => {
+export const deleteDebt = async (debtId: number): Promise<responseDTO> => {
 	const response = await RequestApi(
 		`${PATH}/${debtId}`,
 		METHODS.DELETE,
 		GetAuthToken(),
 	);
 
-	if (response.status != 200) {
-		return false;
-	}
+	if (response.status != STATUS_CODE.NoContent)
+		return failedResponse(response.data);
 
-	return true;
+	return successResponse();
 };

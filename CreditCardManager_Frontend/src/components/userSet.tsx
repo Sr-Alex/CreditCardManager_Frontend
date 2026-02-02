@@ -1,4 +1,4 @@
-import { useAuthContext } from '../hooks/useAuthContext';
+import useAuthContext from "../hooks/useAuthContext";
 
 import AbsoluteContainer from "./absoluteContainer";
 import AuthFormContainer from "./forms/authFormContainer";

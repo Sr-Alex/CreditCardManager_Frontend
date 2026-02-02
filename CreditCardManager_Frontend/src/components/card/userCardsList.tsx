@@ -2,19 +2,26 @@ import { useEffect, useState } from "react";
 
 import { GetUserCreditCards } from "../../api/services/creditCardServices";
 
-import { useAuthContext } from "../../hooks/useAuthContext";
+import useAuthContext from "../../hooks/useAuthContext";
 
 import type { CreditCardDTO } from "../../api/dtos/creditCardDtos";
 import CardSelect from "./cardSelect";
 
 function UserCardsList() {
-	const { user, selectCard } = useAuthContext();
-	const [cards, setCards] = useState<Array<CreditCardDTO>>([]);
+	const { user, isLogged, logout, selectCard } = useAuthContext();
+
+	const [cards, setCards] = useState<CreditCardDTO[]>([]);
 
 	useEffect(() => {
-		if (!user?.id) return;
-		GetUserCreditCards(user.id).then((data) => {
-			setCards(data);
+		if (!isLogged || !user?.id) {
+			logout();
+			return;
+		}
+
+		GetUserCreditCards(user.id).then((response) => {
+			if (response.success) {
+				setCards(response.data as CreditCardDTO[]);
+			}
 		});
 	}, [user]);
 

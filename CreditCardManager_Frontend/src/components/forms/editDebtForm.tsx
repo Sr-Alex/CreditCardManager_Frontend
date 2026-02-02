@@ -1,8 +1,8 @@
-import { useRef, type FormEvent } from "react";
+import { useRef, useState, type FormEvent } from "react";
 
 import type { DebtDTO, UpdateDebtDTO } from "../../api/dtos/debtsDTOs";
 import { deleteDebt, updateDebt } from "../../api/services/DebtServices";
-import { useAuthContext } from "../../hooks/useAuthContext";
+import useAuthContext from "../../hooks/useAuthContext";
 import ActionButton from "../actionButton";
 
 interface EditDebtFormProps {
@@ -20,15 +20,20 @@ function EditDebtForm({
 	const value = useRef<HTMLInputElement>(null);
 	const date = useRef<HTMLInputElement>(null);
 
+	const [isWaiting, setIsWaiting] = useState(false);
+
 	const formattedDate = new Date(debtData.date).toISOString().slice(0, 10);
 
-	const handleDelete = () => {
-		deleteDebt(debtData.id);
+	const handleDelete = async () => {
+		await deleteDebt(debtData.id);
+		updateCard();
 		submitHandler();
 	};
 
 	const handleUpdate = (event: FormEvent) => {
 		event.preventDefault();
+
+		setIsWaiting(true);
 
 		const updatedDebt: UpdateDebtDTO = {
 			label: label.current?.value,
@@ -36,12 +41,14 @@ function EditDebtForm({
 			date: date.current?.value,
 		};
 
-		updateDebt(debtData.id, updatedDebt).then((result) => {
-			if (Object.hasOwn(result, "id")) {
-				submitHandler();
+		updateDebt(debtData.id, updatedDebt).then((response) => {
+			if (response.success) {
 				updateCard();
+				submitHandler();
 			}
 		});
+
+		setIsWaiting(false);
 	};
 
 	return (
@@ -82,14 +89,14 @@ function EditDebtForm({
 					className="input-text"
 				/>
 			</div>
-			<button
+			<ActionButton
 				className="form-button bg-red"
 				type="button"
 				onClick={handleDelete}>
 				delete
-			</button>
+			</ActionButton>
 			<ActionButton type="submit" className="form-button">
-				Update
+				{isWaiting ? "Waiting..." : "Update"}
 			</ActionButton>
 		</form>
 	);

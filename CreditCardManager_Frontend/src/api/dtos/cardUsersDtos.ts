@@ -1,6 +1,6 @@
-import type { UserDTO } from "./userDtos";
-
-export type CardUsersDTO = {
-	cardId: number;
-	users: Array<UserDTO>;
+export type CardUserDTO = {
+	UserId: number;
+	UserName: string;
+	DebtsCount: number;
+	PendingDebts: number;
 };

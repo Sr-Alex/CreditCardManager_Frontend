@@ -1,18 +1,20 @@
-import {
-	ClearAuthToken,
-	GetAuthToken,
-	METHODS,
-	RequestApi,
-	SaveAuthToken,
-} from "../client";
+import { METHODS, RequestApi, STATUS_CODE } from "../client";
+
+import { ClearAuthToken, GetAuthToken, SaveAuthToken } from "../authStorage";
+
 import type { UserDTO, CreateUserDTO } from "../dtos/userDtos";
+import {
+	failedResponse,
+	successResponse,
+	type responseDTO,
+} from "../dtos/responses";
 
 const PATH = "/user";
 
 export const LoginUser = async (
 	email: string,
 	password: string,
-): Promise<UserDTO | object> => {
+): Promise<responseDTO> => {
 	const response = await RequestApi(
 		`${PATH}/login`,
 		METHODS.POST,
@@ -20,44 +22,58 @@ export const LoginUser = async (
 		{ email, password },
 	);
 
+	if (response.status != STATUS_CODE.Ok) {
+		return failedResponse(response.data);
+	}
+
+	if (!Object.hasOwn(response.data, "token")) return failedResponse();
+
 	const loginUser = response.data;
 
 	SaveAuthToken(loginUser?.token, loginUser?.user.id);
-	return loginUser.user as UserDTO;
+
+	return successResponse(loginUser.user);
 };
 
-export const GetUser = async (userId: number): Promise<UserDTO | object> => {
+export const GetUser = async (userId: number): Promise<responseDTO> => {
 	const response = await RequestApi(`${PATH}/${userId}`, METHODS.GET);
-	return response.data as UserDTO;
+
+	if (response.status != STATUS_CODE.Ok) return failedResponse(response.data);
+
+	if (!Object.hasOwn(response.data, "id")) return failedResponse();
+
+	const user = response.data as UserDTO;
+
+	return successResponse(user);
 };
 
 export const CreateUser = async (
 	userData: CreateUserDTO,
-): Promise<UserDTO | object> => {
+): Promise<responseDTO> => {
 	const response = await RequestApi(PATH, METHODS.POST, undefined, userData);
 
-	const createUser = response.data;
+	if (response.status != STATUS_CODE.Created)
+		return failedResponse(response.data);
 
-	SaveAuthToken(createUser?.token, createUser?.user.id);
-	return createUser.user as UserDTO;
+	if (!Object.hasOwn(response.data, "token")) return failedResponse();
+
+	const createdUser = response.data;
+
+	SaveAuthToken(createdUser?.token, createdUser?.user.id);
+
+	return successResponse(createdUser.user as UserDTO);
 };
 
-export const UpdateUser = async (userId: number, userData: CreateUserDTO) => {
-	const response = await RequestApi(
-		`${PATH}/${userId}`,
-		METHODS.PUT,
-		GetAuthToken(),
-		userData,
-	);
-	return response.data;
-};
-
-export const DeleteUser = async (userId: number) => {
+export const DeleteUser = async (userId: number): Promise<responseDTO> => {
 	const response = await RequestApi(
 		`${PATH}/${userId}`,
 		METHODS.DELETE,
 		GetAuthToken(),
 	);
+
+	if (response.status !== STATUS_CODE.NoContent)
+		return failedResponse(response.data);
+
 	ClearAuthToken();
-	return response.data;
+	return successResponse();
 };

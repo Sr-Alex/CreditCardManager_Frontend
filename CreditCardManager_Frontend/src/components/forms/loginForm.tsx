@@ -1,14 +1,18 @@
-import { useRef, type FormEvent } from "react";
+import { useRef, useState, type FormEvent } from "react";
 
 import type { UserDTO } from "../../api/dtos/userDtos";
-import { useAuthContext } from "../../hooks/useAuthContext";
+import useAuthContext from "../../hooks/useAuthContext";
 
 import { LoginUser } from "../../api/services/userServices";
+import ActionButton from "../actionButton";
 
 function LoginForm() {
 	const { login } = useAuthContext();
+
 	const userEmail = useRef<HTMLInputElement>(null);
 	const UserPassword = useRef<HTMLInputElement>(null);
+
+	const [isWaiting, setIsWaiting] = useState(false);
 
 	const handleReset = () => {
 		userEmail.current!.value = "";
@@ -22,11 +26,15 @@ function LoginForm() {
 
 		if (!email || !password) return;
 
-		LoginUser(email, password).then((user) => {
-			if (user.hasOwnProperty("id")) {
-				login(user as UserDTO);
+		setIsWaiting(true);
+
+		LoginUser(email, password).then((response) => {
+			if (response.success) {
+				login(response.data as UserDTO);
 			}
 		});
+
+		setIsWaiting(false);
 	};
 
 	return (
@@ -55,15 +63,18 @@ function LoginForm() {
 				/>
 			</div>
 			<div>
-				<button
+				<ActionButton
 					className="form-button"
 					type="button"
 					onClick={handleReset}>
 					Limpar
-				</button>
-				<button type="submit" className="form-button">
-					Login
-				</button>
+				</ActionButton>
+				<ActionButton
+					disabled={isWaiting}
+					type="submit"
+					className="form-button">
+					{isWaiting ? "waiting..." : "login"}
+				</ActionButton>
 			</div>
 		</form>
 	);

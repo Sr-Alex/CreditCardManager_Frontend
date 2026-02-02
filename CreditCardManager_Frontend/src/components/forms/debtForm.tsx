@@ -1,9 +1,12 @@
-import { useRef, type FormEvent } from "react";
+import { useRef, useState, type FormEvent } from "react";
 
-import { useAuthContext } from "../../hooks/useAuthContext";
+import useAuthContext from "../../hooks/useAuthContext";
 
 import { createDebt } from "../../api/services/DebtServices";
+
 import type { CreateDebtDTO } from "../../api/dtos/debtsDTOs";
+
+import ActionButton from "../actionButton";
 
 interface DebtFormProps {
 	handleCreateForm: Function | undefined;
@@ -16,6 +19,8 @@ function DebtForm({ handleCreateForm = () => {} }: DebtFormProps) {
 	const value = useRef<HTMLInputElement>(null);
 	const date = useRef<HTMLInputElement>(null);
 
+	const [isWaiting, setIsWaiting] = useState(false);
+
 	const handleReset = () => {
 		label.current!.value = "";
 		value.current!.value = "";
@@ -27,6 +32,8 @@ function DebtForm({ handleCreateForm = () => {} }: DebtFormProps) {
 
 		if (!user || !card) return;
 
+		setIsWaiting(true);
+
 		const debtData: CreateDebtDTO = {
 			userId: user.id,
 			cardId: card.id,
@@ -35,10 +42,14 @@ function DebtForm({ handleCreateForm = () => {} }: DebtFormProps) {
 			date: date.current?.value || undefined,
 		};
 
-		createDebt(debtData).then(() => {
-			handleCreateForm();
-			updateCard();
+		createDebt(debtData).then((response) => {
+			if (response.success) {
+				updateCard();
+				handleCreateForm();
+			}
 		});
+
+		setIsWaiting(false);
 	};
 
 	return (
@@ -76,12 +87,18 @@ function DebtForm({ handleCreateForm = () => {} }: DebtFormProps) {
 					className="input-text"
 				/>
 			</div>
-			<button className="form-button" type="button" onClick={handleReset}>
+			<ActionButton
+				className="form-button"
+				type="button"
+				onClick={handleReset}>
 				Reset
-			</button>
-			<button className="form-button" type="submit">
-				Submit
-			</button>
+			</ActionButton>
+			<ActionButton
+				disabled={isWaiting}
+				className="form-button"
+				type="submit">
+				{isWaiting ? "Waiting..." : "Submit"}
+			</ActionButton>
 		</form>
 	);
 }

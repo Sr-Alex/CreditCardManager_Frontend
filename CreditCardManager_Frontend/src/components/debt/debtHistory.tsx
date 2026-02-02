@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import type { DebtDTO } from "../../api/dtos/debtsDTOs";
 
-import { useAuthContext } from "../../hooks/useAuthContext";
+import useAuthContext from "../../hooks/useAuthContext";
 
 import useFetchDebts from "../../hooks/useFetchDebts";
 
@@ -22,7 +22,9 @@ function DebtHistory({
 	description = "Visualize e gerencie suas dívidas",
 }: DebtHistoryProps) {
 	const { card, user } = useAuthContext();
+
 	const debts = useFetchDebts();
+
 	const [showDebtForm, setShowDebtForm] = useState(false);
 
 	const isOwner = (debt: DebtDTO) => {

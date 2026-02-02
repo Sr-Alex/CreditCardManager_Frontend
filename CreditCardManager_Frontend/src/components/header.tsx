@@ -1,18 +1,10 @@
 import { CreditCard, Moon, Sun } from "lucide-react";
-import { useEffect, useState } from "react";
 
 import ActionButton from "./actionButton";
+import useThemeProvider from "../hooks/useThemeContext";
 
 function Header() {
-	const [darkMode, setDarkMode] = useState(false);
-
-	useEffect(() => {
-		if (darkMode) {
-			document.documentElement.classList.add("dark");
-		} else {
-			document.documentElement.classList.remove("dark");
-		}
-	}, [darkMode]);
+	const { darkMode, toggleDarkMode } = useThemeProvider();
 
 	return (
 		<header className="flex justify-between items-center px-1 mb-8 bg-dark text-dark-slate dark:text-white">
@@ -27,7 +19,7 @@ function Header() {
 			</div>
 			<ActionButton
 				type="button"
-				onClick={() => setDarkMode(!darkMode)}
+				onClick={() => toggleDarkMode()}
 				className="p-2 icon-container rounded-full box-shadow border border-off-white dark:border-dark-blue"
 				backgroundColor="bg-white dark:bg-dark-blue">
 				{darkMode ? (

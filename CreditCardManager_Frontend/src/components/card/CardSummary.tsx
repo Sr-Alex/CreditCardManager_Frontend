@@ -1,6 +1,8 @@
-import Container from "../container";
-import { useAuthContext } from "../../hooks/useAuthContext";
+import useAuthContext from "../../hooks/useAuthContext";
+
 import { formatCurrencyValue } from "../../utils/formatters";
+
+import Container from "../container";
 
 function CardSummary() {
 	const { card } = useAuthContext();

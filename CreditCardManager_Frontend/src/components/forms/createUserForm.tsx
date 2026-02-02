@@ -1,15 +1,19 @@
-import { useRef, type FormEvent } from "react";
+import { useRef, useState, type FormEvent } from "react";
 
-import { useAuthContext } from "../../hooks/useAuthContext";
+import useAuthContext from "../../hooks/useAuthContext";
 
 import { CreateUser } from "../../api/services/userServices";
 import type { UserDTO } from "../../api/dtos/userDtos";
+import ActionButton from "../actionButton";
 
 function CreateUserForm() {
-	const context = useAuthContext();
+	const { login } = useAuthContext();
+
 	const userName = useRef<HTMLInputElement>(null);
 	const userEmail = useRef<HTMLInputElement>(null);
 	const userPassword = useRef<HTMLInputElement>(null);
+
+	const [isWaiting, setIsWaiting] = useState(false);
 
 	const handleReset = () => {
 		userName.current!.value = "";
@@ -25,16 +29,20 @@ function CreateUserForm() {
 
 		if (!name || !email || password?.length < 6) return;
 
+		setIsWaiting(true);
+
 		CreateUser({
 			userName: name,
 			email: email,
 			password: password,
-		}).then((user) => {
-			if (user.hasOwnProperty("id")) {
+		}).then((response) => {
+			if (response.success) {
 				handleReset();
-				context.login(user as UserDTO);
+				login(response.data as UserDTO);
 			}
 		});
+
+		setIsWaiting(false);
 	};
 
 	return (
@@ -70,15 +78,18 @@ function CreateUserForm() {
 				/>
 			</div>
 			<div>
-				<button
+				<ActionButton
 					className="form-button"
 					type="button"
 					onClick={handleReset}>
 					Limpar
-				</button>
-				<button type="submit" className="form-button">
-					Criar Usuário
-				</button>
+				</ActionButton>
+				<ActionButton
+					disabled={isWaiting}
+					type="submit"
+					className="form-button">
+					{isWaiting ? "Waiting..." : "Criar Usuário"}
+				</ActionButton>
 			</div>
 		</form>
 	);
