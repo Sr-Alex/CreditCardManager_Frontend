@@ -9,7 +9,7 @@ interface ContainerProps {
 	backgroundColor?: string;
 	textColor?: string;
 	closeButton?: boolean;
-	closeButtonHandler?: Function;
+	closeButtonHandler?: () => void;
 }
 
 function Container({
@@ -41,7 +41,7 @@ function Container({
 							backgroundColor="bg-transparent">
 							<X
 								size="2rem"
-								className={`text-dark-slate transition-all duration-100 ease-in-out`}
+								className={`text-dark-slate dark:text-light-gray transition-all duration-100 ease-in-out`}
 							/>
 						</ActionButton>
 					)}

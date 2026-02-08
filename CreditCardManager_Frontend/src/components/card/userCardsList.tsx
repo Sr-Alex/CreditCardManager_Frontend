@@ -21,9 +21,12 @@ function UserCardsList() {
 		GetUserCreditCards(user.id).then((response) => {
 			if (response.success) {
 				setCards(response.data as CreditCardDTO[]);
+			} else {
+				console.error(response.data);
+				logout();
 			}
 		});
-	}, [user]);
+	}, [isLogged, user, logout]);
 
 	const cardSelectionHandler = (card: CreditCardDTO) => {
 		selectCard(card);

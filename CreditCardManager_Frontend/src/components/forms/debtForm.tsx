@@ -9,7 +9,7 @@ import type { CreateDebtDTO } from "../../api/dtos/debtsDTOs";
 import ActionButton from "../actionButton";
 
 interface DebtFormProps {
-	handleCreateForm: Function | undefined;
+	handleCreateForm: () => void;
 }
 
 function DebtForm({ handleCreateForm = () => {} }: DebtFormProps) {
@@ -27,7 +27,7 @@ function DebtForm({ handleCreateForm = () => {} }: DebtFormProps) {
 		date.current!.value = "";
 	};
 
-	const handleCreate = (event: FormEvent) => {
+	const handleCreate = async (event: FormEvent) => {
 		event.preventDefault();
 
 		if (!user || !card) return;
@@ -42,13 +42,13 @@ function DebtForm({ handleCreateForm = () => {} }: DebtFormProps) {
 			date: date.current?.value || undefined,
 		};
 
-		createDebt(debtData).then((response) => {
-			if (response.success) {
-				updateCard();
-				handleCreateForm();
-			}
-		});
+		const response = await createDebt(debtData);
+		if (response.success) {
+			updateCard();
+			handleCreateForm();
+		}
 
+		handleReset();
 		setIsWaiting(false);
 	};
 

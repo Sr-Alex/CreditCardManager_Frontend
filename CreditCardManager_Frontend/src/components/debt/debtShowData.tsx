@@ -1,4 +1,5 @@
 import { useState } from "react";
+
 import { DollarSign, Pencil } from "lucide-react";
 
 import type { DebtDTO } from "../../api/dtos/debtsDTOs";

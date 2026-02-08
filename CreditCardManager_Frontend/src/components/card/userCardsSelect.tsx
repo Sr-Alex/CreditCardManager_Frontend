@@ -1,8 +1,12 @@
 import { useState } from "react";
-import UserCardsList from "./userCardsList";
+
 import { Plus } from "lucide-react";
-import CreateCardForm from "../forms/createCardForm";
+
 import Container from "../container";
+import UserCardsList from "./userCardsList";
+import CreateCardForm from "../forms/createCardForm";
+
+import ActionButton from "../actionButton";
 
 const UserCardsSelect = () => {
 	const [showCreated, setShowCreated] = useState(false);
@@ -14,14 +18,14 @@ const UserCardsSelect = () => {
 					? "Crie seu cartão!"
 					: "Selecione um de seus cartões!"
 			}>
-			<button
+			<ActionButton
 				onClick={() => setShowCreated(!showCreated)}
-				className="w-fit mb-2 px-4 py-2 bg-blue text-white rounded-lg hover:bg-dark-blue transition-colors font-medium">
+				className="w-fit mb-2 px-4 py-2 rounded-lg font-medium">
 				<Plus
 					className="transition-all duration-100 ease-in-out"
 					style={{ rotate: showCreated ? "45deg" : "0deg" }}
 				/>
-			</button>
+			</ActionButton>
 			{showCreated ? <CreateCardForm /> : <UserCardsList />}
 		</Container>
 	);

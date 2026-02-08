@@ -1,12 +1,12 @@
 import "./App.css";
 
-import { AuthContextProvider } from "./contexts/authContext";
-import { ThemeContextProvider } from "./contexts/themeContext";
+import ThemeContextProvider from "./contexts/themeContextProvider";
+import AuthContextProvider from "./contexts/authContextProvider";
 
-import UserSet from "./components/userSet";
+import UserSet from "./components/user/userSet";
 import Header from "./components/header";
 import CardSummary from "./components/card/CardSummary";
-import UserList from "./components/userList";
+import UserList from "./components/user/userList";
 import DebtHistory from "./components/debt/debtHistory";
 
 function App() {

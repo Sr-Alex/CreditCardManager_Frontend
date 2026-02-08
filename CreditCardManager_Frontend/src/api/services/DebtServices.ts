@@ -10,82 +10,68 @@ import {
 const PATH = "/debt";
 
 export const GetDebtHistory = async (cardId: number): Promise<responseDTO> => {
-	const response = await RequestApi(
-		`${PATH}/?cardId=${cardId}`,
-		METHODS.GET,
-		GetAuthToken(),
-	);
+	return RequestApi(`${PATH}/?cardId=${cardId}`, METHODS.GET, GetAuthToken())
+		.then((response) => {
+			if (!Array.isArray(response.data)) return failedResponse();
 
-	if (response.status != STATUS_CODE.Ok) return failedResponse(response.data);
+			const debts = response.data as DebtDTO[];
 
-	if (!Array.isArray(response.data)) return failedResponse();
-
-	const debts = response.data as DebtDTO[];
-
-	return successResponse(debts);
+			return successResponse(debts);
+		})
+		.catch((error) => failedResponse(error));
 };
 
 export const GetDebt = async (debtId: number): Promise<responseDTO> => {
-	const response = await RequestApi(
-		`${PATH}/detail/${debtId}`,
-		METHODS.GET,
-		GetAuthToken(),
-	);
+	return RequestApi(`${PATH}/detail/${debtId}`, METHODS.GET, GetAuthToken())
+		.then((response) => {
+			if (!Object.hasOwn(response.data, "id")) return failedResponse();
 
-	if (response.status != STATUS_CODE.Ok) return failedResponse(response.data);
+			const debt = response.data as DebtDTO;
 
-	if (!Object.hasOwn(response.data, "id")) return failedResponse();
-
-	const debt = response.data as DebtDTO;
-
-	return successResponse(debt);
+			return successResponse(debt);
+		})
+		.catch((error) => failedResponse(error));
 };
 
 export const createDebt = async (
 	debtData: CreateDebtDTO,
 ): Promise<responseDTO> => {
-	const response = await RequestApi(
-		PATH,
-		METHODS.POST,
-		GetAuthToken(),
-		debtData,
-	);
-
-	if (response.status != STATUS_CODE.Created)
-		return failedResponse(response.data);
-
-	return successResponse();
+	return RequestApi(PATH, METHODS.POST, GetAuthToken(), debtData)
+		.then(() => {
+			return successResponse();
+		})
+		.catch((error) => {
+			return failedResponse(error);
+		});
 };
 
 export const updateDebt = async (
 	debtId: number,
 	debtData: UpdateDebtDTO,
 ): Promise<responseDTO> => {
-	const response = await RequestApi(
+	return RequestApi(
 		`${PATH}/${debtId}`,
 		METHODS.PUT,
 		GetAuthToken(),
 		debtData,
-	);
+	)
+		.then((response) => {
+			if (!Object.hasOwn(response.data, "id")) return failedResponse();
 
-	if (response.status != STATUS_CODE.Ok) return failedResponse(response.data);
+			const debt = response.data as DebtDTO;
 
-	if (!Object.hasOwn(response.data, "id")) return failedResponse();
-
-	const debt = response.data as DebtDTO;
-
-	return successResponse(debt);
+			return successResponse(debt);
+		})
+		.catch((error) => failedResponse(error));
 };
 
 export const deleteDebt = async (debtId: number): Promise<responseDTO> => {
-	const response = await RequestApi(
-		`${PATH}/${debtId}`,
-		METHODS.DELETE,
-		GetAuthToken(),
-	);
+	return RequestApi(`${PATH}/${debtId}`, METHODS.DELETE, GetAuthToken())
+		.then((response) => {
+			if (response.status != STATUS_CODE.NoContent)
+				return failedResponse(response.data);
 
-	if (response.status != STATUS_CODE.NoContent)
-		return failedResponse(response.data);
-
-	return successResponse();
+			return successResponse();
+		})
+		.catch((error) => failedResponse(error));
 };

@@ -6,7 +6,7 @@ import type { CreditCardDTO } from "../../api/dtos/creditCardDtos";
 
 interface CardSelectProps {
 	card: CreditCardDTO;
-	clickHandler: Function;
+	clickHandler: (cardId: number) => void;
 }
 
 function CardSelect({ card, clickHandler }: CardSelectProps) {
