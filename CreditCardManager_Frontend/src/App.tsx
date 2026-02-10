@@ -5,7 +5,7 @@ import AuthContextProvider from "./contexts/authContextProvider";
 
 import UserSet from "./components/user/userSet";
 import Header from "./components/header";
-import CardSummary from "./components/card/CardSummary";
+import Definitions from "./components/definitions";
 import UserList from "./components/user/userList";
 import DebtHistory from "./components/debt/debtHistory";
 
@@ -16,7 +16,7 @@ function App() {
 				<AuthContextProvider>
 					<UserSet />
 					<Header />
-					<CardSummary />
+					<Definitions />
 					<UserList />
 					<DebtHistory />
 				</AuthContextProvider>

@@ -11,7 +11,7 @@ interface AddUserFormProps {
 }
 
 function AddUserForm({ handleAddUserForm = () => {} }: AddUserFormProps) {
-	const { isLogged, user, card } = useAuthContext();
+	const { isLogged, card } = useAuthContext();
 
 	const [isWaiting, setIsWaiting] = useState<boolean>(false);
 

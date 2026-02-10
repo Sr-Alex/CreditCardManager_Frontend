@@ -1,5 +1,5 @@
 import { X } from "lucide-react";
-import type { ReactNode } from "react";
+import { useEffect, type ReactNode } from "react";
 import ActionButton from "./actionButton";
 
 interface ContainerProps {
@@ -8,6 +8,7 @@ interface ContainerProps {
 	description?: string;
 	backgroundColor?: string;
 	textColor?: string;
+	className?: string;
 	closeButton?: boolean;
 	closeButtonHandler?: () => void;
 }
@@ -18,35 +19,52 @@ function Container({
 	description,
 	backgroundColor = "bg-white dark:bg-dark-blue",
 	textColor = "text-dark-blue dark:text-white",
+	className = "min-w-80 min-h-32 h-fit",
 	closeButton = false,
 	closeButtonHandler = () => {},
 }: ContainerProps) {
+	useEffect(() => {
+		const handleEscape = (e: KeyboardEvent) => {
+			if (!closeButton) return;
+
+			if (e.key == "Escape") {
+				closeButtonHandler();
+			}
+		};
+
+		document.addEventListener("keydown", handleEscape);
+
+		return () => document.removeEventListener("keydown", handleEscape);
+	}, [closeButton, closeButtonHandler]);
+
 	return (
 		<section
-			className={`min-w-80 min-h-32 h-fit pt-6 pr-4 pb-2 pl-4 rounded-2xl shadow-md border border-light-gray dark:border-dark-gray ${backgroundColor} ${textColor}`}>
-			{title?.trim() && (
-				<div className="flex w-full gap-2 mb-2">
+			className={`pt-6 pr-4 pb-2 pl-4 rounded-2xl shadow-md border border-light-gray dark:border-dark-gray ${className} ${backgroundColor} ${textColor}`}>
+			<div className="flex w-full gap-2 mb-2">
+				{title?.trim() && (
 					<div>
 						<h3 className="text-lg font-bold">{title}</h3>
 						{description && (
-							<p className="text-md text-gray">{description}</p>
+							<p className="text-md text-gray dark:text-gray">
+								{description}
+							</p>
 						)}
 					</div>
+				)}
 
-					{closeButton && (
-						<ActionButton
-							type="button"
-							onClick={() => closeButtonHandler()}
-							className="block ml-auto mb-2 "
-							backgroundColor="bg-transparent">
-							<X
-								size="2rem"
-								className={`text-dark-slate dark:text-light-gray transition-all duration-100 ease-in-out`}
-							/>
-						</ActionButton>
-					)}
-				</div>
-			)}
+				{closeButton && (
+					<ActionButton
+						type="button"
+						onClick={() => closeButtonHandler()}
+						className="block ml-auto mb-2 "
+						backgroundColor="bg-transparent">
+						<X
+							size="2rem"
+							className={`text-dark-slate dark:text-light-gray transition-all duration-100 ease-in-out`}
+						/>
+					</ActionButton>
+				)}
+			</div>
 			<div>{children}</div>
 		</section>
 	);
