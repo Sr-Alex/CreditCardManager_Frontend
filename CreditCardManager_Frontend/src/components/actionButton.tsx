@@ -16,7 +16,7 @@ function ActionButton({
 	disabled = false,
 	type = "button",
 	className,
-	backgroundColor = "bg-blue disabled:bg-gray",
+	backgroundColor = "bg-blue disabled:bg-gray hover:bg-gray dark:hover:bg-dark-slate",
 	textColor = "text-white",
 }: ActionButtonProps) {
 	return (
@@ -24,7 +24,7 @@ function ActionButton({
 			type={type}
 			onClick={() => onClick()}
 			disabled={disabled}
-			className={`cursor-pointer ${className} ${backgroundColor} ${textColor}`}>
+			className={`cursor-pointer ${className} ${backgroundColor} ${textColor} transition-color ease-in-out duration-100`}>
 			{children}
 		</button>
 	);

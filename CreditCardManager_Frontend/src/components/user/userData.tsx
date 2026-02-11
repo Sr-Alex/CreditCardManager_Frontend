@@ -13,10 +13,13 @@ function UserData() {
 		useState<boolean>(false);
 
 	return (
-		<Container className="aspect-square h-full hover:bg-light-gray dark:hover:bg-dark-slate">
+		<Container
+			backgroundColor="bg-light-gray hover:bg-dark-gray dark:bg-dark-blue dark:hover:bg-dark-slate"
+			textColor="text-dark-slate hover:text-light-gray dark:text-light-gray dark:hover:text-light-gray"
+			className="aspect-square h-full">
 			<button
 				onClick={() => setShowUserDefinitions(true)}
-				className="block w-full cursor-pointer">
+				className="block w-full h-full cursor-pointer">
 				<figure>
 					<User className="mx-auto" size={"3rem"} />
 				</figure>

@@ -39,7 +39,7 @@ function Container({
 
 	return (
 		<section
-			className={`pt-6 pr-4 pb-2 pl-4 rounded-2xl shadow-md border border-light-gray dark:border-dark-gray ${className} ${backgroundColor} ${textColor}`}>
+			className={`pt-6 pr-4 pb-2 pl-4 rounded-2xl shadow-md border border-light-gray dark:border-dark-gray ${className} ${backgroundColor} ${textColor} transition-colors ease-in-out duration-200`}>
 			<div className="flex w-full gap-2 mb-2">
 				{title?.trim() && (
 					<div>

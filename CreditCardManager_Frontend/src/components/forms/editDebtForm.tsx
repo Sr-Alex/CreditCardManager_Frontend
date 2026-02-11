@@ -25,12 +25,15 @@ function EditDebtForm({
 	const formattedDate = new Date(debtData.date).toISOString().slice(0, 10);
 
 	const handleDelete = async () => {
-		await deleteDebt(debtData.id);
-		updateCard();
-		submitHandler();
+		const response = await deleteDebt(debtData.id);
+		if (response.success) {
+			updateCard();
+			submitHandler();
+			return;
+		}
 	};
 
-	const handleUpdate = (event: FormEvent) => {
+	const handleUpdate = async (event: FormEvent) => {
 		event.preventDefault();
 
 		setIsWaiting(true);
@@ -41,12 +44,12 @@ function EditDebtForm({
 			date: date.current?.value,
 		};
 
-		updateDebt(debtData.id, updatedDebt).then((response) => {
-			if (response.success) {
-				updateCard();
-				submitHandler();
-			}
-		});
+		const response = await updateDebt(debtData.id, updatedDebt);
+		if (response.success) {
+			updateCard();
+			submitHandler();
+			return;
+		}
 
 		setIsWaiting(false);
 	};

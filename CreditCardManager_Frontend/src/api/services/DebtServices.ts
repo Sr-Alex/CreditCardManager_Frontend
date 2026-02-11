@@ -1,5 +1,7 @@
 import { GetAuthToken } from "../authStorage";
+
 import { METHODS, RequestApi, STATUS_CODE } from "../client";
+
 import type { CreateDebtDTO, DebtDTO, UpdateDebtDTO } from "../dtos/debtsDTOs";
 import {
 	failedResponse,
@@ -37,7 +39,10 @@ export const createDebt = async (
 	debtData: CreateDebtDTO,
 ): Promise<responseDTO> => {
 	return RequestApi(PATH, METHODS.POST, GetAuthToken(), debtData)
-		.then(() => {
+		.then((response) => {
+			if (response.status == STATUS_CODE.Created)
+				return failedResponse(response.data);
+
 			return successResponse();
 		})
 		.catch((error) => {
@@ -69,6 +74,17 @@ export const deleteDebt = async (debtId: number): Promise<responseDTO> => {
 	return RequestApi(`${PATH}/${debtId}`, METHODS.DELETE, GetAuthToken())
 		.then((response) => {
 			if (response.status != STATUS_CODE.NoContent)
+				return failedResponse(response.data);
+
+			return successResponse();
+		})
+		.catch((error) => failedResponse(error));
+};
+
+export const payDebt = async (debtId: number): Promise<responseDTO> => {
+	return RequestApi(`${PATH}/${debtId}/pay`, METHODS.POST, GetAuthToken())
+		.then((response) => {
+			if (response.status != STATUS_CODE.Ok)
 				return failedResponse(response.data);
 
 			return successResponse();

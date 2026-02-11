@@ -38,10 +38,7 @@ export function AuthContextProvider({
 	};
 
 	const updateCard = () => {
-		if (!card?.id || !(card?.userId == user?.id)) {
-			logout();
-			return;
-		}
+		if (!card?.id) return;
 
 		GetCreditCard(card.id).then((response) => {
 			if (response.success) {

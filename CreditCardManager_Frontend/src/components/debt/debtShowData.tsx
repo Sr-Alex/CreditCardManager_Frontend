@@ -13,6 +13,7 @@ import ActionButton from "../actionButton";
 import AbsoluteContainer from "../absoluteContainer";
 import Container from "../container";
 import EditDebtForm from "../forms/editDebtForm";
+import PayDebtForm from "../forms/payDebtForm";
 
 interface DebtShowDataProps {
 	debtData: DebtDTO;
@@ -26,14 +27,14 @@ function DebtShowData({
 	payable = false,
 }: DebtShowDataProps) {
 	const [showEditForm, setShowEditForm] = useState(false);
+	const [showPayDebtForm, setShowPayDebtForm] = useState(false);
 
 	const formattedDate: string = formatDateToString(new Date(debtData.date));
-
 	const formattedValue: string = formatCurrencyValue(debtData.value);
 
 	return (
-		<li className="px-4 py-2 my-2 rounded-lg border border-opaque hover:shadow-md transition-shadow">
-			<div className="mb-2 gap-4 grid grid-cols-3 md:grid-cols-4">
+		<li className="px-4 py-2 my-2 rounded-lg border-2 border-dark-slate hover:shadow-md transition-shadow">
+			<div className="mb-2 gap-4 grid grid-cols-3 sm:grid-cols-4">
 				<div>
 					<p className="text-sm text-gray font-semibold">Rótulo</p>
 					<p
@@ -50,8 +51,14 @@ function DebtShowData({
 
 				<div>
 					<p className="text-sm text-gray font-semibold">Valor</p>
-					<p className="text-md font-medium text-red">
+					<p className={`text-md font-medium text-red`}>
 						{formattedValue}
+					</p>
+				</div>
+				<div>
+					<p className="text-sm text-gray font-semibold">Status</p>
+					<p className={`text-md font-medium`}>
+						{debtData.isPaid ? "Paga" : "Não Paga"}
 					</p>
 				</div>
 			</div>
@@ -59,7 +66,7 @@ function DebtShowData({
 				<div className="flex gap-2">
 					{payable && (
 						<ActionButton
-							onClick={() => {}}
+							onClick={() => setShowPayDebtForm(true)}
 							className="px-2 py-1 rounded-full">
 							<DollarSign />
 						</ActionButton>
@@ -89,6 +96,20 @@ function DebtShowData({
 							submitHandler={() => {
 								setShowEditForm(false);
 							}}
+						/>
+					</Container>
+				</AbsoluteContainer>
+			)}
+
+			{showPayDebtForm && (
+				<AbsoluteContainer>
+					<Container
+						title="Registre a dívida paga!"
+						closeButton
+						closeButtonHandler={() => setShowPayDebtForm(false)}>
+						<PayDebtForm
+							debtData={debtData}
+							handlePayDebt={() => setShowPayDebtForm(false)}
 						/>
 					</Container>
 				</AbsoluteContainer>

@@ -1,4 +1,5 @@
 import { useState } from "react";
+
 import useAuthContext from "../../hooks/useAuthContext";
 
 import {
@@ -24,9 +25,9 @@ function CardSummary() {
 	return (
 		<Container
 			title={card?.cardName}
-			backgroundColor="bg-blue"
+			backgroundColor="bg-blue hover:bg-dark-gray dark:hover:bg-dark-slate"
 			textColor="text-white"
-			className="w-full h-fit hover:bg-light-gray dark:hover:bg-dark-blue">
+			className="w-full h-fit transition-colors ease-in-out">
 			<button
 				onClick={() => setShowCardDefinitions(true)}
 				className="block w-full text-left cursor-pointer">

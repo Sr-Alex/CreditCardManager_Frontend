@@ -3,6 +3,7 @@ import { CreditCard } from "lucide-react";
 import { formatCurrencyValue } from "../../utils/formatters";
 
 import type { CreditCardDTO } from "../../api/dtos/creditCardDtos";
+import ActionButton from "../actionButton";
 
 interface CardSelectProps {
 	card: CreditCardDTO;
@@ -15,8 +16,8 @@ function CardSelect({ card, clickHandler }: CardSelectProps) {
 
 	return (
 		<li>
-			<button
-				className="flex flex-col items-center p-2 w-36 rounded-lg text-white bg-blue"
+			<ActionButton
+				className="flex flex-col items-center p-2 w-36 cursor-pointer rounded-lg text-white bg-blue"
 				onClick={() => clickHandler(card.id)}>
 				<div>
 					<CreditCard size={"4rem"} />
@@ -26,7 +27,7 @@ function CardSelect({ card, clickHandler }: CardSelectProps) {
 					<p className="text-center">{formattedInvoice}</p>
 					<p>Limite: {formattedLimit}</p>
 				</div>
-			</button>
+			</ActionButton>
 		</li>
 	);
 }

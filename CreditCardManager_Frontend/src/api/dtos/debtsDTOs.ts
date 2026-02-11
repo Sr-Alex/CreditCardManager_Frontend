@@ -5,6 +5,7 @@ export type DebtDTO = {
 	label: string;
 	value: number;
 	date: string;
+	isPaid: boolean;
 };
 
 export type CreateDebtDTO = {
