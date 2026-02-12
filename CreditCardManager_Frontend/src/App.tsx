@@ -16,9 +16,13 @@ function App() {
 				<AuthContextProvider>
 					<UserSet />
 					<Header />
-					<Definitions />
-					<UserList />
-					<DebtHistory />
+					<div className="w-full h-fit flex flex-col flex-nowrap content-start gap-6 md:flex-row-reverse">
+						<Definitions />
+						<div className="flex flex-col gap-6">
+							<UserList />
+							<DebtHistory />
+						</div>
+					</div>
 				</AuthContextProvider>
 			</ThemeContextProvider>
 		</main>

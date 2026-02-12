@@ -14,7 +14,7 @@ function useFetchCardUsers() {
 
 			const response = await GetCreditCardUsers(card.id);
 			if (response.success) {
-				setCardUsers(response.data as CardUserDTO[]);
+				setCardUsers(response.data! as CardUserDTO[]);
 			}
 		}
 

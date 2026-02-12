@@ -40,7 +40,7 @@ export const createDebt = async (
 ): Promise<responseDTO> => {
 	return RequestApi(PATH, METHODS.POST, GetAuthToken(), debtData)
 		.then((response) => {
-			if (response.status == STATUS_CODE.Created)
+			if (response.status != STATUS_CODE.Created)
 				return failedResponse(response.data);
 
 			return successResponse();
@@ -61,6 +61,9 @@ export const updateDebt = async (
 		debtData,
 	)
 		.then((response) => {
+			if (response.status != STATUS_CODE.Ok)
+				return failedResponse(response.data);
+
 			if (!Object.hasOwn(response.data, "id")) return failedResponse();
 
 			const debt = response.data as DebtDTO;

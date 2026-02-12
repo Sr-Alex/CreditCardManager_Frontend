@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import type { DebtDTO } from "../../api/dtos/debtsDTOs";
 
@@ -22,27 +22,43 @@ function DebtHistory({
 	description = "Visualize e gerencie suas dívidas",
 }: DebtHistoryProps) {
 	const { card, user } = useAuthContext();
-
 	const debts = useFetchDebts();
 
 	const [showDebtForm, setShowDebtForm] = useState(false);
+	const [sortedDebts, setSortedDebts] = useState<DebtDTO[]>([]);
 
 	const isOwner = (debt: DebtDTO) => {
 		return user?.id == debt.user || user?.id == card?.userId;
 	};
 
+	useEffect(() => {
+		setSortedDebts(
+			debts.sort(
+				(a: DebtDTO, b: DebtDTO) =>
+					new Date(a.date).getTime() - new Date(b.date).getTime(),
+			),
+		);
+	}, [debts]);
+
 	return (
 		<Container title={title} description={description}>
-			<ul>
+			<ul className="max-h-96 overflow-auto">
 				{debts.length > 0 &&
-					debts.map((debt, index) => (
-						<DebtShowData
-							key={index}
-							debtData={debt}
-							editable={isOwner(debt)}
-							payable={isOwner(debt)}
-						/>
-					))}
+					sortedDebts
+						.sort(
+							(a: DebtDTO, b: DebtDTO) =>
+								new Date(a.date).getTime() -
+								new Date(b.date).getTime(),
+						)
+						.reverse()
+						.map((debt, index) => (
+							<DebtShowData
+								key={index}
+								debtData={debt}
+								editable={isOwner(debt)}
+								payable={isOwner(debt)}
+							/>
+						))}
 			</ul>
 
 			<ActionButton

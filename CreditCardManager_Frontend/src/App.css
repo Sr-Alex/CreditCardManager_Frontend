@@ -4,8 +4,6 @@
 }
 
 .app {
-	display: grid;
-
 	min-height: 100dvh;
 	padding: 2rem 1rem;
 }

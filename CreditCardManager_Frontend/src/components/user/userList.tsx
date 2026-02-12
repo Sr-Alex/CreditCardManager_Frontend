@@ -32,9 +32,10 @@ function UserList() {
 					/>
 				</ActionButton>
 			</div>
+
 			<ul
 				onWheel={(event) => horizontalScroll(event)}
-				className="flex gap-4 overflow-x-auto scrollbar-hide">
+				className="flex gap-2 overflow-x-auto scrollbar-hide">
 				{cardUsers.length > 0 &&
 					cardUsers.map((cardUser: CardUserDTO, index) => (
 						<CardUserShowData key={index} cardUser={cardUser} />

@@ -1,6 +1,11 @@
 export type CardUserDTO = {
-	UserId: number;
-	UserName: string;
-	DebtsCount: number;
-	PendingDebts: number;
+	id: number;
+	userId: number;
+	userName: string;
+	debtsCount: number;
+	pendingDebts: number;
+};
+
+export type RemoveCardUserDTO = {
+	cardUserId: number;
 };

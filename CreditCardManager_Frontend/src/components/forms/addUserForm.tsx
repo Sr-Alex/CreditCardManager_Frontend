@@ -11,7 +11,7 @@ interface AddUserFormProps {
 }
 
 function AddUserForm({ handleAddUserForm = () => {} }: AddUserFormProps) {
-	const { isLogged, card } = useAuthContext();
+	const { isLogged, card, updateCard } = useAuthContext();
 
 	const [isWaiting, setIsWaiting] = useState<boolean>(false);
 
@@ -32,8 +32,9 @@ function AddUserForm({ handleAddUserForm = () => {} }: AddUserFormProps) {
 
 		const response = await AddUser(card.id, email.toString());
 		if (response.success) {
-			handleAddUserForm();
+			updateCard();
 			setIsWaiting(false);
+			handleAddUserForm();
 		}
 
 		handleReset();

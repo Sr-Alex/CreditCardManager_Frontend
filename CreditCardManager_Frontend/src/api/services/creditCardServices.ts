@@ -1,6 +1,9 @@
 import { GetAuthToken } from "../authStorage";
-import { METHODS, RequestApi } from "../client";
-import { type CardUserDTO } from "../dtos/cardUsersDtos";
+import { METHODS, RequestApi, STATUS_CODE } from "../client";
+import {
+	type CardUserDTO,
+	type RemoveCardUserDTO,
+} from "../dtos/cardUsersDtos";
 
 import type {
 	CreditCardDTO,
@@ -73,7 +76,10 @@ export const AddUser = async (cardId: number, userEmail: string) => {
 		{ userEmail: userEmail },
 	)
 		.then((response) => {
-			return response.data;
+			if (response.status != STATUS_CODE.Ok)
+				return failedResponse(response.data);
+
+			return successResponse();
 		})
 		.catch((error) => {
 			return failedResponse(error);
@@ -104,4 +110,21 @@ export const DeleteCreditCard = async (cardId: number) => {
 		.catch((error) => {
 			return failedResponse(error);
 		});
+};
+
+export const RemoveCardUser = async (
+	cardId: number,
+	cardUserData: RemoveCardUserDTO,
+): Promise<responseDTO> => {
+	return RequestApi(
+		`${PATH}/details/${cardId}/users`,
+		METHODS.DELETE,
+		GetAuthToken(),
+		cardUserData,
+	).then((response) => {
+		if (response.status != STATUS_CODE.NoContent)
+			return failedResponse(response.data);
+
+		return successResponse();
+	});
 };

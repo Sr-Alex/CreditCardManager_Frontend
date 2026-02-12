@@ -43,6 +43,7 @@ function DebtForm({ handleCreateForm = () => {} }: DebtFormProps) {
 		};
 
 		const response = await createDebt(debtData);
+		console.log(response);
 		if (response.success) {
 			updateCard();
 			handleCreateForm();

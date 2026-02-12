@@ -37,14 +37,14 @@ export function AuthContextProvider({
 		setCard(selected);
 	};
 
-	const updateCard = () => {
+	const updateCard = async () => {
 		if (!card?.id) return;
 
-		GetCreditCard(card.id).then((response) => {
-			if (response.success) {
-				setCard(response.data as CreditCardDTO);
-			}
-		});
+		const response = await GetCreditCard(card.id);
+
+		if (response.success) {
+			setCard(response.data as CreditCardDTO);
+		}
 	};
 
 	useEffect(() => {

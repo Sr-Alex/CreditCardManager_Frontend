@@ -7,7 +7,7 @@ function Header() {
 	const { darkMode, toggleDarkMode } = useThemeProvider();
 
 	return (
-		<header className="flex justify-between items-center px-1 mb-8 bg-dark text-dark-slate dark:text-white">
+		<header className="flex justify-between items-center w-full h-fit px-1 mb-8 bg-dark text-dark-slate dark:text-white">
 			<div className="flex justify-center items-center gap-2">
 				<div className="p-4 icon-container rounded bg-blue">
 					<CreditCard size={"1.5rem"} color="var(--color-white)" />

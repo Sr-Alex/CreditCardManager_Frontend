@@ -27,10 +27,10 @@ function CardSummary() {
 			title={card?.cardName}
 			backgroundColor="bg-blue hover:bg-dark-gray dark:hover:bg-dark-slate"
 			textColor="text-white"
-			className="w-full h-fit transition-colors ease-in-out">
+			className="w-full h-fit transition-colors ease-in-out md:min-h-48">
 			<button
 				onClick={() => setShowCardDefinitions(true)}
-				className="block w-full text-left cursor-pointer">
+				className="block w-full h-full text-left cursor-pointer">
 				<h2>{formattedInvoice}</h2>
 				<div className="mt-2 text-sm">
 					<p>Limite: {formattedLimit}</p>
