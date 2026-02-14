@@ -1,73 +1,61 @@
-# React + TypeScript + Vite
+# Credit Card Manager - Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplicação frontend moderna para gerenciamento completo de cartões de crédito, seja para uso pessoal ou compartilhado entre múltiplos usuários. Organize suas dívidas, acompanhe despesas e mantenha registros estruturados de todas as transações.
 
-Currently, two official plugins are available:
+## Sobre o Projeto
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+O Credit Card Manager oferece uma solução intuitiva e responsiva para controlar faturas de cartões de crédito com suporte a compartilhamento de cartões, gerenciamento de dívidas e rastreamento detalhado de despesas.
 
-## React Compiler
+### Gerenciamento de Usuários
+- **Cadastro de Usuários**: Crie novas contas com informações pessoais;
+- **Autenticação Segura**: Login com tokens JWT para sessões seguras;
+- **Controle de Perfil**: Visualize e atualize informações de usuário;
+- **Logout Seguro**: Finalização de sessão com limpeza de tokens.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Gerenciamento de Cartões de Crédito
+- **Criar Cartões**: Registre novos cartões com limite e informações bancárias;
+- **Visualizar Detalhes**: Acesse informações completas de cada cartão;
+- **Acompanhar Saldo**: Visualize limite disponível e saldo utilizado;
+- **Selecionar Cartão Ativo**: Escolha qual cartão gerenciar em tempo real.
 
-## Expanding the ESLint configuration
+### Compartilhamento de Cartões
+- **Adicionar Usuários**: Inclua múltiplos usuários em um único cartão;
+- **Gerenciar Usuários**: Remova ou atualize usuários associados;
+- **Controle de Permissões**: Apenas proprietários podem gerenciar usuários.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Controle de Dívidas e Despesas
+- **Registrar Despesas**: Crie novas dívidas com descrição, valor e data;
+- **Acompanhar Status**: Visualize quais despesas estão pendentes ou pagas;
+- **Editar Dívidas**: Corrija informações de despesas registradas;
+- **Marcar como Paga**: Registre o pagamento de dívidas;
+- **Histórico de Dívidas**: Consulte todas as despesas com filtros por cartão;
+- **Cálculo Automático**: Soma de dívidas atualizada em tempo real.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Autorização e Segurança
+- **Controle em Cascata**: Apenas proprietários de cartões podem gerenciar usuários e dívidas;
+- **Proteção por Autenticação**: Todas as operações são protegidas por JWT;
+- **Validação de Dados**: Verificação de entrada em formulários e na API.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Interface e Experiência
+- **Design Responsivo**: Totalmente adaptável para desktop, tablet e mobile;
+- **Tema Claro/Escuro**: Alterne entre temas de acordo com preferência;
+- **Componentes Reutilizáveis**: Arquitetura modular e escalável;
+- **Navegação Intuitiva**: Interface clara e fácil de usar.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## Tecnologias Utilizadas
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+- **React JS**: Framework JavaScript para interfaces dinâmicas;
+- **TypeScript**: Tipagem estática para maior segurança;
+- **Vite**: Bundler moderno e rápido;
+- **Tailwind CSS**: Framework CSS utilitário para estilos responsivos;
+- **Axios**: Cliente HTTP para requisições à API;
+- **Lucide React**: Biblioteca de ícones SVG;
+- **React Context API**: Gerenciamento de estado global (autenticação e tema).
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## 📝 Licença
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Este projeto está sob licença MIT. Veja o arquivo LICENSE para mais detalhes.
+
+---
+
+**Desenvolvido com usando React + TypeScript**
