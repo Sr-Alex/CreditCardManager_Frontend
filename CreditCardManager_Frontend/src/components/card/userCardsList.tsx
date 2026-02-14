@@ -23,7 +23,6 @@ function UserCardsList() {
 				setCards(response.data as CreditCardDTO[]);
 			} else {
 				console.error(response.data);
-				logout();
 			}
 		});
 	}, [isLogged, user, logout]);
