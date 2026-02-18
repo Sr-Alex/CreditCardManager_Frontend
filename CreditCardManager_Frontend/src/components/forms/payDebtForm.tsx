@@ -1,6 +1,7 @@
 import { useEffect, useState, type FormEvent } from "react";
 
 import useAuthContext from "../../hooks/useAuthContext";
+import useModalContext from "../../hooks/useModalContext";
 
 import { payDebt } from "../../api/services/DebtServices";
 
@@ -14,7 +15,6 @@ import {
 	formatDateToString,
 } from "../../utils/formatters";
 import { User } from "lucide-react";
-import useModalContext from "../../hooks/useModalContext";
 
 function PayDebtForm({ debtData }: { debtData: DebtDTO }) {
 	const { user, card, updateCard } = useAuthContext();
@@ -30,8 +30,7 @@ function PayDebtForm({ debtData }: { debtData: DebtDTO }) {
 		event.preventDefault();
 
 		if (!(user?.id == debtData.user) || !(user?.id == card?.userId)) {
-			closeModal;
-			return;
+			closeModal();
 		}
 
 		setIsWaiting(true);
@@ -39,8 +38,7 @@ function PayDebtForm({ debtData }: { debtData: DebtDTO }) {
 		const response = await payDebt(debtData.id);
 		if (response.success) {
 			updateCard();
-			closeModal;
-			return;
+			closeModal();
 		}
 
 		setIsWaiting(false);

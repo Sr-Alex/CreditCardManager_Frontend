@@ -87,7 +87,7 @@ export const deleteDebt = async (debtId: number): Promise<responseDTO> => {
 export const payDebt = async (debtId: number): Promise<responseDTO> => {
 	return RequestApi(`${PATH}/${debtId}/pay`, METHODS.POST, GetAuthToken())
 		.then((response) => {
-			if (response.status != STATUS_CODE.Ok)
+			if (response.status != STATUS_CODE.NoContent)
 				return failedResponse(response.data);
 
 			return successResponse();

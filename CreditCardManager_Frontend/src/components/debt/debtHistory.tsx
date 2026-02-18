@@ -61,7 +61,7 @@ function DebtHistory({
 								key={index}
 								debtData={debt}
 								editable={isOwner(debt)}
-								payable={isOwner(debt)}
+								payable={isOwner(debt) && !debt.isPaid}
 							/>
 						))}
 			</ul>

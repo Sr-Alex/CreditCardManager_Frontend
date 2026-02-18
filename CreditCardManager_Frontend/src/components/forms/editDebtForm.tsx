@@ -4,6 +4,7 @@ import type { DebtDTO, UpdateDebtDTO } from "../../api/dtos/debtsDTOs";
 import { deleteDebt, updateDebt } from "../../api/services/DebtServices";
 import useAuthContext from "../../hooks/useAuthContext";
 import ActionButton from "../actionButton";
+import useModalContext from "../../hooks/useModalContext";
 
 interface EditDebtFormProps {
 	debtData: DebtDTO;
@@ -15,6 +16,7 @@ function EditDebtForm({
 	submitHandler = () => {},
 }: EditDebtFormProps) {
 	const { updateCard } = useAuthContext();
+	const { closeModal } = useModalContext();
 
 	const label = useRef<HTMLInputElement>(null);
 	const value = useRef<HTMLInputElement>(null);
@@ -29,6 +31,7 @@ function EditDebtForm({
 		if (response.success) {
 			updateCard();
 			submitHandler();
+			closeModal();
 			return;
 		}
 	};
@@ -48,7 +51,7 @@ function EditDebtForm({
 		if (response.success) {
 			updateCard();
 			submitHandler();
-			return;
+			closeModal();
 		}
 
 		setIsWaiting(false);
