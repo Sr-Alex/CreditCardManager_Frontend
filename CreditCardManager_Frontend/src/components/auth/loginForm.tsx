@@ -1,44 +1,41 @@
 import { useRef, useState, type FormEvent } from "react";
 
+import { LoginUser } from "../../api/services/userServices";
+
+import type { UserDTO } from "../../api/dtos/userDtos";
+
 import useAuthContext from "../../hooks/useAuthContext";
 
-import { CreateUser } from "../../api/services/userServices";
-import type { UserDTO } from "../../api/dtos/userDtos";
 import ActionButton from "../actionButton";
+import useModalContext from "../../hooks/useModalContext";
 
-function CreateUserForm() {
+function LoginForm() {
 	const { login } = useAuthContext();
+	const { closeModal } = useModalContext();
 
-	const userName = useRef<HTMLInputElement>(null);
 	const userEmail = useRef<HTMLInputElement>(null);
-	const userPassword = useRef<HTMLInputElement>(null);
+	const UserPassword = useRef<HTMLInputElement>(null);
 
 	const [isWaiting, setIsWaiting] = useState(false);
 
 	const handleReset = () => {
-		userName.current!.value = "";
 		userEmail.current!.value = "";
-		userPassword.current!.value = "";
+		UserPassword.current!.value = "";
 	};
 
-	const handleCreateUser = (e: FormEvent) => {
+	const handleLogin = (e: FormEvent) => {
 		e.preventDefault();
-		const name = userName.current!.value;
 		const email = userEmail.current!.value;
-		const password = userPassword.current!.value;
+		const password = UserPassword.current!.value;
 
-		if (!name || !email || password?.length < 6) return;
+		if (!email || !password) return;
 
 		setIsWaiting(true);
 
-		CreateUser({
-			userName: name,
-			email: email,
-			password: password,
-		}).then((response) => {
+		LoginUser(email, password).then((response) => {
 			if (response.success) {
-				handleReset();
 				login(response.data as UserDTO);
+				closeModal();
 			}
 		});
 
@@ -46,33 +43,26 @@ function CreateUserForm() {
 	};
 
 	return (
-		<form onSubmit={handleCreateUser} className="flex flex-col gap-3">
+		<form
+			onSubmit={handleLogin}
+			className="flex"
+			style={{ flexDirection: "column", gap: "0.75rem" }}>
 			<div>
-				<label htmlFor="name">Nome:</label>
+				<label htmlFor="userEmail">Email de usuário:</label>
 				<input
 					type="text"
-					id="name"
-					ref={userName}
-					placeholder="Nome do usuário"
-					className="input-text"
-				/>
-			</div>
-			<div>
-				<label htmlFor="email">Email:</label>
-				<input
-					type="email"
-					id="email"
+					id="userEmail"
 					ref={userEmail}
 					placeholder="exemplo@gmail.com"
 					className="input-text"
 				/>
 			</div>
 			<div>
-				<label htmlFor="password">Senha:</label>
+				<label htmlFor="password">Password:</label>
 				<input
 					type="password"
 					id="password"
-					ref={userPassword}
+					ref={UserPassword}
 					placeholder="*********"
 					className="input-text"
 				/>
@@ -88,11 +78,11 @@ function CreateUserForm() {
 					disabled={isWaiting}
 					type="submit"
 					className="form-button">
-					{isWaiting ? "Waiting..." : "Criar Usuário"}
+					{isWaiting ? "waiting..." : "login"}
 				</ActionButton>
 			</div>
 		</form>
 	);
 }
 
-export default CreateUserForm;
+export default LoginForm;

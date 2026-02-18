@@ -35,6 +35,10 @@
 		@apply px-4 py-2 mx-2 cursor-pointer rounded-full text-white bg-blue hover:shadow-lg hover:scale-105 transition-all ease-in-out duration-100;
 	}
 
+	.modal {
+		@apply min-w-80 min-h-32 h-fit fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
+	}
+
 	.scrollbar {
 		scroll-behavior: smooth;
 	}

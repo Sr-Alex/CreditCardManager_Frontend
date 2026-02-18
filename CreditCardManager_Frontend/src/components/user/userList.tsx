@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 import { Plus } from "lucide-react";
 
 import type { CardUserDTO } from "../../api/dtos/cardUsersDtos";
@@ -11,12 +9,12 @@ import ActionButton from "../actionButton";
 
 import Container from "../container";
 import CardUserShowData from "./cardUserShowData";
-import AbsoluteContainer from "../absoluteContainer";
-import AddUserForm from "../forms/addUserForm";
+import useModalContext from "../../hooks/useModalContext";
+import AddUserFormContainer from "./addCardUserContainer";
 
 function UserList() {
 	const cardUsers = useFetchCardUsers();
-	const [showAddUserForm, setShowAddUserForm] = useState<boolean>(false);
+	const { openModal } = useModalContext();
 
 	return (
 		<Container
@@ -24,7 +22,7 @@ function UserList() {
 			description={"Gerencie os usuários do sistema"}>
 			<div className="block w-fit ml-auto">
 				<ActionButton
-					onClick={() => setShowAddUserForm(!showAddUserForm)}
+					onClick={() => openModal(<AddUserFormContainer />)}
 					backgroundColor="bg-transparent">
 					<Plus
 						size={"2rem"}
@@ -35,25 +33,12 @@ function UserList() {
 
 			<ul
 				onWheel={(event) => horizontalScroll(event)}
-				className="flex gap-2 overflow-x-auto scrollbar-hide">
+				className="flex p-2 gap-2 overflow-x-auto scrollbar-hide">
 				{cardUsers.length > 0 &&
 					cardUsers.map((cardUser: CardUserDTO, index) => (
 						<CardUserShowData key={index} cardUser={cardUser} />
 					))}
 			</ul>
-
-			{showAddUserForm && (
-				<AbsoluteContainer>
-					<Container
-						title="Adicionar usuário ao cartão: "
-						closeButton
-						closeButtonHandler={() => setShowAddUserForm(false)}>
-						<AddUserForm
-							handleAddUserForm={() => setShowAddUserForm(false)}
-						/>
-					</Container>
-				</AbsoluteContainer>
-			)}
 		</Container>
 	);
 }

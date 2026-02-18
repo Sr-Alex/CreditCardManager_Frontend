@@ -1,6 +1,7 @@
 import { useRef, useState, type FormEvent } from "react";
 
 import useAuthContext from "../../hooks/useAuthContext";
+import useModalContext from "../../hooks/useModalContext";
 
 import { createDebt } from "../../api/services/DebtServices";
 
@@ -8,12 +9,9 @@ import type { CreateDebtDTO } from "../../api/dtos/debtsDTOs";
 
 import ActionButton from "../actionButton";
 
-interface DebtFormProps {
-	handleCreateForm: () => void;
-}
-
-function DebtForm({ handleCreateForm = () => {} }: DebtFormProps) {
+function DebtForm() {
 	const { user, card, updateCard } = useAuthContext();
+	const { closeModal } = useModalContext();
 
 	const label = useRef<HTMLInputElement>(null);
 	const value = useRef<HTMLInputElement>(null);
@@ -43,10 +41,9 @@ function DebtForm({ handleCreateForm = () => {} }: DebtFormProps) {
 		};
 
 		const response = await createDebt(debtData);
-		console.log(response);
 		if (response.success) {
 			updateCard();
-			handleCreateForm();
+			closeModal();
 		}
 
 		handleReset();

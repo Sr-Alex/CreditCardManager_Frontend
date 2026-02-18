@@ -1,6 +1,8 @@
 import { X } from "lucide-react";
 import { useEffect, type ReactNode } from "react";
+
 import ActionButton from "./actionButton";
+import useModalContext from "../hooks/useModalContext";
 
 interface ContainerProps {
 	children: ReactNode;
@@ -21,21 +23,29 @@ function Container({
 	textColor = "text-dark-blue dark:text-white",
 	className = "min-w-80 min-h-32 h-fit",
 	closeButton = false,
-	closeButtonHandler = () => {},
+	closeButtonHandler = undefined,
 }: ContainerProps) {
+	const { closeModal } = useModalContext();
+
+	const closeHandler = () => {
+		if (closeButton) {
+			closeButtonHandler ? closeButtonHandler() : closeModal();
+		}
+	};
+
 	useEffect(() => {
 		const handleEscape = (e: KeyboardEvent) => {
 			if (!closeButton) return;
 
 			if (e.key == "Escape") {
-				closeButtonHandler();
+				closeHandler();
 			}
 		};
 
 		document.addEventListener("keydown", handleEscape);
 
 		return () => document.removeEventListener("keydown", handleEscape);
-	}, [closeButton, closeButtonHandler]);
+	}, [closeButtonHandler, closeButtonHandler]);
 
 	return (
 		<section
@@ -55,7 +65,7 @@ function Container({
 				{closeButton && (
 					<ActionButton
 						type="button"
-						onClick={() => closeButtonHandler()}
+						onClick={closeHandler}
 						className="block ml-auto mb-2 "
 						backgroundColor="bg-transparent">
 						<X

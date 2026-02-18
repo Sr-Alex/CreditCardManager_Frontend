@@ -1,24 +1,26 @@
-import { useState } from "react";
 import { User } from "lucide-react";
 
 import useAuthContext from "../../hooks/useAuthContext";
 
 import Container from "../container";
-import AbsoluteContainer from "../absoluteContainer";
+import useModalContext from "../../hooks/useModalContext";
 import UserDefinitions from "./userDefinitions";
 
 function UserData() {
 	const { user } = useAuthContext();
-	const [showUserDefinitions, setShowUserDefinitions] =
-		useState<boolean>(false);
+	const { openModal } = useModalContext();
+
+	const handleClick = () => {
+		openModal(<UserDefinitions />);
+	};
 
 	return (
 		<Container
 			backgroundColor="bg-light-gray hover:bg-dark-gray dark:bg-dark-blue dark:hover:bg-dark-slate"
 			textColor="text-dark-slate hover:text-light-gray dark:text-light-gray dark:hover:text-light-gray"
-			className="aspect-square h-full">
+			className="h-fit">
 			<button
-				onClick={() => setShowUserDefinitions(true)}
+				onClick={handleClick}
 				className="block w-full h-full cursor-pointer">
 				<figure>
 					<User className="mx-auto" size={"3rem"} />
@@ -27,16 +29,6 @@ function UserData() {
 					<p>{user?.userName}</p>
 				</div>
 			</button>
-
-			{showUserDefinitions && (
-				<AbsoluteContainer>
-					<UserDefinitions
-						userDefinitionsHandler={() =>
-							setShowUserDefinitions(false)
-						}
-					/>
-				</AbsoluteContainer>
-			)}
 		</Container>
 	);
 }

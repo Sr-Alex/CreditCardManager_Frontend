@@ -9,9 +9,11 @@ import type {
 } from "../../api/dtos/creditCardDtos";
 
 import ActionButton from "../actionButton";
+import useModalContext from "../../hooks/useModalContext";
 
 function CreateCardForm() {
 	const { selectCard, user } = useAuthContext();
+	const { closeModal } = useModalContext();
 
 	const cardName = useRef<HTMLInputElement>(null);
 	const expiresAt = useRef<HTMLInputElement>(null);
@@ -45,6 +47,7 @@ function CreateCardForm() {
 				const card = response.data as CreditCardDTO;
 				handleReset();
 				selectCard(card);
+				closeModal();
 			}
 		});
 

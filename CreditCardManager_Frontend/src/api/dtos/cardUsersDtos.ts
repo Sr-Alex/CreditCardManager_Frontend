@@ -4,6 +4,8 @@ export type CardUserDTO = {
 	userName: string;
 	debtsCount: number;
 	pendingDebts: number;
+	totalAmount: number;
+	amountToPay: number;
 };
 
 export type RemoveCardUserDTO = {

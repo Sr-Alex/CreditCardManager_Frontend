@@ -3,12 +3,14 @@ import { useEffect, useState } from "react";
 import { GetUserCreditCards } from "../../api/services/creditCardServices";
 
 import useAuthContext from "../../hooks/useAuthContext";
+import useModalContext from "../../hooks/useModalContext";
 
 import type { CreditCardDTO } from "../../api/dtos/creditCardDtos";
 import CardSelect from "./cardSelect";
 
 function UserCardsList() {
 	const { user, isLogged, logout, selectCard } = useAuthContext();
+	const { closeModal } = useModalContext();
 
 	const [cards, setCards] = useState<CreditCardDTO[]>([]);
 
@@ -22,13 +24,14 @@ function UserCardsList() {
 			if (response.success) {
 				setCards(response.data as CreditCardDTO[]);
 			} else {
-				console.error(response.data);
+				logout();
 			}
 		});
 	}, [isLogged, user, logout]);
 
 	const cardSelectionHandler = (card: CreditCardDTO) => {
 		selectCard(card);
+		closeModal();
 	};
 
 	return (

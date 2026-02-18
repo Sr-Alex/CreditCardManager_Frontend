@@ -8,7 +8,9 @@ function AuthFormContainer() {
 	const [showLoginForm, setShowLoginForm] = useState<boolean>(true);
 
 	return (
-		<Container title="Faça login para acessar seus cartões!">
+		<Container
+			title="Faça login para acessar seus cartões!"
+			className="modal">
 			{showLoginForm ? <LoginForm /> : <CreateUserForm />}
 
 			<button

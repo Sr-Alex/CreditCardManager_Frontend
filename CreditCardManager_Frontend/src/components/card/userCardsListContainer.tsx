@@ -4,11 +4,11 @@ import { Plus } from "lucide-react";
 
 import Container from "../container";
 import UserCardsList from "./userCardsList";
-import CreateCardForm from "../forms/createCardForm";
+import CreateCardForm from "../auth/createCardForm";
 
 import ActionButton from "../actionButton";
 
-const UserCardsSelect = () => {
+const UserCardsListContainer = () => {
 	const [showCreated, setShowCreated] = useState(false);
 
 	return (
@@ -17,7 +17,10 @@ const UserCardsSelect = () => {
 				showCreated
 					? "Crie seu cartão!"
 					: "Selecione um de seus cartões!"
-			}>
+			}
+			closeButton
+			className="modal
+			">
 			<ActionButton
 				onClick={() => setShowCreated(!showCreated)}
 				className="w-fit mb-2 px-4 py-2 rounded-lg font-medium">
@@ -31,4 +34,4 @@ const UserCardsSelect = () => {
 	);
 };
 
-export default UserCardsSelect;
+export default UserCardsListContainer;

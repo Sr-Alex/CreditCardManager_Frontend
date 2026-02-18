@@ -48,18 +48,17 @@ export function AuthContextProvider({
 	};
 
 	useEffect(() => {
-		const autoLogin = async (): Promise<boolean> => {
+		const autoLogin = async (): Promise<void> => {
 			const auth = GetAuthToken();
 
-			if (!auth) return false;
+			if (!auth) return;
 
 			const response = await GetUser(auth.userId);
+			console.log(response);
 			if (response.success) {
 				login(response.data as UserDTO);
-				return true;
-			}
-
-			return false;
+				return;
+			} else logout();
 		};
 
 		autoLogin();

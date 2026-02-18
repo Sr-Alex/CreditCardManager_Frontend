@@ -5,13 +5,11 @@ import { AddUser } from "../../api/services/creditCardServices";
 import useAuthContext from "../../hooks/useAuthContext";
 
 import ActionButton from "../actionButton";
+import useModalContext from "../../hooks/useModalContext";
 
-interface AddUserFormProps {
-	handleAddUserForm: () => void;
-}
-
-function AddUserForm({ handleAddUserForm = () => {} }: AddUserFormProps) {
+function AddUserForm() {
 	const { isLogged, card, updateCard } = useAuthContext();
+	const { closeModal } = useModalContext();
 
 	const [isWaiting, setIsWaiting] = useState<boolean>(false);
 
@@ -34,7 +32,7 @@ function AddUserForm({ handleAddUserForm = () => {} }: AddUserFormProps) {
 		if (response.success) {
 			updateCard();
 			setIsWaiting(false);
-			handleAddUserForm();
+			closeModal();
 		}
 
 		handleReset();

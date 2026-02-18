@@ -14,14 +14,12 @@ import {
 	formatDateToString,
 } from "../../utils/formatters";
 import { User } from "lucide-react";
+import useModalContext from "../../hooks/useModalContext";
 
-interface PayDebtFormProps {
-	debtData: DebtDTO;
-	handlePayDebt: () => void;
-}
-
-function PayDebtForm({ debtData, handlePayDebt = () => {} }: PayDebtFormProps) {
+function PayDebtForm({ debtData }: { debtData: DebtDTO }) {
 	const { user, card, updateCard } = useAuthContext();
+	const { closeModal } = useModalContext();
+
 	const [isWaiting, setIsWaiting] = useState(false);
 	const [debtOwner, setDebtOwner] = useState<UserDTO>();
 
@@ -32,7 +30,7 @@ function PayDebtForm({ debtData, handlePayDebt = () => {} }: PayDebtFormProps) {
 		event.preventDefault();
 
 		if (!(user?.id == debtData.user) || !(user?.id == card?.userId)) {
-			handlePayDebt();
+			closeModal;
 			return;
 		}
 
@@ -41,7 +39,7 @@ function PayDebtForm({ debtData, handlePayDebt = () => {} }: PayDebtFormProps) {
 		const response = await payDebt(debtData.id);
 		if (response.success) {
 			updateCard();
-			handlePayDebt();
+			closeModal;
 			return;
 		}
 

@@ -1,27 +1,22 @@
 import { User } from "lucide-react";
 
 import useAuthContext from "../../hooks/useAuthContext";
+import useModalContext from "../../hooks/useModalContext";
 
 import Container from "../container";
 import ActionButton from "../actionButton";
 
-interface UserDefinitionsProps {
-	userDefinitionsHandler: () => void;
-}
-
-function UserDefinitions({ userDefinitionsHandler }: UserDefinitionsProps) {
+function UserDefinitions() {
 	const { user, logout } = useAuthContext();
+	const { closeModal } = useModalContext();
 
 	const handleLogout = () => {
 		logout();
-		userDefinitionsHandler();
+		closeModal();
 	};
 
 	return (
-		<Container
-			title="Dados de usuário:"
-			closeButton={true}
-			closeButtonHandler={userDefinitionsHandler}>
+		<Container title="Dados de usuário:" className="modal" closeButton>
 			<figure className="w-full">
 				<User className="mx-auto mb-4" size={"4rem"} />
 			</figure>

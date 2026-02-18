@@ -2,17 +2,14 @@ import { CreditCard } from "lucide-react";
 
 import useAuthContext from "../../hooks/useAuthContext";
 
-import Container from "../container";
 import {
 	formatCurrencyValue,
 	formatDateToString,
 } from "../../utils/formatters";
 
-interface CardDefinitionsProps {
-	CardDefinitionsHandler: () => void;
-}
+import Container from "../container";
 
-function CardDefinitions({ CardDefinitionsHandler }: CardDefinitionsProps) {
+function CardDefinitions() {
 	const { card } = useAuthContext();
 
 	const formattedInvoice = formatCurrencyValue(card?.invoice || NaN);
@@ -22,10 +19,7 @@ function CardDefinitions({ CardDefinitionsHandler }: CardDefinitionsProps) {
 	);
 
 	return (
-		<Container
-			title="Dados do cartão:"
-			closeButton={true}
-			closeButtonHandler={CardDefinitionsHandler}>
+		<Container title="Dados do cartão:" closeButton className="modal">
 			<figure className="w-full">
 				<CreditCard className="mx-auto mb-4" size={"4rem"} />
 			</figure>
