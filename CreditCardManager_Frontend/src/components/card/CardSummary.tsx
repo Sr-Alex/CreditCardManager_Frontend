@@ -13,9 +13,9 @@ function CardSummary() {
 	const { card } = useAuthContext();
 	const { openModal } = useModalContext();
 
-	const formattedInvoice = formatCurrencyValue(card?.invoice || 0);
-	const formattedLimit = formatCurrencyValue(card?.limit || 0);
-	const formattedDate = formatDateToString(
+	const formattedInvoice: string = formatCurrencyValue(card?.invoice || 0);
+	const formattedLimit: string = formatCurrencyValue(card?.limit || 0);
+	const formattedDate: string = formatDateToString(
 		card ? new Date(card!.expiresAt) : new Date(),
 	);
 
@@ -32,7 +32,14 @@ function CardSummary() {
 			<button
 				onClick={handleClick}
 				className="block w-full h-full text-left cursor-pointer">
-				<h2>{formattedInvoice}</h2>
+				<h2
+					className={
+						card?.invoice! > card?.limit!
+							? "text-red"
+							: "text-white"
+					}>
+					{formattedInvoice}
+				</h2>
 				<div className="mt-2 text-sm">
 					<p>Limite: {formattedLimit}</p>
 					<p>Expira em: {formattedDate} </p>

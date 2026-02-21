@@ -1,6 +1,10 @@
+import { useState } from "react";
 import { CreditCard } from "lucide-react";
 
+import { DeleteCreditCard } from "../../api/services/creditCardServices";
+
 import useAuthContext from "../../hooks/useAuthContext";
+import useModalContext from "../../hooks/useModalContext";
 
 import {
 	formatCurrencyValue,
@@ -8,15 +12,43 @@ import {
 } from "../../utils/formatters";
 
 import Container from "../container";
+import ActionButton from "../actionButton";
+import ConfirmModal from "../confirmModal";
+import UserCardsListContainer from "./userCardsListContainer";
 
 function CardDefinitions() {
-	const { card } = useAuthContext();
+	const { card, selectCard } = useAuthContext();
+	const { openModal, closeModal } = useModalContext();
 
-	const formattedInvoice = formatCurrencyValue(card?.invoice || NaN);
-	const formattedLimit = formatCurrencyValue(card?.limit || NaN);
+	const [isWaiting, setIsWaiting] = useState<boolean>(false);
+
+	const formattedInvoice = formatCurrencyValue(card?.invoice || 0);
+	const formattedLimit = formatCurrencyValue(card?.limit || 0);
 	const formattedDate = formatDateToString(
 		card ? new Date(card!.expiresAt) : new Date(),
 	);
+
+	const handleDelete = async () => {
+		if (!card?.id) return;
+
+		const response = await DeleteCreditCard(card?.id);
+		if (response.success) {
+			selectCard();
+			closeModal();
+			openModal(<UserCardsListContainer />);
+		}
+	};
+
+	const handleLeaveClick = () => {
+		selectCard(undefined);
+		openModal(<UserCardsListContainer />);
+	};
+
+	const handleDeleteClick = async () => {
+		setIsWaiting(true);
+		openModal(<ConfirmModal onConfirm={handleDelete} />);
+		setIsWaiting(false);
+	};
 
 	return (
 		<Container title="Dados do cartão:" closeButton className="modal">
@@ -42,6 +74,22 @@ function CardDefinitions() {
 					</p>
 				</div>
 			</div>
+
+			<ActionButton
+				onClick={handleLeaveClick}
+				className="form-button px-2">
+				Trocar cartão
+			</ActionButton>
+
+			{card && (
+				<ActionButton
+					onClick={handleDeleteClick}
+					disabled={isWaiting}
+					className="form-button px-2"
+					backgroundColor="bg-red hover:bg-dark-red disabled:bg-gray">
+					Apagar cartão
+				</ActionButton>
+			)}
 		</Container>
 	);
 }

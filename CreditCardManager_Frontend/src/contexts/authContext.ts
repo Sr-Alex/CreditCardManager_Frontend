@@ -9,7 +9,7 @@ export interface AuthContextImp {
 	card: CreditCardDTO | undefined;
 	login: (userDto: UserDTO) => void;
 	logout: () => void;
-	selectCard: (selected: CreditCardDTO) => void;
+	selectCard: (selected?: CreditCardDTO) => void;
 	updateCard: () => void;
 }
 

@@ -104,7 +104,10 @@ export const CreateCreditCard = async (
 
 export const DeleteCreditCard = async (cardId: number) => {
 	return RequestApi(`${PATH}/${cardId}`, METHODS.DELETE, GetAuthToken())
-		.then(() => {
+		.then((response) => {
+			if (response.status != STATUS_CODE.NoContent)
+				failedResponse(response.data);
+
 			return successResponse();
 		})
 		.catch((error) => {

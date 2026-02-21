@@ -31,8 +31,11 @@ export function AuthContextProvider({
 		setIsLogged(false);
 	};
 
-	const selectCard = (selected: CreditCardDTO) => {
-		if (!selected.id) return;
+	const selectCard = (selected?: CreditCardDTO) => {
+		if (!selected || !selected.id) {
+			setCard(undefined);
+			return;
+		}
 
 		setCard(selected);
 	};
@@ -54,7 +57,6 @@ export function AuthContextProvider({
 			if (!auth) return;
 
 			const response = await GetUser(auth.userId);
-			console.log(response);
 			if (response.success) {
 				login(response.data as UserDTO);
 				return;

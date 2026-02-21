@@ -2,6 +2,7 @@
 
 @theme {
 	--color-red: #e7000b;
+	--color-dark-red: #9b0000;
 
 	--color-blue: #4843f8;
 	--color-dark-blue: #15203d;
@@ -32,7 +33,7 @@
 	}
 
 	.form-button {
-		@apply px-4 py-2 mx-2 cursor-pointer rounded-full text-white bg-blue hover:shadow-lg hover:scale-105 transition-all ease-in-out duration-100;
+		@apply px-4 py-2 mx-2 mb-2 rounded-lg cursor-pointer;
 	}
 
 	.modal {
