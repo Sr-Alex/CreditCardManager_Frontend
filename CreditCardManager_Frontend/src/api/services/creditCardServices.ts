@@ -8,6 +8,7 @@ import {
 import type {
 	CreditCardDTO,
 	CreateCreditCardDTO,
+	UpdateCreditCardDTO,
 } from "../dtos/creditCardDtos";
 
 import {
@@ -96,6 +97,31 @@ export const CreateCreditCard = async (
 			const createdCard = response.data as CreditCardDTO;
 
 			return successResponse(createdCard);
+		})
+		.catch((error) => {
+			return failedResponse(error);
+		});
+};
+
+export const UpdateCreditCard = async (
+	cardId: number,
+	cardData: UpdateCreditCardDTO,
+): Promise<responseDTO> => {
+	return RequestApi(
+		`${PATH}/${cardId}`,
+		METHODS.PUT,
+		GetAuthToken(),
+		cardData,
+	)
+		.then((response) => {
+			if (response.status != STATUS_CODE.Ok)
+				return failedResponse(response.data);
+
+			if (!Object.hasOwn(response.data, "id")) return failedResponse();
+
+			const updatedCard = response.data as CreditCardDTO;
+
+			return successResponse(updatedCard);
 		})
 		.catch((error) => {
 			return failedResponse(error);

@@ -1,12 +1,11 @@
 import Container from "../container";
-import DebtForm from "../forms/debtForm";
+import EditCardForm from "../forms/editCardForm";
 
-function DebtFormContainer() {
+function EditCardFormContainer() {
 	return (
 		<Container title="Registre sua dívida:" className="modal" closeButton>
-			<DebtForm />
+			<EditCardForm />
 		</Container>
 	);
 }
-
-export default DebtFormContainer;
+export default EditCardFormContainer;

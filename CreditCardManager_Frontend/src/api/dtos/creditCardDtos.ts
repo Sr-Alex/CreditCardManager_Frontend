@@ -13,3 +13,9 @@ export type CreateCreditCardDTO = {
 	expiresAt?: string;
 	Limit?: number;
 };
+
+export type UpdateCreditCardDTO = {
+	cardName?: string;
+	expiresAt?: string;
+	limit?: number;
+};

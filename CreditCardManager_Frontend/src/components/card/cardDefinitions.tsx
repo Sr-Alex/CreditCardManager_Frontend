@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { CreditCard } from "lucide-react";
+import { CreditCard, SquarePen } from "lucide-react";
 
 import { DeleteCreditCard } from "../../api/services/creditCardServices";
 
@@ -15,6 +15,7 @@ import Container from "../container";
 import ActionButton from "../actionButton";
 import ConfirmModal from "../confirmModal";
 import UserCardsListContainer from "./userCardsListContainer";
+import EditCardFormContainer from "./editCardFormContainer";
 
 function CardDefinitions() {
 	const { card, selectCard } = useAuthContext();
@@ -39,6 +40,10 @@ function CardDefinitions() {
 		}
 	};
 
+	const handleEditClick = () => {
+		openModal(<EditCardFormContainer />);
+	};
+
 	const handleLeaveClick = () => {
 		selectCard(undefined);
 		openModal(<UserCardsListContainer />);
@@ -52,6 +57,11 @@ function CardDefinitions() {
 
 	return (
 		<Container title="Dados do cartão:" closeButton className="modal">
+			<button
+				onClick={handleEditClick}
+				className="block ml-auto cursor-pointer">
+				<SquarePen size={"1.5rem"} />
+			</button>
 			<figure className="w-full">
 				<CreditCard className="mx-auto mb-4" size={"4rem"} />
 			</figure>
