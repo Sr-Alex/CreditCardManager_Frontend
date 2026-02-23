@@ -1,5 +1,3 @@
-import { useEffect, useState } from "react";
-
 import type { DebtDTO } from "../../api/dtos/debtsDTOs";
 
 import useAuthContext from "../../hooks/useAuthContext";
@@ -26,8 +24,6 @@ function DebtHistory({
 
 	const debts = useFetchDebts();
 
-	const [sortedDebts, setSortedDebts] = useState<DebtDTO[]>([]);
-
 	const isOwner = (debt: DebtDTO) => {
 		return user?.id == debt.user || user?.id == card?.userId;
 	};
@@ -36,20 +32,11 @@ function DebtHistory({
 		openModal(<DebtFormContainer />);
 	};
 
-	useEffect(() => {
-		setSortedDebts(
-			debts.sort(
-				(a: DebtDTO, b: DebtDTO) =>
-					new Date(a.date).getTime() - new Date(b.date).getTime(),
-			),
-		);
-	}, [debts]);
-
 	return (
 		<Container title={title} description={description}>
 			<ul className="max-h-96 overflow-auto">
 				{debts.length > 0 &&
-					sortedDebts
+					debts
 						.sort(
 							(a: DebtDTO, b: DebtDTO) =>
 								new Date(a.date).getTime() -

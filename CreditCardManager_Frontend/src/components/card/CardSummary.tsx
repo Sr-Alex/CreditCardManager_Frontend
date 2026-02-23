@@ -34,7 +34,7 @@ function CardSummary() {
 				className="block w-full h-full text-left cursor-pointer">
 				<h2
 					className={
-						card?.invoice! > card?.limit!
+						card != undefined && card.invoice > card.limit
 							? "text-red"
 							: "text-white"
 					}>

@@ -12,7 +12,6 @@ interface ContainerProps {
 	textColor?: string;
 	className?: string;
 	closeButton?: boolean;
-	closeButtonHandler?: () => void;
 }
 
 function Container({
@@ -23,13 +22,12 @@ function Container({
 	textColor = "text-dark-blue dark:text-white",
 	className = "min-w-80 min-h-32 h-fit",
 	closeButton = false,
-	closeButtonHandler = undefined,
 }: ContainerProps) {
 	const { closeModal } = useModalContext();
 
 	const closeHandler = () => {
 		if (closeButton) {
-			closeButtonHandler ? closeButtonHandler() : closeModal();
+			closeModal();
 		}
 	};
 
@@ -38,14 +36,14 @@ function Container({
 			if (!closeButton) return;
 
 			if (e.key == "Escape") {
-				closeHandler();
+				closeModal();
 			}
 		};
 
 		document.addEventListener("keydown", handleEscape);
 
 		return () => document.removeEventListener("keydown", handleEscape);
-	}, [closeButtonHandler, closeButtonHandler]);
+	}, [closeButton, closeModal]);
 
 	return (
 		<section

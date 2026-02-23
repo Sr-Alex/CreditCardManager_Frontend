@@ -13,7 +13,7 @@ function useSetUserEnv() {
 		if (!isLogged) {
 			openModal(<AuthFormContainer />);
 		} else if (!card) openModal(<UserCardsListContainer />);
-	}, [isLogged, card]);
+	}, [isLogged, card, openModal]);
 }
 
 export default useSetUserEnv;

@@ -1,10 +1,10 @@
 export type CreditCardDTO = {
 	id: number;
 	userId: number;
-	cardName?: string;
+	cardName: string;
 	expiresAt: string;
-	invoice?: number;
-	limit?: number;
+	invoice: number;
+	limit: number;
 };
 
 export type CreateCreditCardDTO = {

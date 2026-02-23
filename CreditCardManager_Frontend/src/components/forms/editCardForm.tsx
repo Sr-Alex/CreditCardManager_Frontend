@@ -19,11 +19,12 @@ function EditCardForm() {
 	const cardName = useRef<HTMLInputElement>(null);
 	const expiresAt = useRef<HTMLInputElement>(null);
 	const limit = useRef<HTMLInputElement>(null);
-	const invoice = useRef<HTMLInputElement>(null);
 
 	const [isWaiting, setIsWaiting] = useState(false);
 
-	const formattedDate = new Date(card?.expiresAt!).toISOString().slice(0, 10);
+	const formattedDate = new Date(card ? card?.expiresAt : "")
+		.toISOString()
+		.slice(0, 10);
 
 	const handleUpdate = async (event: FormEvent) => {
 		event.preventDefault();
