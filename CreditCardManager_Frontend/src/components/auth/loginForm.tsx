@@ -8,10 +8,11 @@ import useAuthContext from "../../hooks/useAuthContext";
 
 import ActionButton from "../actionButton";
 import useModalContext from "../../hooks/useModalContext";
+import UserCardsListContainer from "../card/userCardsListContainer";
 
 function LoginForm() {
 	const { login } = useAuthContext();
-	const { closeModal } = useModalContext();
+	const { openModal } = useModalContext();
 
 	const userEmail = useRef<HTMLInputElement>(null);
 	const UserPassword = useRef<HTMLInputElement>(null);
@@ -35,7 +36,7 @@ function LoginForm() {
 		LoginUser(email, password).then((response) => {
 			if (response.success) {
 				login(response.data as UserDTO);
-				closeModal();
+				openModal(<UserCardsListContainer />);
 			}
 		});
 
@@ -78,7 +79,7 @@ function LoginForm() {
 					disabled={isWaiting}
 					type="submit"
 					className="form-button">
-					{isWaiting ? "waiting..." : "login"}
+					{isWaiting ? "Aguardando..." : "login"}
 				</ActionButton>
 			</div>
 		</form>

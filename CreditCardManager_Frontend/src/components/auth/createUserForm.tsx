@@ -1,15 +1,17 @@
 import { useRef, useState, type FormEvent } from "react";
 
-import useAuthContext from "../../hooks/useAuthContext";
-
-import { CreateUser } from "../../api/services/userServices";
 import type { UserDTO } from "../../api/dtos/userDtos";
-import ActionButton from "../actionButton";
+import { CreateUser } from "../../api/services/userServices";
+
+import useAuthContext from "../../hooks/useAuthContext";
 import useModalContext from "../../hooks/useModalContext";
+
+import ActionButton from "../actionButton";
+import UserCardsListContainer from "../card/userCardsListContainer";
 
 function CreateUserForm() {
 	const { login } = useAuthContext();
-	const { closeModal } = useModalContext();
+	const { openModal } = useModalContext();
 
 	const userName = useRef<HTMLInputElement>(null);
 	const userEmail = useRef<HTMLInputElement>(null);
@@ -41,7 +43,7 @@ function CreateUserForm() {
 			if (response.success) {
 				handleReset();
 				login(response.data as UserDTO);
-				closeModal();
+				openModal(<UserCardsListContainer />);
 			}
 		});
 
@@ -91,7 +93,7 @@ function CreateUserForm() {
 					disabled={isWaiting}
 					type="submit"
 					className="form-button">
-					{isWaiting ? "Waiting..." : "Criar Usuário"}
+					{isWaiting ? "Aguardando..." : "Criar Usuário"}
 				</ActionButton>
 			</div>
 		</form>

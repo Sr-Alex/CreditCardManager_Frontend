@@ -1,9 +1,8 @@
-import { useEffect, useState, type ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 
 import { GetCreditCard } from "../api/services/creditCardServices";
-import { GetUser } from "../api/services/userServices";
 
-import { ClearAuthToken, GetAuthToken } from "../api/authStorage";
+import { ClearAuthToken } from "../api/authStorage";
 
 import type { CreditCardDTO } from "../api/dtos/creditCardDtos";
 import type { UserDTO } from "../api/dtos/userDtos";
@@ -49,22 +48,6 @@ export function AuthContextProvider({
 			setCard(response.data as CreditCardDTO);
 		}
 	};
-
-	useEffect(() => {
-		const autoLogin = async (): Promise<void> => {
-			const auth = GetAuthToken();
-
-			if (!auth) return;
-
-			const response = await GetUser(auth.userId);
-			if (response.success) {
-				login(response.data as UserDTO);
-				return;
-			} else logout();
-		};
-
-		autoLogin();
-	}, []);
 
 	const values: AuthContextImp = {
 		isLogged: isLogged,

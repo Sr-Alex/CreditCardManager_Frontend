@@ -10,6 +10,7 @@ import type {
 
 import ActionButton from "../actionButton";
 import useModalContext from "../../hooks/useModalContext";
+import { formatCurrencyValue } from "../../utils/formatters";
 
 function CreateCardForm() {
 	const { selectCard, user } = useAuthContext();
@@ -57,7 +58,11 @@ function CreateCardForm() {
 	return (
 		<form onSubmit={handleSubmit}>
 			<div>
-				<label htmlFor="cardName">Card Name:</label>
+				<label
+					title="Um nome para identificar seu cartão."
+					htmlFor="cardName">
+					Nome do cartão:
+				</label>
 				<input
 					type="text"
 					name="cardName"
@@ -67,20 +72,20 @@ function CreateCardForm() {
 				/>
 			</div>
 			<div>
-				<label htmlFor="expiresAt">Expires At:</label>
+				<label htmlFor="expiresAt">Data de expiração:</label>
 				<input
 					type="date"
 					name="expiresAt"
-					placeholder=""
 					ref={expiresAt}
 					className="input-text"
 				/>
 			</div>
 			<div>
-				<label htmlFor="limit">Limit:</label>
+				<label htmlFor="limit">Limite:</label>
 				<input
 					type="number"
 					name="limit"
+					placeholder={formatCurrencyValue(500)}
 					min={0}
 					max={999999}
 					step={0.01}
@@ -92,13 +97,13 @@ function CreateCardForm() {
 				className="form-button"
 				type="button"
 				onClick={handleReset}>
-				Reset
+				Limpar
 			</ActionButton>
 			<ActionButton
 				disabled={isWaiting}
 				className="form-button"
 				type="submit">
-				{isWaiting ? "Waiting" : "Submit"}
+				{isWaiting ? "Aguardando..." : "Criar"}
 			</ActionButton>
 		</form>
 	);

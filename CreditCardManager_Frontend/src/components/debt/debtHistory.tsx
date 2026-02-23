@@ -55,7 +55,7 @@ function DebtHistory({
 
 			<ActionButton
 				onClick={handleAddClick}
-				className="w-full mt-4 px-4 py-2 rounded-lg hover:bg-dark-blue transition-colors font-medium">
+				className="w-full mt-4 mb-2 px-4 py-2 rounded-lg hover:bg-dark-blue transition-colors font-medium">
 				+ Adicionar Dívida
 			</ActionButton>
 		</Container>

@@ -42,9 +42,7 @@ function DebtShowData({
 			<div className="mb-2 gap-4 grid grid-cols-3 sm:grid-cols-4">
 				<div>
 					<p className="text-sm text-gray font-semibold">Rótulo</p>
-					<p
-						className="overflow-hidden text-ellipsis text-md font-medium"
-						defaultValue={debtData.label}>
+					<p className="overflow-hidden text-ellipsis text-md font-medium">
 						{debtData.label}
 					</p>
 				</div>

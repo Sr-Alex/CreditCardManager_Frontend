@@ -95,7 +95,7 @@ function DebtForm() {
 				disabled={isWaiting}
 				className="form-button"
 				type="submit">
-				{isWaiting ? "Waiting..." : "Submit"}
+				{isWaiting ? "Aguardando..." : "Submit"}
 			</ActionButton>
 		</form>
 	);

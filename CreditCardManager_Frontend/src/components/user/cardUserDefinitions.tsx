@@ -46,7 +46,11 @@ function CardUserDefinitions({ cardUser }: { cardUser: CardUserDTO }) {
 		<Container title="Usuário do cartão:" className="modal" closeButton>
 			<figure className="text-center mb-4">
 				<User className="mx-auto mb-2" size={"4rem"} />
-				<p className="font-bold">{cardUser.userName}</p>
+				<p className="font-bold">
+					{cardUser.userName.length > 50
+						? cardUser.userName.slice(0, 50) + "..."
+						: cardUser.userName}
+				</p>
 			</figure>
 			<div className="mb-6">
 				<div className="text-center">

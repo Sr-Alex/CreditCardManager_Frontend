@@ -65,7 +65,7 @@ function EditDebtForm({
 					type="text"
 					name="debtLabel"
 					placeholder="User Debt"
-					maxLength={100}
+					maxLength={50}
 					ref={label}
 					defaultValue={debtData.label || ""}
 					className="input-text"
@@ -102,7 +102,7 @@ function EditDebtForm({
 				delete
 			</ActionButton>
 			<ActionButton type="submit" className="form-button">
-				{isWaiting ? "Waiting..." : "Update"}
+				{isWaiting ? "Aguardando..." : "Update"}
 			</ActionButton>
 		</form>
 	);

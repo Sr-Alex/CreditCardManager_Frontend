@@ -9,25 +9,23 @@ import type { CreditCardDTO } from "../../api/dtos/creditCardDtos";
 import CardSelect from "./cardSelect";
 
 function UserCardsList() {
-	const { user, isLogged, logout, selectCard } = useAuthContext();
+	const { user, selectCard } = useAuthContext();
 	const { closeModal } = useModalContext();
 
 	const [cards, setCards] = useState<CreditCardDTO[]>([]);
 
 	useEffect(() => {
-		if (!isLogged || !user?.id) {
-			logout();
-			return;
-		}
-
-		GetUserCreditCards(user.id).then((response) => {
-			if (response.success) {
-				setCards(response.data as CreditCardDTO[]);
-			} else {
-				logout();
+		const fetchCards = async () => {
+			if (user) {
+				const response = await GetUserCreditCards(user.id);
+				if (response.success) {
+					setCards(response.data as CreditCardDTO[]);
+				}
 			}
-		});
-	}, [isLogged, user, logout]);
+		};
+
+		fetchCards();
+	}, [user, setCards]);
 
 	const cardSelectionHandler = (card: CreditCardDTO) => {
 		selectCard(card);

@@ -17,15 +17,19 @@ function CardSelect({ card, clickHandler }: CardSelectProps) {
 	return (
 		<li>
 			<ActionButton
-				className="flex flex-col items-center p-2 w-36 cursor-pointer rounded-lg text-white bg-blue"
+				className="flex flex-col items-center p-1 w-30 h-30 cursor-pointer rounded-lg text-white bg-blue"
 				onClick={() => clickHandler(card.id)}>
 				<div>
-					<CreditCard size={"4rem"} />
+					<CreditCard size={"2.5rem"} />
 				</div>
-				<div>
-					<p className="text-center">{card.cardName}</p>
-					<p className="text-center">{formattedInvoice}</p>
-					<p>Limite: {formattedLimit}</p>
+				<div className="w-full text-sm text-center">
+					<p
+						title={card.cardName}
+						className="overflow-hidden text-ellipsis text-nowrap">
+						{card.cardName}
+					</p>
+					<p className="font-bold">{formattedInvoice}</p>
+					<p>{formattedLimit}</p>
 				</div>
 			</ActionButton>
 		</li>

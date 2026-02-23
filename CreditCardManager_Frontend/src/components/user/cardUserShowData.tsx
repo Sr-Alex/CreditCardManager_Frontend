@@ -18,20 +18,19 @@ function CardUserShowData({ cardUser }: { cardUser: CardUserDTO }) {
 	};
 
 	return (
-		<li className="w-36 h-fit rounded-lg border-2 delay-150 hover:scale-105 transition-all duration-200 ease-in-out border-light-gray hover:bg-dark-slate dark:border-dark-slate shadow-lg">
+		<li className="rounded-lg border-2 delay-150 hover:scale-105 transition-all duration-200 ease-in-out border-light-gray hover:bg-dark-slate dark:border-dark-slate shadow-lg">
 			<button
 				type="button"
 				onClick={handleClick}
-				className="block w-full h-full cursor-pointer px-2 pt-2 pb-1">
+				className="block w-30 h-42 px-2 pt-2 pb-1 cursor-pointer ">
 				<figure>
 					<User className="mx-auto" size={"4rem"} />
 				</figure>
-				<div className="text-center [&>p]:mt-1 [&>p]:overflow-hidden [&>p]:text-ellipsis">
-					<p>{cardUser.userName}</p>
+				<div className="text-center text-sm [&>p]:mt-1 [&>p]:overflow-hidden [&>p]:text-ellipsis [&>p]:whitespace-nowrap">
+					<p title={cardUser.userName}>{cardUser.userName}</p>
 					<p className="font-bold">{formattedTotalAmount}</p>
 					<p className="font-bold">
 						<span className="text-red">{formattedAmountToPay}</span>
-						<br /> à pagar
 					</p>
 				</div>
 			</button>

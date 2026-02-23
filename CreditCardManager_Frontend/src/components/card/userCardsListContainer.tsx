@@ -23,7 +23,7 @@ const UserCardsListContainer = () => {
 			">
 			<ActionButton
 				onClick={() => setShowCreated(!showCreated)}
-				className="w-fit mb-2 px-4 py-2 rounded-lg font-medium">
+				className="mb-2 form-button rounded-lg font-medium">
 				<Plus
 					className="transition-all duration-100 ease-in-out"
 					style={{ rotate: showCreated ? "45deg" : "0deg" }}
