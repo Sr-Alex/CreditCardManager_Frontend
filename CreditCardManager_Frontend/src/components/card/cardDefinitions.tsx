@@ -3,7 +3,7 @@ import { CreditCard, SquarePen } from "lucide-react";
 
 import { DeleteCreditCard } from "../../api/services/creditCardServices";
 
-import useAuthContext from "../../hooks/useAuthContext";
+import useCardContext from "../../hooks/useCardContext";
 import useModalContext from "../../hooks/useModalContext";
 
 import {
@@ -18,7 +18,7 @@ import UserCardsListContainer from "./userCardsListContainer";
 import EditCardFormContainer from "./editCardFormContainer";
 
 function CardDefinitions() {
-	const { card, selectCard } = useAuthContext();
+	const { card, setCard, clearCard } = useCardContext();
 	const { openModal, closeModal } = useModalContext();
 
 	const [isWaiting, setIsWaiting] = useState<boolean>(false);
@@ -34,7 +34,8 @@ function CardDefinitions() {
 
 		const response = await DeleteCreditCard(card?.id);
 		if (response.success) {
-			selectCard();
+			setCard(undefined);
+			clearCard();
 			closeModal();
 			openModal(<UserCardsListContainer />);
 		}
@@ -45,7 +46,7 @@ function CardDefinitions() {
 	};
 
 	const handleLeaveClick = () => {
-		selectCard(undefined);
+		setCard(undefined);
 		openModal(<UserCardsListContainer />);
 	};
 

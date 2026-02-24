@@ -1,4 +1,4 @@
-import useAuthContext from "../../hooks/useAuthContext";
+import useCardContext from "../../hooks/useCardContext";
 import useModalContext from "../../hooks/useModalContext";
 
 import {
@@ -10,7 +10,7 @@ import Container from "../container";
 import CardDefinitions from "./cardDefinitions";
 
 function CardSummary() {
-	const { card } = useAuthContext();
+	const { card } = useCardContext();
 	const { openModal } = useModalContext();
 
 	const formattedInvoice: string = formatCurrencyValue(card?.invoice || 0);

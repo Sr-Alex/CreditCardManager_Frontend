@@ -1,6 +1,7 @@
 import type { DebtDTO } from "../../api/dtos/debtsDTOs";
 
 import useAuthContext from "../../hooks/useAuthContext";
+import useCardContext from "../../hooks/useCardContext";
 import useModalContext from "../../hooks/useModalContext";
 
 import useFetchDebts from "../../hooks/useFetchDebts";
@@ -19,7 +20,8 @@ function DebtHistory({
 	title = "Histórico de Dívidas",
 	description = "Visualize e gerencie suas dívidas",
 }: DebtHistoryProps) {
-	const { card, user } = useAuthContext();
+	const { user } = useAuthContext();
+	const { card } = useCardContext();
 	const { openModal } = useModalContext();
 
 	const debts = useFetchDebts();

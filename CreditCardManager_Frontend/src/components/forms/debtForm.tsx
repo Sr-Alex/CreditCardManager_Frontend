@@ -8,9 +8,11 @@ import { createDebt } from "../../api/services/DebtServices";
 import type { CreateDebtDTO } from "../../api/dtos/debtsDTOs";
 
 import ActionButton from "../actionButton";
+import useCardContext from "../../hooks/useCardContext";
 
 function DebtForm() {
-	const { user, card, updateCard } = useAuthContext();
+	const { user } = useAuthContext();
+	const { card, updateDebts } = useCardContext();
 	const { closeModal } = useModalContext();
 
 	const label = useRef<HTMLInputElement>(null);
@@ -42,7 +44,7 @@ function DebtForm() {
 
 		const response = await createDebt(debtData);
 		if (response.success) {
-			updateCard();
+			updateDebts();
 			closeModal();
 		}
 

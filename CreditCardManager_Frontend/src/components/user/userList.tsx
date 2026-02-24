@@ -4,12 +4,13 @@ import type { CardUserDTO } from "../../api/dtos/cardUsersDtos";
 
 import useFetchCardUsers from "../../hooks/useFetchCardUsers";
 
+import useModalContext from "../../hooks/useModalContext";
+
 import horizontalScroll from "../../utils/horizontalScroll";
-import ActionButton from "../actionButton";
 
 import Container from "../container";
+import ActionButton from "../actionButton";
 import CardUserShowData from "./cardUserShowData";
-import useModalContext from "../../hooks/useModalContext";
 import AddUserFormContainer from "./addCardUserContainer";
 
 function UserList() {

@@ -3,12 +3,14 @@ import { useRef, useState, type FormEvent } from "react";
 import { AddUser } from "../../api/services/creditCardServices";
 
 import useAuthContext from "../../hooks/useAuthContext";
-
-import ActionButton from "../actionButton";
+import useCardContext from "../../hooks/useCardContext";
 import useModalContext from "../../hooks/useModalContext";
 
+import ActionButton from "../actionButton";
+
 function AddUserForm() {
-	const { isLogged, card, updateCard } = useAuthContext();
+	const { isLogged } = useAuthContext();
+	const { card, updateCardUsers } = useCardContext();
 	const { closeModal } = useModalContext();
 
 	const [isWaiting, setIsWaiting] = useState<boolean>(false);
@@ -30,7 +32,7 @@ function AddUserForm() {
 
 		const response = await AddUser(card.id, email.toString());
 		if (response.success) {
-			updateCard();
+			updateCardUsers();
 			setIsWaiting(false);
 			closeModal();
 		}

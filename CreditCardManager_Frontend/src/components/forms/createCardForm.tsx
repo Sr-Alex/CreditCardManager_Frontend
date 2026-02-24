@@ -1,19 +1,22 @@
 import { useRef, useState, type FormEvent } from "react";
 
-import useAuthContext from "../../hooks/useAuthContext";
-
-import { CreateCreditCard } from "../../api/services/creditCardServices";
 import type {
 	CreateCreditCardDTO,
 	CreditCardDTO,
 } from "../../api/dtos/creditCardDtos";
+import { CreateCreditCard } from "../../api/services/creditCardServices";
+
+import useAuthContext from "../../hooks/useAuthContext";
+import useCardContext from "../../hooks/useCardContext";
+
+import { formatCurrencyValue } from "../../utils/formatters";
 
 import ActionButton from "../actionButton";
 import useModalContext from "../../hooks/useModalContext";
-import { formatCurrencyValue } from "../../utils/formatters";
 
 function CreateCardForm() {
-	const { selectCard, user } = useAuthContext();
+	const { user } = useAuthContext();
+	const { setCard } = useCardContext();
 	const { closeModal } = useModalContext();
 
 	const cardName = useRef<HTMLInputElement>(null);
@@ -47,7 +50,7 @@ function CreateCardForm() {
 			if (response.success) {
 				const card = response.data as CreditCardDTO;
 				handleReset();
-				selectCard(card);
+				setCard(card);
 				closeModal();
 			}
 		});

@@ -1,29 +1,13 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
-import { GetDebtHistory } from "../api/services/DebtServices";
-
-import useAuthContext from "./useAuthContext";
-
-import type { DebtDTO } from "../api/dtos/debtsDTOs";
+import useCardContext from "./useCardContext";
 
 function useFetchDebts() {
-	const { isLogged, card } = useAuthContext();
-	const [debts, setDebts] = useState<DebtDTO[]>([]);
+	const { card, debts, updateDebts } = useCardContext();
 
 	useEffect(() => {
-		async function fetchDebts() {
-			if (!card?.id) return;
-
-			const response = await GetDebtHistory(card.id);
-			if (response.success) {
-				setDebts(response.data as DebtDTO[]);
-			}
-		}
-
-		fetchDebts();
-
-		return () => setDebts([]);
-	}, [isLogged, card]);
+		if (card) updateDebts();
+	}, [card]);
 
 	return debts;
 }

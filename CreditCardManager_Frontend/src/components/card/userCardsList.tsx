@@ -1,15 +1,18 @@
 import { useEffect, useState } from "react";
 
+import type { CreditCardDTO } from "../../api/dtos/creditCardDtos";
+
 import { GetUserCreditCards } from "../../api/services/creditCardServices";
 
 import useAuthContext from "../../hooks/useAuthContext";
+import useCardContext from "../../hooks/useCardContext";
 import useModalContext from "../../hooks/useModalContext";
 
-import type { CreditCardDTO } from "../../api/dtos/creditCardDtos";
 import CardSelect from "./cardSelect";
 
 function UserCardsList() {
-	const { user, selectCard } = useAuthContext();
+	const { user } = useAuthContext();
+	const { setCard } = useCardContext();
 	const { closeModal } = useModalContext();
 
 	const [cards, setCards] = useState<CreditCardDTO[]>([]);
@@ -28,7 +31,7 @@ function UserCardsList() {
 	}, [user, setCards]);
 
 	const cardSelectionHandler = (card: CreditCardDTO) => {
-		selectCard(card);
+		setCard(card);
 		closeModal();
 	};
 

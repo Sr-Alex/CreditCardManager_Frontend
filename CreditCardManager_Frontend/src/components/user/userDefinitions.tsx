@@ -1,6 +1,7 @@
 import { User } from "lucide-react";
 
 import useAuthContext from "../../hooks/useAuthContext";
+import useCardContext from "../../hooks/useCardContext";
 import useModalContext from "../../hooks/useModalContext";
 
 import Container from "../container";
@@ -9,10 +10,12 @@ import AuthFormContainer from "../auth/authFormContainer";
 
 function UserDefinitions() {
 	const { user, logout } = useAuthContext();
+	const { clearCard } = useCardContext();
 	const { openModal } = useModalContext();
 
 	const handleLogout = () => {
 		logout();
+		clearCard();
 		openModal(<AuthFormContainer />);
 	};
 

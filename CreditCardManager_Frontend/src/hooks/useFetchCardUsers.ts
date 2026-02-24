@@ -1,26 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
-import type { CardUserDTO } from "../api/dtos/cardUsersDtos";
-import useAuthContext from "./useAuthContext";
-import { GetCreditCardUsers } from "../api/services/creditCardServices";
+import useCardContext from "./useCardContext";
 
 function useFetchCardUsers() {
-	const { card } = useAuthContext();
-	const [cardUsers, setCardUsers] = useState<CardUserDTO[]>([]);
+	const { card, updateCardUsers, cardUsers } = useCardContext();
 
 	useEffect(() => {
-		async function fetchCardUser() {
-			if (!card?.id) return;
-
-			const response = await GetCreditCardUsers(card.id);
-			if (response.success) {
-				setCardUsers(response.data! as CardUserDTO[]);
-			}
-		}
-
-		fetchCardUser();
-
-		return () => setCardUsers([]);
+		updateCardUsers();
 	}, [card]);
 
 	return cardUsers;

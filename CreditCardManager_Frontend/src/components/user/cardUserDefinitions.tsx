@@ -1,15 +1,16 @@
 import { useState } from "react";
 import { User } from "lucide-react";
 
-import { RemoveCardUser } from "../../api/services/creditCardServices";
-
-import useAuthContext from "../../hooks/useAuthContext";
-import useModalContext from "../../hooks/useModalContext";
-
 import type {
 	CardUserDTO,
 	RemoveCardUserDTO,
 } from "../../api/dtos/cardUsersDtos";
+
+import { RemoveCardUser } from "../../api/services/creditCardServices";
+
+import useAuthContext from "../../hooks/useAuthContext";
+import useCardContext from "../../hooks/useCardContext";
+import useModalContext from "../../hooks/useModalContext";
 
 import { formatCurrencyValue } from "../../utils/formatters";
 
@@ -17,7 +18,8 @@ import Container from "../container";
 import ActionButton from "../actionButton";
 
 function CardUserDefinitions({ cardUser }: { cardUser: CardUserDTO }) {
-	const { user, card, updateCard } = useAuthContext();
+	const { user } = useAuthContext();
+	const { card, updateCardUsers } = useCardContext();
 	const { closeModal } = useModalContext();
 
 	const [isWaiting, setIsWaiting] = useState<boolean>(false);
@@ -36,7 +38,7 @@ function CardUserDefinitions({ cardUser }: { cardUser: CardUserDTO }) {
 
 		const response = await RemoveCardUser(card?.id, removeCardUserDTO);
 		if (response.success) {
-			updateCard();
+			updateCardUsers();
 			closeModal();
 		}
 		setIsWaiting(false);
@@ -84,13 +86,15 @@ function CardUserDefinitions({ cardUser }: { cardUser: CardUserDTO }) {
 					</p>
 				</div>
 			</div>
-			<ActionButton
-				onClick={handleDeleteCardUser}
-				disabled={isWaiting}
-				backgroundColor="bg-red"
-				className="p-2 rounded-lg">
-				Remove
-			</ActionButton>
+			{cardUser.userId != user?.id && (
+				<ActionButton
+					onClick={handleDeleteCardUser}
+					disabled={isWaiting}
+					backgroundColor="bg-red"
+					className="p-2 rounded-lg">
+					Remove
+				</ActionButton>
+			)}
 		</Container>
 	);
 }
