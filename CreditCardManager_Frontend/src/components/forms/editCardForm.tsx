@@ -7,13 +7,13 @@ import type {
 	UpdateCreditCardDTO,
 } from "../../api/dtos/creditCardDtos";
 
-import useAuthContext from "../../hooks/useAuthContext";
+import useCardContext from "../../hooks/useCardContext";
 import useModalContext from "../../hooks/useModalContext";
 
 import ActionButton from "../actionButton";
 
 function EditCardForm() {
-	const { card, selectCard } = useAuthContext();
+	const { card, setCard } = useCardContext();
 	const { closeModal } = useModalContext();
 
 	const cardName = useRef<HTMLInputElement>(null);
@@ -45,7 +45,7 @@ function EditCardForm() {
 
 		const response = await UpdateCreditCard(card.id, updatedCard);
 		if (response.success) {
-			selectCard(response.data as CreditCardDTO);
+			setCard(response.data as CreditCardDTO);
 			closeModal();
 		}
 
@@ -55,7 +55,9 @@ function EditCardForm() {
 	return (
 		<form onSubmit={(e) => handleUpdate(e)}>
 			<div>
-				<label title="Nome do cartão de crédito." htmlFor="cardName">Nome do Cartão:</label>
+				<label title="Nome do cartão de crédito." htmlFor="cardName">
+					Nome do Cartão:
+				</label>
 				<input
 					type="text"
 					name="cardName"
@@ -67,7 +69,11 @@ function EditCardForm() {
 				/>
 			</div>
 			<div>
-				<label title="Data em que sua fatura expira." htmlFor="expiresAt">Data de Validade:</label>
+				<label
+					title="Data em que sua fatura expira."
+					htmlFor="expiresAt">
+					Data de Validade:
+				</label>
 				<input
 					type="date"
 					name="expiresAt"
@@ -77,7 +83,9 @@ function EditCardForm() {
 				/>
 			</div>
 			<div>
-				<label title="Limite do cartão de crédito." htmlFor="limit">Limite:</label>
+				<label title="Limite do cartão de crédito." htmlFor="limit">
+					Limite:
+				</label>
 				<input
 					type="number"
 					name="limit"

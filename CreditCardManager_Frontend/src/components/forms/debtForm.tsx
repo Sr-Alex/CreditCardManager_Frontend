@@ -12,7 +12,7 @@ import useCardContext from "../../hooks/useCardContext";
 
 function DebtForm() {
 	const { user } = useAuthContext();
-	const { card, updateDebts } = useCardContext();
+	const { card, updateCard } = useCardContext();
 	const { closeModal } = useModalContext();
 
 	const label = useRef<HTMLInputElement>(null);
@@ -44,7 +44,7 @@ function DebtForm() {
 
 		const response = await createDebt(debtData);
 		if (response.success) {
-			updateDebts();
+			updateCard();
 			closeModal();
 		}
 

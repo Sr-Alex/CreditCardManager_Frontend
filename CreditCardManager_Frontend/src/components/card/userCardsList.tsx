@@ -19,7 +19,7 @@ function UserCardsList() {
 
 	useEffect(() => {
 		const fetchCards = async () => {
-			if (user) {
+			if (user != undefined) {
 				const response = await GetUserCreditCards(user.id);
 				if (response.success) {
 					setCards(response.data as CreditCardDTO[]);
@@ -28,7 +28,7 @@ function UserCardsList() {
 		};
 
 		fetchCards();
-	}, [user, setCards]);
+	}, [user]);
 
 	const cardSelectionHandler = (card: CreditCardDTO) => {
 		setCard(card);

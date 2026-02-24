@@ -1,10 +1,13 @@
 import { useRef, useState, type FormEvent } from "react";
 
 import type { DebtDTO, UpdateDebtDTO } from "../../api/dtos/debtsDTOs";
+
 import { deleteDebt, updateDebt } from "../../api/services/DebtServices";
-import useAuthContext from "../../hooks/useAuthContext";
-import ActionButton from "../actionButton";
+
+import useCardContext from "../../hooks/useCardContext";
 import useModalContext from "../../hooks/useModalContext";
+
+import ActionButton from "../actionButton";
 
 interface EditDebtFormProps {
 	debtData: DebtDTO;
@@ -15,7 +18,7 @@ function EditDebtForm({
 	debtData,
 	submitHandler = () => {},
 }: EditDebtFormProps) {
-	const { updateCard } = useAuthContext();
+	const { updateCard } = useCardContext();
 	const { closeModal } = useModalContext();
 
 	const label = useRef<HTMLInputElement>(null);

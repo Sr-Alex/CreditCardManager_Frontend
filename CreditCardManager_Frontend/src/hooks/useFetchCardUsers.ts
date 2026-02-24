@@ -6,7 +6,7 @@ function useFetchCardUsers() {
 	const { card, updateCardUsers, cardUsers } = useCardContext();
 
 	useEffect(() => {
-		updateCardUsers();
+		if (card) updateCardUsers();
 	}, [card]);
 
 	return cardUsers;

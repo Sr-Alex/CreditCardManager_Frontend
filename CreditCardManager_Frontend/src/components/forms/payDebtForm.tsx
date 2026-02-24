@@ -1,6 +1,7 @@
 import { useEffect, useState, type FormEvent } from "react";
 
 import useAuthContext from "../../hooks/useAuthContext";
+import useCardContext from "../../hooks/useCardContext";
 import useModalContext from "../../hooks/useModalContext";
 
 import { payDebt } from "../../api/services/DebtServices";
@@ -17,7 +18,8 @@ import {
 import { User } from "lucide-react";
 
 function PayDebtForm({ debtData }: { debtData: DebtDTO }) {
-	const { user, card, updateCard } = useAuthContext();
+	const { user } = useAuthContext();
+	const { card, updateCard } = useCardContext();
 	const { closeModal } = useModalContext();
 
 	const [isWaiting, setIsWaiting] = useState(false);
