@@ -72,7 +72,11 @@ function CreateCardForm() {
 				/>
 			</div>
 			<div>
-				<label htmlFor="expiresAt">Data de expiração:</label>
+				<label
+					title="Data em que sua fatura expira."
+					htmlFor="expiresAt">
+					Data de expiração:
+				</label>
 				<input
 					type="date"
 					name="expiresAt"
@@ -81,7 +85,9 @@ function CreateCardForm() {
 				/>
 			</div>
 			<div>
-				<label htmlFor="limit">Limite:</label>
+				<label title="Limite do cartão de crédito." htmlFor="limit">
+					Limite:
+				</label>
 				<input
 					type="number"
 					name="limit"

@@ -14,7 +14,7 @@
 	--color-dark-gray: #30738d;
 	--color-light-gray: #eff5ff;
 
-	--color-opaque: #0000001a;
+	--color-opaque: #00000040;
 }
 
 @custom-variant dark (&:where(.dark, .dark *));

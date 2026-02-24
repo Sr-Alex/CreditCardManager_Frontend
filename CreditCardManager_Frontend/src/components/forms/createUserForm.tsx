@@ -53,7 +53,9 @@ function CreateUserForm() {
 	return (
 		<form onSubmit={handleCreateUser} className="flex flex-col gap-3">
 			<div>
-				<label htmlFor="name">Nome:</label>
+				<label title="Seu nome de usuário" htmlFor="name">
+					Nome:
+				</label>
 				<input
 					type="text"
 					id="name"
@@ -63,7 +65,9 @@ function CreateUserForm() {
 				/>
 			</div>
 			<div>
-				<label htmlFor="email">Email:</label>
+				<label title="Seu email de acesso." htmlFor="email">
+					Email:
+				</label>
 				<input
 					type="email"
 					id="email"
@@ -73,7 +77,9 @@ function CreateUserForm() {
 				/>
 			</div>
 			<div>
-				<label htmlFor="password">Senha:</label>
+				<label title="Sua senha de acesso." htmlFor="password">
+					Senha:
+				</label>
 				<input
 					type="password"
 					id="password"

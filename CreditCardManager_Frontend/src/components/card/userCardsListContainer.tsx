@@ -4,7 +4,7 @@ import { Plus } from "lucide-react";
 
 import Container from "../container";
 import UserCardsList from "./userCardsList";
-import CreateCardForm from "../auth/createCardForm";
+import CreateCardForm from "../forms/createCardForm";
 
 import ActionButton from "../actionButton";
 

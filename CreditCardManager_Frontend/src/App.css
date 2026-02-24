@@ -10,6 +10,4 @@
 .app {
 	min-height: 100dvh;
 	padding-top: 1rem;
-
-	overflow: auto;
 }

@@ -18,7 +18,7 @@ function CardUserShowData({ cardUser }: { cardUser: CardUserDTO }) {
 	};
 
 	return (
-		<li className="rounded-lg border-2 delay-150 hover:scale-105 transition-all duration-200 ease-in-out border-light-gray hover:bg-dark-slate dark:border-dark-slate shadow-lg">
+		<li className="rounded-lg border-2 delay-150 hover:scale-105 transition-all duration-200 ease-in-out border-light-gray dark:border-dark-slate hover:bg-light-gray dark:hover:bg-dark-slate shadow-opaque shadow-md">
 			<button
 				type="button"
 				onClick={handleClick}

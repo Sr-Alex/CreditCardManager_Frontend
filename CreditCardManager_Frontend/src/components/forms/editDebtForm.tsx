@@ -60,7 +60,9 @@ function EditDebtForm({
 	return (
 		<form onSubmit={(e) => handleUpdate(e)}>
 			<div>
-				<label htmlFor="debtLabel">Rótulo da dívida:</label>
+				<label title="Rótulo da dívida." htmlFor="debtLabel">
+					Rótulo da dívida:
+				</label>
 				<input
 					type="text"
 					name="debtLabel"
@@ -72,7 +74,9 @@ function EditDebtForm({
 				/>
 			</div>
 			<div>
-				<label htmlFor="debtValue">Quantia da dívida:</label>
+				<label title="Quantia da dívida." htmlFor="debtValue">
+					Quantia da dívida:
+				</label>
 				<input
 					type="number"
 					name="debtValue"
@@ -86,7 +90,9 @@ function EditDebtForm({
 				/>
 			</div>
 			<div>
-				<label htmlFor="debtDate">Data da dívida:</label>
+				<label title="Data da dívida." htmlFor="debtDate">
+					Data da dívida:
+				</label>
 				<input
 					type="date"
 					name="debtDate"

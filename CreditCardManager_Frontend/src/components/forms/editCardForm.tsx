@@ -55,7 +55,7 @@ function EditCardForm() {
 	return (
 		<form onSubmit={(e) => handleUpdate(e)}>
 			<div>
-				<label htmlFor="cardName">Nome do Cartão:</label>
+				<label title="Nome do cartão de crédito." htmlFor="cardName">Nome do Cartão:</label>
 				<input
 					type="text"
 					name="cardName"
@@ -67,7 +67,7 @@ function EditCardForm() {
 				/>
 			</div>
 			<div>
-				<label htmlFor="expiresAt">Data de Validade:</label>
+				<label title="Data em que sua fatura expira." htmlFor="expiresAt">Data de Validade:</label>
 				<input
 					type="date"
 					name="expiresAt"
@@ -77,7 +77,7 @@ function EditCardForm() {
 				/>
 			</div>
 			<div>
-				<label htmlFor="limit">Limite:</label>
+				<label title="Limite do cartão de crédito." htmlFor="limit">Limite:</label>
 				<input
 					type="number"
 					name="limit"

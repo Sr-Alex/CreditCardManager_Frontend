@@ -38,16 +38,18 @@ function DebtShowData({
 	};
 
 	return (
-		<li className="px-4 py-2 my-2 rounded-lg border-2 border-dark-slate hover:shadow-md transition-all delay-200 duration-200 hover:bg-dark-slate">
+		<li className="px-4 py-2 my-2 rounded-lg border-2 border-dark-slate hover:bg-light-gray dark:hover:bg-dark-slate hover:shadow-md transition-all delay-200 duration-200">
 			<div className="mb-2 gap-4 grid grid-cols-3 sm:grid-cols-4">
 				<div>
 					<p className="text-sm text-gray font-semibold">Rótulo</p>
-					<p className="overflow-hidden text-ellipsis text-md font-medium">
+					<p
+						title={debtData.label}
+						className="overflow-hidden text-ellipsis text-md font-medium">
 						{debtData.label}
 					</p>
 				</div>
 
-				<div className="">
+				<div>
 					<p className="text-sm text-gray font-semibold">Data</p>
 					<p className="text-md font-medium">{formattedDate}</p>
 				</div>
