@@ -72,16 +72,13 @@ function CardDefinitions() {
 						{card?.cardName}
 					</p>
 					<p className="input-text">
-						Fatura atual:{" "}
-						<span className="font-bold">{formattedInvoice}</span>
+						Fatura atual: <strong>{formattedInvoice}</strong>
 					</p>
 					<p className="input-text">
-						Limite atual:{" "}
-						<span className="font-bold">{formattedLimit}</span>
+						Limite atual: <strong>{formattedLimit}</strong>
 					</p>
 					<p className="input-text">
-						Data de expiração:{" "}
-						<span className="font-bold">{formattedDate}</span>
+						Data de expiração: <strong>{formattedDate}</strong>
 					</p>
 				</div>
 			</div>

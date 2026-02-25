@@ -58,31 +58,28 @@ function CardUserDefinitions({ cardUser }: { cardUser: CardUserDTO }) {
 				<div className="text-center">
 					<p className="input-text">
 						Total de registros:{" "}
-						<span className="font-bold">{cardUser.debtsCount}</span>
+						<strong>{cardUser.debtsCount}</strong>
 					</p>
 				</div>
 				<div className="text-center">
 					<p className="input-text">
 						Dívidas Pendentes:{" "}
-						<span className="font-bold text-red">
+						<strong className="text-red">
 							{cardUser.pendingDebts}
-						</span>
+						</strong>
 					</p>
 				</div>
 				<div className="text-center">
 					<p className="input-text">
-						Quantia total:{" "}
-						<span className="font-bold">
-							{formattedTotalAmount}
-						</span>
+						Quantia total: <strong>{formattedTotalAmount}</strong>
 					</p>
 				</div>
 				<div className="text-center">
 					<p className="input-text">
 						Quantia à pagar:{" "}
-						<span className="font-bold text-red">
+						<strong className="text-red">
 							{formattedAmountToPay}
-						</span>
+						</strong>
 					</p>
 				</div>
 			</div>

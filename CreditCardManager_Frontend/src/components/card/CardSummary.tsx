@@ -1,3 +1,4 @@
+import { CalendarClock, Slash, TrendingUp } from "lucide-react";
 import useCardContext from "../../hooks/useCardContext";
 import useModalContext from "../../hooks/useModalContext";
 
@@ -10,7 +11,7 @@ import Container from "../container";
 import CardDefinitions from "./cardDefinitions";
 
 function CardSummary() {
-	const { card } = useCardContext();
+	const { card, debts } = useCardContext();
 	const { openModal } = useModalContext();
 
 	const formattedInvoice: string = formatCurrencyValue(card?.invoice || 0);
@@ -39,10 +40,22 @@ function CardSummary() {
 							: "text-white"
 					}>
 					{formattedInvoice}
+					<Slash
+						size={"1rem"}
+						className="inline mx-2
+					"
+					/>
+					<strong>{formattedLimit}</strong>
 				</h2>
 				<div className="mt-2 text-sm">
-					<p>Limite: {formattedLimit}</p>
-					<p>Expira em: {formattedDate} </p>
+					<p title="Data de expiração do cartão.">
+						<CalendarClock size={"1rem"} className="inline" />{" "}
+						{formattedDate}
+					</p>
+					<p title="Número de dívidas registradas.">
+						<TrendingUp size={"1rem"} className="inline" />{" "}
+						{debts.length} registros
+					</p>
 				</div>
 			</button>
 		</Container>

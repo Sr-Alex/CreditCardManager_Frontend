@@ -28,9 +28,13 @@ function CardUserShowData({ cardUser }: { cardUser: CardUserDTO }) {
 				</figure>
 				<div className="text-center text-sm [&>p]:mt-1 [&>p]:overflow-hidden [&>p]:text-ellipsis [&>p]:whitespace-nowrap">
 					<p title={cardUser.userName}>{cardUser.userName}</p>
-					<p className="font-bold">{formattedTotalAmount}</p>
-					<p className="font-bold">
-						<span className="text-red">{formattedAmountToPay}</span>
+					<p>
+						<strong>{formattedTotalAmount}</strong>
+					</p>
+					<p>
+						<strong className="text-red">
+							{formattedAmountToPay}
+						</strong>
 					</p>
 				</div>
 			</button>
