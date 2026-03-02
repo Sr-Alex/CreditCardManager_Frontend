@@ -62,6 +62,7 @@ function DebtForm() {
 					placeholder="User Debt"
 					maxLength={100}
 					ref={label}
+					required
 					className="input-text"
 				/>
 			</div>
@@ -75,6 +76,7 @@ function DebtForm() {
 					max={999999}
 					step={0.01}
 					ref={value}
+					required
 					className="input-text"
 				/>
 			</div>

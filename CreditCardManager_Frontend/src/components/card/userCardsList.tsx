@@ -9,11 +9,12 @@ import useCardContext from "../../hooks/useCardContext";
 import useModalContext from "../../hooks/useModalContext";
 
 import CardSelect from "./cardSelect";
+import AuthFormContainer from "../auth/authFormContainer";
 
 function UserCardsList() {
-	const { user } = useAuthContext();
+	const { user, logout } = useAuthContext();
 	const { setCard } = useCardContext();
-	const { closeModal } = useModalContext();
+	const { closeModal, openModal } = useModalContext();
 
 	const [cards, setCards] = useState<CreditCardDTO[]>([]);
 
@@ -23,6 +24,9 @@ function UserCardsList() {
 				const response = await GetUserCreditCards(user.id);
 				if (response.success) {
 					setCards(response.data as CreditCardDTO[]);
+				} else {
+					logout();
+					openModal(<AuthFormContainer />);
 				}
 			}
 		};

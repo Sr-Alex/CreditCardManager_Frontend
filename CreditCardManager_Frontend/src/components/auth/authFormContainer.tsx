@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import CreateUserForm from "../forms/createUserForm";
+import CreateUserForm from "./createUserForm";
 import LoginForm from "./loginForm";
 import Container from "../container";
 

@@ -8,6 +8,7 @@ import useModalContext from "../../hooks/useModalContext";
 
 import ActionButton from "../actionButton";
 import UserCardsListContainer from "../card/userCardsListContainer";
+import { Eye, EyeClosed } from "lucide-react";
 
 function CreateUserForm() {
 	const { login } = useAuthContext();
@@ -17,6 +18,7 @@ function CreateUserForm() {
 	const userEmail = useRef<HTMLInputElement>(null);
 	const userPassword = useRef<HTMLInputElement>(null);
 
+	const [showPassword, setShowPassword] = useState(false);
 	const [isWaiting, setIsWaiting] = useState(false);
 
 	const handleReset = () => {
@@ -80,13 +82,25 @@ function CreateUserForm() {
 				<label title="Sua senha de acesso." htmlFor="password">
 					Senha:
 				</label>
-				<input
-					type="password"
-					id="password"
-					ref={userPassword}
-					placeholder="*********"
-					className="input-text"
-				/>
+				<div className="input-text flex px-0">
+					<input
+						type={showPassword ? "text" : "password"}
+						ref={userPassword}
+						id="password"
+						placeholder="*********"
+						className="flex-2 px-2"
+					/>
+					<button
+						type="button"
+						onClick={() => setShowPassword(!showPassword)}
+						className="flex-1 px-2">
+						{showPassword ? (
+							<Eye className="h-full aspect-square" />
+						) : (
+							<EyeClosed className="h-full aspect-square" />
+						)}
+					</button>
+				</div>
 			</div>
 			<div>
 				<ActionButton
