@@ -1,12 +1,9 @@
-import { useMemo } from "react";
+import { useEffect, useState } from "react";
 import { BarChart, PieChart } from "@mui/x-charts";
 
 import useCardContext from "../hooks/useCardContext";
 
-import { formatCurrencyValue } from "../utils/formatters";
-
 import Container from "./container";
-import type { CardUserDTO } from "../api/dtos/cardUsersDtos";
 
 type DebtsCardUser = {
 	label: string;
@@ -18,24 +15,20 @@ type DebtsCardUser = {
 function StatisticsContainer() {
 	const { card, debts, cardUsers } = useCardContext();
 
-	const debtsCardUser = useMemo(() => {
-		const debtCardUserList: DebtsCardUser[] = [];
-		debts.forEach((debt) => {
-			const cardUser: CardUserDTO | undefined = cardUsers.find(
-				(user) => user.userId === debt.user,
-			);
+	const [isWideScreen, setIsWideScreen] = useState<boolean>(
+		window.innerWidth > 600,
+	);
 
-			if (cardUser) {
-				debtCardUserList.push({
-					label: debt.label,
-					value: debt.value,
-					userName: cardUser.userName,
-					date: debt.date,
-				});
-			}
-		});
-		return debtCardUserList;
-	}, [debts, cardUsers]);
+	useEffect(() => {
+		const handleResize = () => {
+			setIsWideScreen(window.innerWidth > 768);
+		};
+
+		window.addEventListener("resize", handleResize);
+		return () => {
+			window.removeEventListener("resize", handleResize);
+		};
+	});
 
 	return (
 		<Container title="Statistics" className="w-full max-h-80">
@@ -58,12 +51,16 @@ function StatisticsContainer() {
 					]}
 					height={200}
 					width={200}
-					slotProps={{
-						legend: {
-							position: { horizontal: "center" },
-							direction: "horizontal",
-						},
-					}}
+					slotProps={
+						isWideScreen
+							? {
+									legend: {
+										position: { horizontal: "center" },
+										direction: "horizontal",
+									},
+								}
+							: undefined
+					}
 				/>
 			)}
 		</Container>

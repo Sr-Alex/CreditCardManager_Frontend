@@ -7,9 +7,11 @@ function Definitions() {
 	useSetUserEnv();
 
 	return (
-		<section className="flex flex-row flex-1 flex-wrap w-full h-fit gap-2 md:flex-col">
-			<CardSummary />
-			<UserData />
+		<section className="flex flex-col gap-2">
+			<div className="flex flex-row flex-wrap w-full h-fit gap-2 md:flex-col">
+				<CardSummary />
+				<UserData />
+			</div>
 			<StatisticsContainer />
 		</section>
 	);

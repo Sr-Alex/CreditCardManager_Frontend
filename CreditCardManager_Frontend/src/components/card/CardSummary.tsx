@@ -29,7 +29,7 @@ function CardSummary() {
 			title={card?.cardName}
 			backgroundColor="bg-blue hover:bg-dark-gray dark:hover:bg-dark-slate"
 			textColor="text-white"
-			className="w-full h-fit transition-colors ease-in-out md:min-h-48">
+			className="flex-4 h-fit transition-colors ease-in-out md:min-h-48">
 			<button
 				onClick={handleClick}
 				className="block w-full h-full text-left cursor-pointer">

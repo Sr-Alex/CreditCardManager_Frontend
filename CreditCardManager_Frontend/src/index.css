@@ -51,4 +51,9 @@
 	.scrollbar-hide::-webkit-scrollbar-thumb {
 		background: var(--color-opaque);
 	}
+
+	.MuiChartsLabel-root {
+		color: var(--color-white);
+		fill: var(--color-white);
+	}
 }

@@ -18,7 +18,7 @@ function UserData() {
 		<Container
 			backgroundColor="bg-light-gray hover:bg-dark-gray dark:bg-dark-blue dark:hover:bg-dark-slate"
 			textColor="text-dark-slate hover:text-light-gray dark:text-light-gray dark:hover:text-light-gray"
-			className="h-fit">
+			className="flex-1 h-fit">
 			<button
 				onClick={handleClick}
 				className="block w-full h-full cursor-pointer">
