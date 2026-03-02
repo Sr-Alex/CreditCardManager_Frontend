@@ -82,18 +82,18 @@ function CreateUserForm() {
 				<label title="Sua senha de acesso." htmlFor="password">
 					Senha:
 				</label>
-				<div className="input-text flex px-0">
+				<div className="input-text flex flex-nowrap px-0">
 					<input
 						type={showPassword ? "text" : "password"}
 						ref={userPassword}
 						id="password"
 						placeholder="*********"
-						className="flex-2 px-2"
+						className="w-full px-2"
 					/>
 					<button
 						type="button"
 						onClick={() => setShowPassword(!showPassword)}
-						className="flex-1 px-2">
+						className="px-2">
 						{showPassword ? (
 							<Eye className="h-full aspect-square" />
 						) : (

@@ -68,12 +68,12 @@ function LoginForm() {
 						id="password"
 						ref={UserPassword}
 						placeholder="*********"
-						className="flex-2 px-2"
+						className="w-full px-2"
 					/>
 					<button
 						type="button"
 						onClick={() => setShowPassword(!showPassword)}
-						className="flex-1 px-2">
+						className="px-2">
 						{showPassword ? (
 							<Eye className="h-full aspect-square" />
 						) : (
